@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://dypy4oy4ron2l"]
+
+[ext_resource type="Script" uid="uid://dwloqinhbk6aj" path="res://battle_logic/BattleScene.gd" id="1_wtcfe"]
+
+[node name="battleScene" type="Node2D" node_paths=PackedStringArray("players_node")]
+script = ExtResource("1_wtcfe")
+players_node = NodePath("players")
+
+[node name="players" type="Node2D" parent="."]
+
+[node name="ennemies" type="Node2D" parent="."]
