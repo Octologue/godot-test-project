@@ -21,19 +21,16 @@ var player_positions := [
 var enemy_positions = battle_data.enemy_pos
 
 func _ready():
-	
 	_variables_init()
 	spawn_characters()
-	return
+	debugging_prints()
+	
 		
 func _variables_init():
-	print(player_list_data.character_list)
 	for player in player_list_data.character_list:
 		player_list.append(player)
 	for enemy in battle_data.enemy_list:
 		enemy_list.append(enemy)
-	print(player_list)
-	print(enemy_positions)
 
 func spawn_characters():
 	for child in players_node.get_children():
@@ -56,3 +53,10 @@ func spawn_characters():
 		enemies_node.add_child(enemy)
 		enemy.position = enemy_positions[i]
 		enemy.setup(data)
+
+func debugging_prints():
+	for i in player_list:
+		print(i.title)
+	for i in enemy_list:
+		print(i.title)
+	print(players_node.get_children(),enemies_node.get_children())
