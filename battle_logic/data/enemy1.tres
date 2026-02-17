@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Character" load_steps=3 format=3 uid="uid://xi6lhu7b8k2v"]
+
+[ext_resource type="Script" uid="uid://daasw55bdrk7d" path="res://battle_logic/Character.gd" id="1_bynng"]
+[ext_resource type="Texture2D" uid="uid://81am3rxtunjw" path="res://icon.svg" id="2_kfhnk"]
+
+[resource]
+script = ExtResource("1_bynng")
+title = "enemy 1"
+sprite = ExtResource("2_kfhnk")
+metadata/_custom_type_script = "uid://daasw55bdrk7d"

@@ -1,4 +1,4 @@
 extends Resource
-class_name PlayerList
+class_name PlayerListData
 
 @export var character_list : Array[Character]

@@ -1,12 +1,12 @@
 [gd_scene load_steps=3 format=3 uid="uid://dypy4oy4ron2l"]
 
 [ext_resource type="Script" uid="uid://dwloqinhbk6aj" path="res://battle_logic/BattleScene.gd" id="1_wtcfe"]
-[ext_resource type="PackedScene" uid="uid://05w6whdt5ti3" path="res://battle_logic/PlayerNode.tscn" id="2_0e48y"]
+[ext_resource type="PackedScene" uid="uid://05w6whdt5ti3" path="res://battle_logic/CharacterScene.tscn" id="2_0e48y"]
 
 [node name="battleScene" type="Node2D"]
 script = ExtResource("1_wtcfe")
-player_scene = ExtResource("2_0e48y")
+character_scene = ExtResource("2_0e48y")
 
 [node name="players" type="Node2D" parent="."]
 
-[node name="ennemies" type="Node2D" parent="."]
+[node name="enemies" type="Node2D" parent="."]
