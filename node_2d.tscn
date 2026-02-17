@@ -1,10 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://dypy4oy4ron2l"]
+[gd_scene load_steps=3 format=3 uid="uid://dypy4oy4ron2l"]
 
 [ext_resource type="Script" uid="uid://dwloqinhbk6aj" path="res://battle_logic/BattleScene.gd" id="1_wtcfe"]
+[ext_resource type="PackedScene" uid="uid://05w6whdt5ti3" path="res://battle_logic/PlayerNode.tscn" id="2_0e48y"]
 
-[node name="battleScene" type="Node2D" node_paths=PackedStringArray("players_node")]
+[node name="battleScene" type="Node2D"]
 script = ExtResource("1_wtcfe")
-players_node = NodePath("players")
+player_scene = ExtResource("2_0e48y")
 
 [node name="players" type="Node2D" parent="."]
 

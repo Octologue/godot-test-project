@@ -6,5 +6,5 @@
 [resource]
 script = ExtResource("1_lgkgl")
 title = "player 1"
-icon = ExtResource("1_xtlnf")
+sprite = ExtResource("1_xtlnf")
 metadata/_custom_type_script = "uid://daasw55bdrk7d"
