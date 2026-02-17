@@ -5,5 +5,15 @@ class_name Character
 @export var sprite : Texture2D
 var node
 
-@export var HP : int
 @export var ATK : int
+@export var HP : int:
+	set (value):
+		HP = value
+		var max_hp = HP
+		clamp (HP, 0, max_hp)
+@export var SPE : int : 
+	set(value):
+		SPE = value
+		delay = 200 / (log(SPE) + 2) - 25
+
+var delay : float
