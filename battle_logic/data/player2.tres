@@ -7,4 +7,8 @@
 script = ExtResource("2_3yjxn")
 title = "player 2"
 sprite = ExtResource("1_n6fbi")
+is_player = true
+ATK = 0
+HP = 0
+SPE = 0
 metadata/_custom_type_script = "uid://daasw55bdrk7d"

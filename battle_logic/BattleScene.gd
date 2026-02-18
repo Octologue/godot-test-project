@@ -22,7 +22,8 @@ var enemy_positions = battle_data.enemy_pos
 
 func _ready():
 	_variables_init()
-	spawn_characters()
+	_spawn_characters(player_list,players_node)
+	_spawn_characters(enemy_list,enemies_node)
 	debugging_prints()
 	
 		
@@ -32,27 +33,21 @@ func _variables_init():
 	for enemy in battle_data.enemy_list:
 		enemy_list.append(enemy)
 
-func spawn_characters():
-	for child in players_node.get_children():
+func _spawn_characters(chara_list : Array,chara_node : Node2D):
+	for child in chara_node.get_children():
 		child.queue_free()
-	for child in enemies_node.get_children():
-		child.queue_free()
-		
-	var count = min(player_list.size(),4)
+	var count = chara_list.size()
 	for i in range(count):
-		var data = player_list[i]
-		var player = character_scene.instantiate()
-		players_node.add_child(player)
-		player.position = player_positions[i]
-		player.setup(data)
-		
-	count = min(enemy_list.size(),4)
-	for i in range(count):
-		var data = enemy_list[i]
-		var enemy = character_scene.instantiate()
-		enemies_node.add_child(enemy)
-		enemy.position = enemy_positions[i]
-		enemy.setup(data)
+		var chara_data = chara_list[i]
+		var chara_scene = character_scene.instantiate()
+		chara_node.add_child(chara_scene)
+		#pour positions, faire un check si player ou ennemi
+		if chara_data.is_player == true:
+			chara_scene.position = player_positions[i]
+		else :
+			chara_scene.position = enemy_positions[i]
+		chara_scene.setup(chara_data)
+	return
 
 func debugging_prints():
 	for i in player_list:
