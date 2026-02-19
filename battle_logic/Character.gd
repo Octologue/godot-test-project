@@ -22,6 +22,8 @@ var delay : float
 var queue : Array[float]
 
 func queue_reset():
+#créer 4 valeurs d'après une suite arithmétique
+#pour avoir les positions du personnage dans la timeline
 	queue.clear()
 	for i in range(4):
 		if queue.is_empty():

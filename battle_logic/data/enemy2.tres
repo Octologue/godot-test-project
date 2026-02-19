@@ -1,10 +1,14 @@
 [gd_resource type="Resource" script_class="Character" load_steps=3 format=3 uid="uid://lq3m0lwffkub"]
 
 [ext_resource type="Script" uid="uid://daasw55bdrk7d" path="res://battle_logic/Character.gd" id="1_t8fta"]
-[ext_resource type="Texture2D" uid="uid://81am3rxtunjw" path="res://icon.svg" id="2_tc4xe"]
+[ext_resource type="Texture2D" uid="uid://k0p4yw0c7ipv" path="res://battle_logic/sprites/New Piskel.png" id="2_tc4xe"]
 
 [resource]
 script = ExtResource("1_t8fta")
 title = "enemy 2"
 sprite = ExtResource("2_tc4xe")
+is_player = false
+ATK = 0
+HP = 0
+SPE = 0
 metadata/_custom_type_script = "uid://daasw55bdrk7d"

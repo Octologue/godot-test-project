@@ -13,15 +13,12 @@ var character_nodes : Dictionary = {}
 @onready var enemies_node = $enemies
 @export var character_scene: PackedScene
 
-
-
 var player_positions := [
-	Vector2(200, 100),
-	Vector2(200, 250),
-	Vector2(200, 400),
-	Vector2(200, 550)
+	Vector2(150, 150),
+	Vector2(150, 200),
+	Vector2(150, 250),
+	Vector2(150, 300)
 ]
-
 var enemy_positions = battle_data.enemy_pos
 
 func _ready():
@@ -37,6 +34,7 @@ func _variables_init():
 	for enemy in battle_data.enemy_list:
 		var new_enemy = enemy.duplicate()  
 		enemy_list.append(new_enemy)
+	
 
 func _spawn_characters(chara_list : Array,chara_node : Node2D):
 	for child in chara_node.get_children():

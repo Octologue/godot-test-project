@@ -9,5 +9,6 @@
 [resource]
 script = ExtResource("2_q0f2h")
 enemy_list = Array[ExtResource("1_di0uu")]([ExtResource("2_aox2c"), ExtResource("3_v3gdg"), ExtResource("4_4avrj"), ExtResource("3_v3gdg")])
-enemy_pos = Array[Vector2]([Vector2(900, 100), Vector2(800, 300), Vector2(900, 500), Vector2(1000, 300)])
+random_enemy_order = true
+enemy_pos = Array[Vector2]([Vector2(400, 150), Vector2(500, 200), Vector2(400, 250), Vector2(500, 300)])
 metadata/_custom_type_script = "uid://cei210h2ftix8"
