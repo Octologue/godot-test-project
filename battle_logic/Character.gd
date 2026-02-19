@@ -18,15 +18,19 @@ var alive : bool = true
 	set(value):
 		SPE = value
 		delay = 200 / (log(SPE) + 2) - 25
+		queue_reset()
 var delay : float
 var queue : Array[float]
 
 func queue_reset():
-#créer 4 valeurs d'après une suite arithmétique
+#créer 8 valeurs d'après une suite arithmétique
 #pour avoir les positions du personnage dans la timeline
 	queue.clear()
-	for i in range(4):
+	for i in range(8):
 		if queue.is_empty():
 			queue.append(delay)
 		else:
 			queue.append(queue[-1] + delay)
+func pop_out():
+	queue.pop_front()
+	queue.append(queue[-1]*delay)

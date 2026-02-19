@@ -1,11 +1,11 @@
 [gd_scene load_steps=3 format=3 uid="uid://dypy4oy4ron2l"]
 
-[ext_resource type="Script" uid="uid://dwloqinhbk6aj" path="res://battle_logic/BattleScene.gd" id="1_wtcfe"]
-[ext_resource type="PackedScene" uid="uid://05w6whdt5ti3" path="res://battle_logic/CharacterScene.tscn" id="2_0e48y"]
+[ext_resource type="Script" uid="uid://dwloqinhbk6aj" path="res://battle_logic/battle_scene.gd" id="1_r5l0u"]
+[ext_resource type="PackedScene" uid="uid://05w6whdt5ti3" path="res://battle_logic/CharacterScene.tscn" id="2_5g7vw"]
 
 [node name="battleScene" type="Node2D"]
-script = ExtResource("1_wtcfe")
-character_scene = ExtResource("2_0e48y")
+script = ExtResource("1_r5l0u")
+character_scene = ExtResource("2_5g7vw")
 
 [node name="players" type="Node2D" parent="."]
 
@@ -13,7 +13,7 @@ character_scene = ExtResource("2_0e48y")
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI"]
+[node name="Timeline" type="HBoxContainer" parent="UI"]
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -22,88 +22,88 @@ offset_right = 254.0
 offset_bottom = 60.0
 grow_horizontal = 2
 
-[node name="TimelineSlot" type="Panel" parent="UI/HBoxContainer"]
+[node name="TimelineSlot" type="Panel" parent="UI/Timeline"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="UI/HBoxContainer/TimelineSlot"]
+[node name="TextureRect" type="TextureRect" parent="UI/Timeline/TimelineSlot"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TimelineSlot2" type="Panel" parent="UI/HBoxContainer"]
+[node name="TimelineSlot2" type="Panel" parent="UI/Timeline"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="UI/HBoxContainer/TimelineSlot2"]
+[node name="TextureRect" type="TextureRect" parent="UI/Timeline/TimelineSlot2"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TimelineSlot3" type="Panel" parent="UI/HBoxContainer"]
+[node name="TimelineSlot3" type="Panel" parent="UI/Timeline"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="UI/HBoxContainer/TimelineSlot3"]
+[node name="TextureRect" type="TextureRect" parent="UI/Timeline/TimelineSlot3"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TimelineSlot4" type="Panel" parent="UI/HBoxContainer"]
+[node name="TimelineSlot4" type="Panel" parent="UI/Timeline"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="UI/HBoxContainer/TimelineSlot4"]
+[node name="TextureRect" type="TextureRect" parent="UI/Timeline/TimelineSlot4"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TimelineSlot5" type="Panel" parent="UI/HBoxContainer"]
+[node name="TimelineSlot5" type="Panel" parent="UI/Timeline"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="UI/HBoxContainer/TimelineSlot5"]
+[node name="TextureRect" type="TextureRect" parent="UI/Timeline/TimelineSlot5"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TimelineSlot6" type="Panel" parent="UI/HBoxContainer"]
+[node name="TimelineSlot6" type="Panel" parent="UI/Timeline"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="UI/HBoxContainer/TimelineSlot6"]
+[node name="TextureRect" type="TextureRect" parent="UI/Timeline/TimelineSlot6"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TimelineSlot7" type="Panel" parent="UI/HBoxContainer"]
+[node name="TimelineSlot7" type="Panel" parent="UI/Timeline"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="UI/HBoxContainer/TimelineSlot7"]
+[node name="TextureRect" type="TextureRect" parent="UI/Timeline/TimelineSlot7"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TimelineSlot8" type="Panel" parent="UI/HBoxContainer"]
+[node name="TimelineSlot8" type="Panel" parent="UI/Timeline"]
 custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="UI/HBoxContainer/TimelineSlot8"]
+[node name="TextureRect" type="TextureRect" parent="UI/Timeline/TimelineSlot8"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
