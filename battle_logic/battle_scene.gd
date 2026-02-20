@@ -27,6 +27,10 @@ func _ready():
 	_spawn_characters(enemy_list,enemies_node)
 	debugging_prints()
 	sort_and_display()
+	
+	EventBus.next_attack.connect(next_turn)
+	next_turn()
+	
 		
 func _variables_init():
 	for player in player_list_data.character_list:
@@ -67,7 +71,7 @@ func sort_combined_queue():
 	timeline = player_time_list
 	timeline.append_array(enemy_time_list)
 	timeline.sort_custom(sort_by_time)
-	
+
 	
 func sort_by_time(a,b):
 	return a["time"] < b["time"]
@@ -87,10 +91,27 @@ func debugging_prints():
 		print(i.title)
 	for i in enemy_list:
 		print(i.title)
-	print("players =",players_node.get_children(),"enemies = ",enemies_node.get_children())
+	print("enemy data =",battle_data.enemy_list, "player data =",player_list_data.character_list)
+	print("players =",player_list,"enemies = ",enemy_list)
 	print("character_nodes =", character_nodes)
+	
 
 func pop_out():
 	timeline[0]["character"].pop_out()
 	sort_and_display()
+
+func attack(attacker, target):
+	target.get_attacked(attacker)
+	EventBus.next_attack.emit()
+
+func next_turn():
+	var attacker = timeline[0]["character"]
+	var test_target = Character
+	if attacker.is_player == true:
+		test_target = enemy_list.pick_random()
+	else:
+		test_target = player_list.pick_random()
 	
+	await get_tree().create_timer(1.0).timeout
+	attack(attacker, test_target)
+	pop_out()
