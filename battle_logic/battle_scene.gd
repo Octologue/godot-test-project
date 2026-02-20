@@ -13,6 +13,7 @@ var character_nodes : Dictionary = {}
 @onready var enemies_node = $enemies
 @export var character_scene: PackedScene
 
+
 var player_positions := [
 	Vector2(150, 150),
 	Vector2(150, 200),
@@ -25,10 +26,11 @@ func _ready():
 	_variables_init()
 	_spawn_characters(player_list,players_node)
 	_spawn_characters(enemy_list,enemies_node)
-	debugging_prints()
-	sort_and_display()
 	
+	sort_and_display()
+	debugging_prints()
 	EventBus.next_attack.connect(next_turn)
+	EventBus.character_died.connect(_on_character_died)
 	next_turn()
 	
 		
@@ -71,7 +73,6 @@ func sort_combined_queue():
 	timeline = player_time_list
 	timeline.append_array(enemy_time_list)
 	timeline.sort_custom(sort_by_time)
-
 	
 func sort_by_time(a,b):
 	return a["time"] < b["time"]
@@ -79,34 +80,32 @@ func sort_by_time(a,b):
 func update_timeline_display():
 	var index : int = 0
 	for slot in timeline_UI.get_children():
-		slot.find_child("TextureRect").texture = timeline[index]["character"].sprite
-		index += 1
+		if index < timeline.size():
+			slot.find_child("TextureRect").texture = timeline[index]["character"].sprite
+			index += 1
+		else:
+			slot.find_child("TextureRect").texture = null 
 		
 func sort_and_display():
 	sort_combined_queue()
 	update_timeline_display()
 
-func debugging_prints():
-	for i in player_list:
-		print(i.title)
-	for i in enemy_list:
-		print(i.title)
-	print("enemy data =",battle_data.enemy_list, "player data =",player_list_data.character_list)
-	print("players =",player_list,"enemies = ",enemy_list)
-	print("character_nodes =", character_nodes)
-	
-
 func pop_out():
+	if timeline[0]["character"].alive == false:
+		return
 	timeline[0]["character"].pop_out()
 	sort_and_display()
 
 func attack(attacker, target):
 	target.get_attacked(attacker)
+	attack_anim(attacker,target)
 	EventBus.next_attack.emit()
-
+	
 func next_turn():
+	timeline = timeline.filter(func(entry): return entry["character"].alive)
 	var attacker = timeline[0]["character"]
 	var test_target = Character
+	
 	if attacker.is_player == true:
 		test_target = enemy_list.pick_random()
 	else:
@@ -115,3 +114,52 @@ func next_turn():
 	await get_tree().create_timer(1.0).timeout
 	attack(attacker, test_target)
 	pop_out()
+
+func attack_anim(attacker,target):
+	var attacker_node = character_nodes[attacker]
+	var target_node = character_nodes[target]
+	var shift = Vector2(10,0)
+	if attacker_node.get_parent() and attacker_node.position.x > 0:
+		shift = -shift
+	await tween_movement(attacker_node,-shift)
+	await tween_movement(attacker_node,shift)
+	
+func tween_movement(node,shift):
+	var tween = get_tree().create_tween()
+	tween.tween_property(node, "position", node.position + shift, 0.2)
+	await tween.finished
+
+func _on_character_died(character):
+
+	if character in player_list:
+		player_list.erase(character)
+	elif character in enemy_list:
+		enemy_list.erase(character)
+
+	timeline = timeline.filter(func(entry): return entry["character"] != character)
+	character_nodes[character].queue_free()
+	
+	#for button in $UI/EnemySelection.get_children():
+		#if button.character == character:
+			#button.queue_free()
+			#break  # Sortir de la boucle dès qu'on a trouvé le bon bouton
+			
+	check_end_of_battle()
+
+func check_end_of_battle():
+	if enemy_list.is_empty():
+		print("Tous les ennemis sont morts")
+		get_tree().quit()
+	if player_list.is_empty():
+		print("Tous les joueurs sont morts")
+		get_tree().quit()
+	
+func debugging_prints():
+	for i in player_list:
+		print(i.title)
+	for i in enemy_list:
+		print(i.title)
+	print("enemy data =",battle_data.enemy_list, "player data =",player_list_data.character_list)
+	print("players =",player_list,"enemies = ",enemy_list)
+	print("character_nodes =", character_nodes)
+	print(character_nodes[timeline[0]["character"]])

@@ -10,5 +10,5 @@ sprite = ExtResource("2_28270")
 is_player = true
 ATK = 1
 HP = 1000
-SPE = 140
+SPE = 15
 metadata/_custom_type_script = "uid://daasw55bdrk7d"

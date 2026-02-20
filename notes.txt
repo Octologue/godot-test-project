@@ -4,8 +4,3 @@ git status
 git add .
 git commit -m "message"
 git push
-
-figure out the turn system:
-=) find the turorial again to get the general logic
-=) start with just one button to randomly attack an enemy
-=) the current attacker need to be "clear" as well as the target

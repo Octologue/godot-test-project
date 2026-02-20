@@ -20,7 +20,6 @@ var alive : bool = true
 		queue_reset()
 var delay : float
 var queue : Array[float]
-var node
 
 func queue_reset():
 #créer 8 valeurs d'après une suite arithmétique
@@ -33,15 +32,10 @@ func queue_reset():
 			queue.append(queue[-1] + delay)
 
 func pop_out():
+	if not alive:
+		return
 	queue.pop_front()
 	queue.append(queue[-1]*delay)
-
-func tween_movement(shift, tree):
-	if not alive or node == null:
-		return
-	var tween = tree.create_tween()
-	tween.tween_property(node, "position", node.position + shift, 0.2)
-	await tween.finished
 	
 func get_attacked(attacker: Character):
 	if not alive:
@@ -49,4 +43,13 @@ func get_attacked(attacker: Character):
 	HP -= attacker.ATK
 	print(title, " a été attaqué par ", attacker.title, " et a maintenant ", HP, " HP.")
 	if HP <= 0:
-		return
+		die()
+
+func die():
+	if not alive:
+		return  # Évite de tuer deux fois
+	alive = false
+	print(title, " est mort !")
+
+	# Informer la scène de combat pour qu'elle le retire proprement
+	EventBus.character_died.emit(self)
