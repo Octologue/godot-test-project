@@ -27,9 +27,10 @@ custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="UI/Timeline/TimelineSlot"]
+texture_filter = 1
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 60.0
+offset_bottom = 60.0
 expand_mode = 1
 stretch_mode = 5
 
@@ -38,9 +39,10 @@ custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="UI/Timeline/TimelineSlot2"]
+texture_filter = 1
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 60.0
+offset_bottom = 60.0
 expand_mode = 1
 stretch_mode = 5
 
@@ -49,9 +51,10 @@ custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="UI/Timeline/TimelineSlot3"]
+texture_filter = 1
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 60.0
+offset_bottom = 60.0
 expand_mode = 1
 stretch_mode = 5
 
@@ -60,9 +63,10 @@ custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="UI/Timeline/TimelineSlot4"]
+texture_filter = 1
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 60.0
+offset_bottom = 60.0
 expand_mode = 1
 stretch_mode = 5
 
@@ -71,9 +75,10 @@ custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="UI/Timeline/TimelineSlot5"]
+texture_filter = 1
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 60.0
+offset_bottom = 60.0
 expand_mode = 1
 stretch_mode = 5
 
@@ -82,9 +87,10 @@ custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="UI/Timeline/TimelineSlot6"]
+texture_filter = 1
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 60.0
+offset_bottom = 60.0
 expand_mode = 1
 stretch_mode = 5
 
@@ -93,9 +99,10 @@ custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="UI/Timeline/TimelineSlot7"]
+texture_filter = 1
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 60.0
+offset_bottom = 60.0
 expand_mode = 1
 stretch_mode = 5
 
@@ -104,9 +111,10 @@ custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="UI/Timeline/TimelineSlot8"]
+texture_filter = 1
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 60.0
+offset_bottom = 60.0
 expand_mode = 1
 stretch_mode = 5
 

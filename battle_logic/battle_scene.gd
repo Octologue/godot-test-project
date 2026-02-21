@@ -14,6 +14,7 @@ var character_nodes : Dictionary = {}
 @export var character_scene: PackedScene
 
 
+
 var player_positions := [
 	Vector2(150, 150),
 	Vector2(150, 200),
@@ -23,16 +24,15 @@ var player_positions := [
 var enemy_positions = battle_data.enemy_pos
 
 func _ready():
+	
 	_variables_init()
 	_spawn_characters(player_list,players_node)
 	_spawn_characters(enemy_list,enemies_node)
 	
 	sort_and_display()
-	debugging_prints()
 	EventBus.next_attack.connect(next_turn)
 	EventBus.character_died.connect(_on_character_died)
 	next_turn()
-	
 		
 func _variables_init():
 	for player in player_list_data.character_list:
@@ -51,7 +51,7 @@ func _spawn_characters(chara_list : Array,chara_node : Node2D):
 		var chara_data = chara_list[i]
 		var chara_scene = character_scene.instantiate()
 		chara_node.add_child(chara_scene)
-		#pour positions, faire un check si player ou ennemi
+		
 		if chara_data.is_player == true:
 			chara_scene.position = player_positions[i]
 		else :
@@ -98,7 +98,7 @@ func pop_out():
 
 func attack(attacker, target):
 	target.get_attacked(attacker)
-	attack_anim(attacker,target)
+	await attack_anim(attacker,target)
 	EventBus.next_attack.emit()
 	
 func next_turn():

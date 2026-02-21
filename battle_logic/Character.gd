@@ -41,15 +41,14 @@ func get_attacked(attacker: Character):
 	if not alive:
 		return
 	HP -= attacker.ATK
-	print(title, " a été attaqué par ", attacker.title, " et a maintenant ", HP, " HP.")
+	print(title, " attacked by ", attacker.title, " and now has ", HP, " HP.")
 	if HP <= 0:
 		die()
 
 func die():
 	if not alive:
-		return  # Évite de tuer deux fois
+		return  
 	alive = false
-	print(title, " est mort !")
+	print(title, " died")
 
-	# Informer la scène de combat pour qu'elle le retire proprement
 	EventBus.character_died.emit(self)
