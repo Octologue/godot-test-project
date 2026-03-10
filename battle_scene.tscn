@@ -1,11 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://dypy4oy4ron2l"]
+[gd_scene load_steps=4 format=3 uid="uid://dypy4oy4ron2l"]
 
 [ext_resource type="Script" uid="uid://dwloqinhbk6aj" path="res://battle_logic/battle_scene.gd" id="1_r5l0u"]
 [ext_resource type="PackedScene" uid="uid://05w6whdt5ti3" path="res://battle_logic/CharacterScene.tscn" id="2_5g7vw"]
+[ext_resource type="PackedScene" uid="uid://de4q135ob0b84" path="res://battle_logic/enemy_button.tscn" id="3_5g7vw"]
 
 [node name="battleScene" type="Node2D"]
 script = ExtResource("1_r5l0u")
 character_scene = ExtResource("2_5g7vw")
+enemy_button = ExtResource("3_5g7vw")
 
 [node name="players" type="Node2D" parent="."]
 
@@ -118,7 +120,40 @@ offset_bottom = 60.0
 expand_mode = 1
 stretch_mode = 5
 
+[node name="Options" type="VBoxContainer" parent="UI"]
+visible = false
+anchors_preset = -1
+anchor_top = 0.997
+anchor_bottom = 0.997
+offset_left = 1.0
+offset_top = -187.92
+offset_right = 117.0
+offset_bottom = 0.0799866
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Attack" type="Button" parent="UI/Options"]
+layout_mode = 2
+text = "attack"
+
+[node name="EnemySelection" type="VBoxContainer" parent="UI"]
+visible = false
+anchors_preset = -1
+anchor_top = 0.997
+anchor_bottom = 0.997
+offset_left = 1.0
+offset_top = -187.92
+offset_right = 117.0
+offset_bottom = 0.0799866
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
 [node name="ColorRect" type="ColorRect" parent="."]
+visible = false
 z_index = -5
 offset_right = 640.0
 offset_bottom = 360.0
