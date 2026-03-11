@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Character" load_steps=3 format=3 uid="uid://cfigutl5jlspl"]
+
+[ext_resource type="Script" uid="uid://daasw55bdrk7d" path="res://battle_logic/Character.gd" id="1_lhxeu"]
+[ext_resource type="Texture2D" uid="uid://dmngb0ey8t2kx" path="res://battle_logic/sprites/New Piskel (4).png" id="2_5hv5a"]
+
+[resource]
+script = ExtResource("1_lhxeu")
+title = "player 3"
+sprite = ExtResource("2_5hv5a")
+is_player = true
+ATK = 5
+HP = 0
+SPE = 0
+metadata/_custom_type_script = "uid://daasw55bdrk7d"
