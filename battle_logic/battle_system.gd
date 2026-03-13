@@ -58,6 +58,10 @@ func change_state(new_state):
 #endregion
 
 func _ready():
+	EventBus.character_died.connect(_on_character_died)
+	EventBus.attacked_ennemy.connect(enemy_button_pressed)
+	attack_button.pressed.connect(show_selection)
+	
 	change_state(BattleState.START)
 
 
@@ -69,7 +73,7 @@ func start():
 	change_state(BattleState.NEXT_TURN)
 
 func next_turn():
-	EventBus.character_died.connect(_on_character_died)
+	
 	check_end_of_battle()
 	
 	timeline = timeline.filter(func(entry): return entry["character"].alive)
@@ -83,7 +87,7 @@ func next_turn():
 func player_turn():
 	var attacker = timeline[0]["character"]
 	show_options()
-	EventBus.attacked_ennemy.connect(enemy_button_pressed)
+	
 	await get_tree().create_timer(1).timeout
 	
 
@@ -106,6 +110,7 @@ func check_end_of_battle():
 		print(i.title)
 	for i in enemy_list:
 		print(i.title)
+		
 #region INIT
 func _variables_init():
 	for player in player_list_data.character_list:
@@ -135,13 +140,16 @@ func _spawn_characters(chara_list : Array,chara_node : Node2D):
 			chara_scene.position = enemy_positions[i]
 		chara_scene.setup(chara_data)
 		character_nodes[chara_data] = chara_scene
+	
+func initialize_health_bars():
+	return
+		
+	
 #endregion
 #region TIMELINE
 func sort_and_display():
 	sort_combined_queue()
 	update_timeline_display()
-	#if timeline[0]["character"].is_player == true:
-		#show_options()
 
 func sort_combined_queue():
 	var player_time_list = []
@@ -216,7 +224,7 @@ func _on_character_died(character):
 
 func show_options():
 	options.show()
-	attack_button.pressed.connect(show_selection)
+	
 
 func show_selection():
 	options.hide()
@@ -228,5 +236,8 @@ func enemy_button_pressed(target):
 	attack(attacker, target)
 	pop_out()
 	change_state(BattleState.NEXT_TURN)
-	
+
+func update_hp_bar():
+	return
+
 #endregion

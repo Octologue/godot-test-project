@@ -21,6 +21,9 @@ var alive : bool = true
 var delay : float
 var queue : Array[float]
 
+@export var move_list : Array[Move]
+var status_effects : Array
+
 func queue_reset():
 #créer 8 valeurs d'après une suite arithmétique
 #pour avoir les positions du personnage dans la timeline

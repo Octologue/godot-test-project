@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="Character" load_steps=3 format=3 uid="uid://b748wy4f7pjej"]
+[gd_resource type="Resource" script_class="Character" load_steps=4 format=3 uid="uid://b748wy4f7pjej"]
 
+[ext_resource type="Script" uid="uid://dwkthqmibmlio" path="res://battle_logic/Move.gd" id="1_dup7b"]
 [ext_resource type="Script" uid="uid://daasw55bdrk7d" path="res://battle_logic/Character.gd" id="2_3yjxn"]
 [ext_resource type="Texture2D" uid="uid://dbhghm50vsjj7" path="res://battle_logic/sprites/New Piskel (6).png" id="2_eqjrk"]
 
@@ -9,6 +10,7 @@ title = "player 2"
 sprite = ExtResource("2_eqjrk")
 is_player = true
 ATK = 10
-HP = 1000
+HP = 120
 SPE = 10
+move_list = Array[ExtResource("1_dup7b")]([])
 metadata/_custom_type_script = "uid://daasw55bdrk7d"
