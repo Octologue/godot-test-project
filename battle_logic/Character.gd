@@ -21,7 +21,7 @@ var alive : bool = true
 var delay : float
 var queue : Array[float]
 
-@export var move_list : Array[Move]
+@export var moveset : Array[Move]
 var status_effects : Array
 
 func queue_reset():

@@ -21,6 +21,10 @@ var character_nodes : Dictionary = {}
 @onready var enemy_selection = $UI/EnemySelection
 @export var enemy_button : PackedScene
 
+var actor : Character
+var move_used : Move
+var target : Character
+
 var player_positions := [
 	Vector2(150, 150),
 	Vector2(150, 200),
@@ -34,7 +38,7 @@ enum BattleState {
 	NEXT_TURN,
 	PLAYER_TURN,
 	ENEMY_TURN,
-	ANIMATION,
+	ATTACK,
 	RESOLVE
 }
 var state : BattleState
@@ -54,16 +58,21 @@ func change_state(new_state):
 		BattleState.ENEMY_TURN:
 			print("ENEMY_TURN")
 			enemy_turn()
-			
+		BattleState.ATTACK:
+			print("ATTACK")
+			attack()
+		BattleState.RESOLVE:
+			print("RESOLVE")
+			resolve()
+
 #endregion
 
 func _ready():
 	EventBus.character_died.connect(_on_character_died)
 	EventBus.attacked_ennemy.connect(enemy_button_pressed)
-	attack_button.pressed.connect(show_selection)
+	attack_button.pressed.connect(show_enemy_selection)
 	
 	change_state(BattleState.START)
-
 
 func start():
 	_variables_init()
@@ -75,43 +84,60 @@ func start():
 func next_turn():
 	
 	check_end_of_battle()
-	
 	timeline = timeline.filter(func(entry): return entry["character"].alive)
-	var attacker = timeline[0]["character"]
 	
-	if attacker.is_player == true:
+	actor = timeline[0]["character"]
+	if actor.is_player == true:
 		change_state(BattleState.PLAYER_TURN)
 	else:
 		change_state(BattleState.ENEMY_TURN)
 
 func player_turn():
-	var attacker = timeline[0]["character"]
 	show_options()
 	
-	await get_tree().create_timer(1).timeout
-	
+func enemy_button_pressed(target_selected):
+	target = target_selected
+	enemy_selection.hide()
+	change_state(BattleState.ATTACK)
 
 func enemy_turn():
-	var attacker = timeline[0]["character"]
-	var target = player_list.pick_random()
-	await get_tree().create_timer(1).timeout
-	attack(attacker, target)
+	target = player_list.pick_random()
+	change_state(BattleState.ATTACK)
+
+func attack():
+	var actor_node = character_nodes[actor]
+	#var target_node = character_nodes[target]
+	var shift = Vector2(10,0)
+	if actor_node.position.x < 325:
+		shift = -shift
+	await tween_movement(actor_node,-shift)
+	#jouer les animations de move ici avec un await et en utilisant la variable qui store m
+	#refresh l'affichage de la barre de vie ici
+	attack_compute()
 	pop_out()
+	await tween_movement(actor_node,shift)
 	change_state(BattleState.NEXT_TURN)
+
+func tween_movement(node,shift):
+	var tween = get_tree().create_tween()
+	tween.tween_property(node, "position", node.position + shift, 0.2)
+	await tween.finished
 
 func check_end_of_battle():
 	if enemy_list.is_empty():
 		print("Tous les ennemis sont morts")
-		get_tree().quit()
+		change_state(BattleState.RESOLVE)
 	if player_list.is_empty():
 		print("Tous les joueurs sont morts")
-		get_tree().quit()
-	for i in player_list:
-		print(i.title)
-	for i in enemy_list:
-		print(i.title)
-		
+		change_state(BattleState.RESOLVE)
+
+func resolve():
+	print("fin du combat")
+	await get_tree().create_timer(2.0).timeout
+	get_tree().quit()
+	
 #region INIT
+
 func _variables_init():
 	for player in player_list_data.character_list:
 		player_list.append(player)
@@ -144,9 +170,9 @@ func _spawn_characters(chara_list : Array,chara_node : Node2D):
 func initialize_health_bars():
 	return
 		
-	
 #endregion
 #region TIMELINE
+
 func sort_and_display():
 	sort_combined_queue()
 	update_timeline_display()
@@ -184,25 +210,10 @@ func pop_out():
 	sort_and_display()
 
 #endregion
-#region ATTACK
 
-func attack(attacker, target):
-	target.get_attacked(attacker)
-	attack_anim(attacker,target)
+func attack_compute():
+	target.get_attacked(actor)
 	
-func attack_anim(attacker,target):
-	var attacker_node = character_nodes[attacker]
-	var target_node = character_nodes[target]
-	var shift = Vector2(10,0)
-	if attacker_node.get_parent() and attacker_node.position.x > 0:
-		shift = -shift
-	await tween_movement(attacker_node,-shift)
-	await tween_movement(attacker_node,shift)
-func tween_movement(node,shift):
-	var tween = get_tree().create_tween()
-	tween.tween_property(node, "position", node.position + shift, 0.2)
-	await tween.finished
-
 func _on_character_died(character):
 
 	if character in player_list:
@@ -216,28 +227,21 @@ func _on_character_died(character):
 	for button in enemy_selection.get_children():
 		if button.character == character:
 			button.queue_free()
-			break  # Sortir de la boucle dès qu'on a trouvé le bon bouton
+			break  
 
 
-#endregion
-#region USER INTERFACE
 
 func show_options():
 	options.show()
-	
 
-func show_selection():
+func show_enemy_selection():
 	options.hide()
 	enemy_selection.show()
-	
-func enemy_button_pressed(target):
-	enemy_selection.hide()
-	var attacker = timeline[0]["character"] 
-	attack(attacker, target)
-	pop_out()
-	change_state(BattleState.NEXT_TURN)
 
 func update_hp_bar():
 	return
 
-#endregion
+func show_move_list():
+	for move in actor.moveset:
+		return
+		

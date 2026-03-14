@@ -1,8 +1,9 @@
-[gd_resource type="Resource" script_class="Character" load_steps=4 format=3 uid="uid://cfigutl5jlspl"]
+[gd_resource type="Resource" script_class="Character" format=3 uid="uid://cfigutl5jlspl"]
 
 [ext_resource type="Script" uid="uid://dwkthqmibmlio" path="res://battle_logic/Move.gd" id="1_6sqkr"]
 [ext_resource type="Script" uid="uid://daasw55bdrk7d" path="res://battle_logic/Character.gd" id="1_lhxeu"]
 [ext_resource type="Texture2D" uid="uid://dmngb0ey8t2kx" path="res://battle_logic/sprites/New Piskel (4).png" id="2_5hv5a"]
+[ext_resource type="Resource" uid="uid://cv8lh8med48ox" path="res://battle_logic/data/moves/accurate.tres" id="2_ow74c"]
 
 [resource]
 script = ExtResource("1_lhxeu")
@@ -12,5 +13,5 @@ is_player = true
 ATK = 20
 HP = 80
 SPE = 18
-move_list = Array[ExtResource("1_6sqkr")]([])
+moveset = Array[ExtResource("1_6sqkr")]([ExtResource("2_ow74c")])
 metadata/_custom_type_script = "uid://daasw55bdrk7d"

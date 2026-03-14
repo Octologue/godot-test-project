@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="PlayerListData" load_steps=7 format=3 uid="uid://4ujcajlfd680"]
+[gd_resource type="Resource" script_class="PlayerListData" format=3 uid="uid://4ujcajlfd680"]
 
 [ext_resource type="Script" uid="uid://daasw55bdrk7d" path="res://battle_logic/Character.gd" id="1_bc6pm"]
-[ext_resource type="Resource" uid="uid://eg6g06t5dfmf" path="res://battle_logic/data/player1.tres" id="2_y0wgl"]
-[ext_resource type="Resource" uid="uid://b748wy4f7pjej" path="res://battle_logic/data/player2.tres" id="3_30ha4"]
-[ext_resource type="Script" uid="uid://cungq3mefsa3k" path="res://battle_logic/data/PlayerListData.gd" id="4_6pedf"]
-[ext_resource type="Resource" uid="uid://cfigutl5jlspl" path="res://battle_logic/data/player3.tres" id="4_30ha4"]
-[ext_resource type="Resource" uid="uid://c2dt77w4vebu2" path="res://battle_logic/data/player4.tres" id="5_6pedf"]
+[ext_resource type="Resource" uid="uid://eg6g06t5dfmf" path="res://battle_logic/data/characters/player1.tres" id="2_y0wgl"]
+[ext_resource type="Resource" uid="uid://b748wy4f7pjej" path="res://battle_logic/data/characters/player2.tres" id="3_30ha4"]
+[ext_resource type="Script" uid="uid://cungq3mefsa3k" path="res://battle_logic/PlayerListData.gd" id="4_6pedf"]
+[ext_resource type="Resource" uid="uid://cfigutl5jlspl" path="res://battle_logic/data/characters/player3.tres" id="4_30ha4"]
+[ext_resource type="Resource" uid="uid://c2dt77w4vebu2" path="res://battle_logic/data/characters/player4.tres" id="5_6pedf"]
 
 [resource]
 script = ExtResource("4_6pedf")

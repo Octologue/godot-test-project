@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Move" format=3 uid="uid://cv8lh8med48ox"]
+
+[ext_resource type="Script" uid="uid://dwkthqmibmlio" path="res://battle_logic/Move.gd" id="1_srphn"]
+
+[resource]
+script = ExtResource("1_srphn")
+power = 20
+cost = 10
+acc = 1.0
+metadata/_custom_type_script = "uid://dwkthqmibmlio"

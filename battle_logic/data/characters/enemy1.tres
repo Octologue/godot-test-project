@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="Character" load_steps=3 format=3 uid="uid://xi6lhu7b8k2v"]
+[gd_resource type="Resource" script_class="Character" format=3 uid="uid://xi6lhu7b8k2v"]
 
+[ext_resource type="Script" uid="uid://dwkthqmibmlio" path="res://battle_logic/Move.gd" id="1_10q8h"]
 [ext_resource type="Script" uid="uid://daasw55bdrk7d" path="res://battle_logic/Character.gd" id="1_bynng"]
 [ext_resource type="Texture2D" uid="uid://c5lepnllp8msa" path="res://battle_logic/sprites/New Piskel (1).png" id="2_kfhnk"]
 
@@ -7,8 +8,7 @@
 script = ExtResource("1_bynng")
 title = "enemy 1"
 sprite = ExtResource("2_kfhnk")
-is_player = false
 ATK = 90
 HP = 1
-SPE = 10
+SPE = 20
 metadata/_custom_type_script = "uid://daasw55bdrk7d"
