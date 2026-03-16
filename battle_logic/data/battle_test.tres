@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="BattleData" format=3 uid="uid://tlcu2vl4c42x"]
 
-[ext_resource type="Script" uid="uid://daasw55bdrk7d" path="res://battle_logic/Character.gd" id="1_di0uu"]
+[ext_resource type="Script" uid="uid://daasw55bdrk7d" path="res://battle_logic/classes/Character.gd" id="1_di0uu"]
 [ext_resource type="Resource" uid="uid://xi6lhu7b8k2v" path="res://battle_logic/data/characters/enemy1.tres" id="2_aox2c"]
-[ext_resource type="Script" uid="uid://cei210h2ftix8" path="res://battle_logic/BattleData.gd" id="2_q0f2h"]
+[ext_resource type="Script" uid="uid://cei210h2ftix8" path="res://battle_logic/classes/BattleData.gd" id="2_q0f2h"]
 [ext_resource type="Resource" uid="uid://lq3m0lwffkub" path="res://battle_logic/data/characters/enemy2.tres" id="3_v3gdg"]
 [ext_resource type="Resource" uid="uid://c1tuxo1eb1o3e" path="res://battle_logic/data/characters/enemy3.tres" id="4_4avrj"]
 

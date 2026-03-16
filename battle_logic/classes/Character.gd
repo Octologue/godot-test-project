@@ -6,12 +6,21 @@ class_name Character
 @export var is_player : bool
 var alive : bool = true
 
-@export var ATK : int
+
 @export var HP : int:
 	set (value):
 		HP = value
 		var max_hp = HP
 		clamp (HP, 0, max_hp)
+@export var SP : int:
+	set(value):
+		SP = value
+		var max_sp = SP
+		clamp (SP, 0, max_sp)
+@export var MATK : int
+@export var RATK : int
+@export var MDEF : int
+@export var RDEF : int
 
 @export var SPE : int : 
 	set(value):
@@ -33,6 +42,7 @@ func queue_reset():
 			queue.append(delay)
 		else:
 			queue.append(queue[-1] + delay)
+	
 
 func pop_out():
 	if not alive:
@@ -40,14 +50,36 @@ func pop_out():
 	queue.pop_front()
 	queue.append(queue[-1]*delay)
 	
-func get_attacked(attacker: Character):
+func get_attacked(attacker: Character, move: Move):
 	if not alive:
 		return
-	HP -= attacker.ATK
-	print(title, " attacked by ", attacker.title, " and now has ", HP, " HP.")
+	
+	if randf()<= move.acc:
+		var damage : int
+		if move.category == move.Categories.MELEE:
+			@warning_ignore("integer_division")
+			damage = (move.power * attacker.MATK) / MDEF
+		elif move.category == move.Categories.RANGED:
+			@warning_ignore("integer_division")
+			damage = (move.power * attacker.RATK) / RDEF
+			
+		@warning_ignore("narrowing_conversion")
+		damage *= randf_range(0.9,1.1)
+		
+		HP -= damage
+		
+		print(title, " attacked by ", attacker.title, " with ",move.title, " and now has ", HP, " HP.")
+		
+	else:
+		print(attacker.title," attack's missed ",title)
+	
+	
 	if HP <= 0:
 		die()
 
+
+
+		
 func die():
 	if not alive:
 		return  

@@ -3,11 +3,13 @@
 [ext_resource type="Script" uid="uid://bwmvjsqmsetd1" path="res://battle_logic/battle_system.gd" id="1_pihux"]
 [ext_resource type="PackedScene" uid="uid://05w6whdt5ti3" path="res://battle_logic/scenes/CharacterScene.tscn" id="2_nslbn"]
 [ext_resource type="PackedScene" uid="uid://de4q135ob0b84" path="res://battle_logic/scenes/enemy_button.tscn" id="3_1xpmh"]
+[ext_resource type="PackedScene" uid="uid://ci33ahwonakk7" path="res://battle_logic/scenes/move_button.tscn" id="4_nslbn"]
 
 [node name="battleScene" type="Node2D" unique_id=582481188]
 script = ExtResource("1_pihux")
 character_scene = ExtResource("2_nslbn")
 enemy_button = ExtResource("3_1xpmh")
+move_button = ExtResource("4_nslbn")
 
 [node name="players" type="Node2D" parent="." unique_id=650177504]
 
@@ -138,6 +140,20 @@ layout_mode = 2
 text = "attack"
 
 [node name="EnemySelection" type="VBoxContainer" parent="UI" unique_id=1673753465]
+visible = false
+anchors_preset = -1
+anchor_top = 0.997
+anchor_bottom = 0.997
+offset_left = 1.0
+offset_top = -187.92
+offset_right = 117.0
+offset_bottom = 0.0799866
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="MoveSelection" type="VBoxContainer" parent="UI" unique_id=1566199477]
 visible = false
 anchors_preset = -1
 anchor_top = 0.997

@@ -1,17 +1,21 @@
 [gd_resource type="Resource" script_class="Character" format=3 uid="uid://c2dt77w4vebu2"]
 
-[ext_resource type="Script" uid="uid://dwkthqmibmlio" path="res://battle_logic/Move.gd" id="1_dctap"]
-[ext_resource type="Script" uid="uid://daasw55bdrk7d" path="res://battle_logic/Character.gd" id="1_grr0u"]
-[ext_resource type="Resource" uid="uid://cv8lh8med48ox" path="res://battle_logic/data/moves/accurate.tres" id="2_h5oh0"]
-[ext_resource type="Texture2D" uid="uid://cy22jmi8oycf2" path="res://battle_logic/sprites/New Piskel (5).png" id="3_jtcy2"]
+[ext_resource type="Script" uid="uid://dwkthqmibmlio" path="res://battle_logic/classes/Move.gd" id="1_dctap"]
+[ext_resource type="Script" uid="uid://daasw55bdrk7d" path="res://battle_logic/classes/Character.gd" id="1_grr0u"]
+[ext_resource type="Resource" uid="uid://bf6iis5ysvasj" path="res://battle_logic/data/moves/unaccurate.tres" id="2_h5oh0"]
+[ext_resource type="Texture2D" uid="uid://dbhghm50vsjj7" path="res://battle_logic/sprites/New Piskel (6).png" id="4_h5oh0"]
 
 [resource]
 script = ExtResource("1_grr0u")
 title = "player 4"
-sprite = ExtResource("3_jtcy2")
+sprite = ExtResource("4_h5oh0")
 is_player = true
-ATK = 10
-HP = 130
-SPE = 10
+HP = 100
+SP = 140
+MATK = 10
+RATK = 100
+MDEF = 80
+RDEF = 80
+SPE = 30
 moveset = Array[ExtResource("1_dctap")]([ExtResource("2_h5oh0")])
 metadata/_custom_type_script = "uid://daasw55bdrk7d"

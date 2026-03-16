@@ -19,7 +19,9 @@ var character_nodes : Dictionary = {}
 @onready var options = $UI/Options
 @onready var attack_button = $UI/Options/Attack
 @onready var enemy_selection = $UI/EnemySelection
+@onready var move_selection = $UI/MoveSelection
 @export var enemy_button : PackedScene
+@export var move_button : PackedScene
 
 var actor : Character
 var move_used : Move
@@ -68,9 +70,11 @@ func change_state(new_state):
 #endregion
 
 func _ready():
+	randomize() #déplacer dans un script global plus tard
 	EventBus.character_died.connect(_on_character_died)
 	EventBus.attacked_ennemy.connect(enemy_button_pressed)
-	attack_button.pressed.connect(show_enemy_selection)
+	EventBus.selected_move.connect(move_button_pressed)
+	attack_button.pressed.connect(show_move_selection) 
 	
 	change_state(BattleState.START)
 
@@ -79,6 +83,7 @@ func start():
 	_spawn_characters(player_list,players_node)
 	_spawn_characters(enemy_list,enemies_node)
 	sort_and_display()
+	
 	change_state(BattleState.NEXT_TURN)
 
 func next_turn():
@@ -87,6 +92,7 @@ func next_turn():
 	timeline = timeline.filter(func(entry): return entry["character"].alive)
 	
 	actor = timeline[0]["character"]
+	
 	if actor.is_player == true:
 		change_state(BattleState.PLAYER_TURN)
 	else:
@@ -98,24 +104,29 @@ func player_turn():
 func enemy_button_pressed(target_selected):
 	target = target_selected
 	enemy_selection.hide()
+	
 	change_state(BattleState.ATTACK)
 
 func enemy_turn():
+	#appeler une fonction qui permet de caluler la meilleure cible possible (enemy_AI_compute ou un truc du genre)
 	target = player_list.pick_random()
+	move_used = actor.moveset.pick_random()
+	
 	change_state(BattleState.ATTACK)
 
 func attack():
 	var actor_node = character_nodes[actor]
-	#var target_node = character_nodes[target]
+	var target_node = character_nodes[target]
 	var shift = Vector2(10,0)
 	if actor_node.position.x < 325:
 		shift = -shift
 	await tween_movement(actor_node,-shift)
-	#jouer les animations de move ici avec un await et en utilisant la variable qui store m
+	#jouer les animations de move ici avec un await et en utilisant la variable qui store move
 	#refresh l'affichage de la barre de vie ici
 	attack_compute()
 	pop_out()
 	await tween_movement(actor_node,shift)
+	
 	change_state(BattleState.NEXT_TURN)
 
 func tween_movement(node,shift):
@@ -144,12 +155,16 @@ func _variables_init():
 	for enemy in battle_data.enemy_list:
 		var new_enemy = enemy.duplicate() 
 		enemy_list.append(new_enemy)
+	duplicate_title_fix()
+	for enemy in enemy_list:
 		var button = enemy_button.instantiate() 
-		button.character = new_enemy
+		button.character = enemy
 		enemy_selection.add_child(button)
 		
 	if battle_data.is_enemy_order_random == true:
 		enemy_list.shuffle()
+		
+	
 
 func _spawn_characters(chara_list : Array,chara_node : Node2D):
 	for child in chara_node.get_children():
@@ -212,10 +227,14 @@ func pop_out():
 #endregion
 
 func attack_compute():
-	target.get_attacked(actor)
+	if move_used.sp_cost < actor.SP:
+		actor.SP -= move_used.sp_cost
+		target.get_attacked(actor,move_used)
+		print (actor.title, " now has ",actor.SP," SP")
+	else:
+		print(actor.title," does not have enough SP : ",actor.SP,", cost : ",move_used.sp_cost)
 	
 func _on_character_died(character):
-
 	if character in player_list:
 		player_list.erase(character)
 	elif character in enemy_list:
@@ -229,19 +248,40 @@ func _on_character_died(character):
 			button.queue_free()
 			break  
 
-
-
 func show_options():
 	options.show()
-
-func show_enemy_selection():
-	options.hide()
-	enemy_selection.show()
 
 func update_hp_bar():
 	return
 
-func show_move_list():
+func show_move_selection():
+	for child in move_selection.get_children():
+		child.queue_free()
 	for move in actor.moveset:
-		return
+		var button = move_button.instantiate()
+		button.move = move
+		move_selection.add_child(button)
+	move_selection.show()
+	options.hide()
+
+func move_button_pressed(move):
+	move_used = move
+	enemy_selection.show()
+	move_selection.hide()
+
+func duplicate_title_fix():
+	var letter_list = ["a","b","c","d","e"]
+	var title_total_count = {} 
+
+	for enemy in enemy_list:
+		var title = enemy.title
+		title_total_count[title] = title_total_count.get(title, 0) + 1
 		
+	var title_seen_count = {} 
+	for enemy in enemy_list:
+		var title = enemy.title
+		if title_total_count[title] > 1:
+			var seen = title_seen_count.get(title, 0)
+			enemy.title += " " + letter_list[seen]
+			title_seen_count[title] = seen + 1
+	
