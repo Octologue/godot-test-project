@@ -25,7 +25,9 @@ func trigger(chara:Character):
 		Stats.SPE:
 			base_stat = chara.SPE
 			chara.SPE *= power
-
+			
+	print(chara.title,"'s stats changed")
+	
 func stop_trigger(chara:Character):
 	match stat:
 		Stats.MATK:
@@ -38,3 +40,4 @@ func stop_trigger(chara:Character):
 			chara.RDEF = base_stat
 		Stats.SPE:
 			chara.SPE = base_stat
+	print(chara.title,"'s stats came back to normal")

@@ -74,6 +74,7 @@ func _ready():
 	EventBus.character_died.connect(_on_character_died)
 	EventBus.attacked_ennemy.connect(enemy_button_pressed)
 	EventBus.selected_move.connect(move_button_pressed)
+	EventBus.speed_changed.connect(sort_and_display)
 	attack_button.pressed.connect(show_move_selection) 
 	
 	change_state(BattleState.START)
@@ -87,6 +88,9 @@ func start():
 	change_state(BattleState.NEXT_TURN)
 
 func next_turn():
+	
+	for chara in player_list + enemy_list:
+		chara.effects_trigger()
 	
 	check_end_of_battle()
 	timeline = timeline.filter(func(entry): return entry["character"].alive)
@@ -208,7 +212,7 @@ func sort_combined_queue():
 	timeline.sort_custom(sort_by_time)
 func sort_by_time(a,b):
 	return a["time"] < b["time"]
-	
+
 func update_timeline_display():
 	var index : int = 0
 	for slot in timeline_UI.get_children():

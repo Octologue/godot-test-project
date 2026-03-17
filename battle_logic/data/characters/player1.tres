@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://bfxywgud0bk3s" path="res://battle_logic/sprites/New Piskel (3).png" id="2_28270"]
 [ext_resource type="Resource" uid="uid://bf6iis5ysvasj" path="res://battle_logic/data/moves/unaccurate.tres" id="2_wg38l"]
 [ext_resource type="Resource" uid="uid://cv8lh8med48ox" path="res://battle_logic/data/moves/accurate.tres" id="3_n0hb2"]
+[ext_resource type="Resource" path="res://battle_logic/data/moves/attack_poison.tres" id="4_n0hb2"]
 
 [resource]
 script = ExtResource("1_lgkgl")
@@ -18,5 +19,5 @@ RATK = 60
 MDEF = 60
 RDEF = 60
 SPE = 50
-moveset = Array[ExtResource("1_e3w7p")]([ExtResource("2_wg38l"), ExtResource("3_n0hb2")])
+moveset = Array[ExtResource("1_e3w7p")]([ExtResource("2_wg38l"), ExtResource("3_n0hb2"), ExtResource("4_n0hb2")])
 metadata/_custom_type_script = "uid://daasw55bdrk7d"

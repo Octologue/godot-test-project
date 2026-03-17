@@ -42,7 +42,6 @@ func queue_reset():
 			queue.append(delay)
 		else:
 			queue.append(queue[-1] + delay)
-	
 
 func pop_out():
 	if not alive:
@@ -65,7 +64,10 @@ func get_attacked(attacker: Character, move: Move):
 		
 		HP -= damage
 		print(title, " attacked by ", attacker.title, " with ",move.title, " and now has ", HP, " HP.")
-	
+		
+		if randf() <= move.proc:
+			effect_proc(move.effect)
+		
 	else:
 		print(attacker.title," attack's missed ",title)
 	
@@ -81,21 +83,27 @@ func effect_proc(effect:Effect):
 			new = false
 			break
 	if new != false:
-		effects.append(effect.duplicate())
-		if effect is StatChange:
-			effect.trigger(self)
+		var new_effect = effect.duplicate()
+		effects.append(new_effect)
+		if new_effect is StatChange:
+			new_effect.trigger(self)
+			if new_effect.stat == SPE:
+				EventBus.speed_changed.emit()
+		
+	print (effect.title, " has proc and affect ", title)
 
 func effects_trigger():
 	for effect in effects:
-		if effect is StatChange:
-			continue
-		else:
-			effect.trigger()
+		effect.duration -= 1
+		if effect is not StatChange:
+			effect.trigger(self)
 		if effect.duration == 0:
-			effect.stop_trigger()
-			
-		
+			effect.stop_trigger(self)
+			effects.erase(effect)
+			if effect is StatChange and effect.stat == SPE:
+				EventBus.speed_changed.emit()
 
+	
 func die():
 	if not alive:
 		return  

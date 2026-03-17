@@ -139,7 +139,7 @@ size_flags_vertical = 4
 layout_mode = 2
 text = "attack"
 
-[node name="EnemySelection" type="VBoxContainer" parent="UI" unique_id=1673753465]
+[node name="MoveSelection" type="VBoxContainer" parent="UI" unique_id=1566199477]
 visible = false
 anchors_preset = -1
 anchor_top = 0.997
@@ -147,13 +147,27 @@ anchor_bottom = 0.997
 offset_left = 1.0
 offset_top = -187.92
 offset_right = 117.0
-offset_bottom = 0.0799866
+offset_bottom = 0.07998657
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="MoveSelection" type="VBoxContainer" parent="UI" unique_id=1566199477]
+[node name="AllySelection" type="VBoxContainer" parent="UI" unique_id=2144317351]
+visible = false
+anchors_preset = -1
+anchor_top = 0.997
+anchor_bottom = 0.997
+offset_left = 1.0
+offset_top = -187.92
+offset_right = 117.0
+offset_bottom = 0.07998657
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="EnemySelection" type="VBoxContainer" parent="UI" unique_id=1673753465]
 visible = false
 anchors_preset = -1
 anchor_top = 0.997
