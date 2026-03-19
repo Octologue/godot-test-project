@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://de4q135ob0b84"]
+[gd_scene format=3 uid="uid://de4q135ob0b84"]
 
-[ext_resource type="Script" uid="uid://d0doxsl31aek5" path="res://battle_logic/enemy_button.gd" id="1_8lqld"]
+[ext_resource type="Script" uid="uid://d0doxsl31aek5" path="res://battle_logic/character_button.gd" id="1_8lqld"]
 
 [node name="EnemyButton" type="Button"]
 offset_right = 8.0

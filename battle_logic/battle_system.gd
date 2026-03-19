@@ -13,19 +13,20 @@ var character_nodes : Dictionary = {}
 
 @onready var players_node = $players
 @onready var enemies_node = $enemies
-@export var character_scene: PackedScene
+@export var character_scene = preload("res://battle_logic/scenes/character_scene.tscn")
 
 @onready var timeline_UI = $UI/Timeline
 @onready var options = $UI/Options
 @onready var attack_button = $UI/Options/Attack
 @onready var enemy_selection = $UI/EnemySelection
+@onready var ally_selection = $UI/AllySelection
 @onready var move_selection = $UI/MoveSelection
-@export var enemy_button : PackedScene
-@export var move_button : PackedScene
+@onready var character_button = preload("res://battle_logic/scenes/character_button.tscn")
+@export var move_button = preload("res://battle_logic/scenes/move_button.tscn")
 
 var actor : Character
 var move_used : Move
-var target : Character
+var targets : Array[Character]
 
 var player_positions := [
 	Vector2(150, 150),
@@ -40,7 +41,7 @@ enum BattleState {
 	NEXT_TURN,
 	PLAYER_TURN,
 	ENEMY_TURN,
-	ATTACK,
+	ACT,
 	RESOLVE
 }
 var state : BattleState
@@ -60,9 +61,9 @@ func change_state(new_state):
 		BattleState.ENEMY_TURN:
 			print("ENEMY_TURN")
 			enemy_turn()
-		BattleState.ATTACK:
-			print("ATTACK")
-			attack()
+		BattleState.ACT:
+			print("ACT")
+			act()
 		BattleState.RESOLVE:
 			print("RESOLVE")
 			resolve()
@@ -72,7 +73,7 @@ func change_state(new_state):
 func _ready():
 	randomize() #déplacer dans un script global plus tard
 	EventBus.character_died.connect(_on_character_died)
-	EventBus.attacked_ennemy.connect(enemy_button_pressed)
+	EventBus.target_selected.connect(character_button_pressed)
 	EventBus.selected_move.connect(move_button_pressed)
 	EventBus.speed_changed.connect(sort_and_display)
 	attack_button.pressed.connect(show_move_selection) 
@@ -105,22 +106,24 @@ func next_turn():
 func player_turn():
 	show_options()
 	
-func enemy_button_pressed(target_selected):
-	target = target_selected
+func character_button_pressed(target_selected):
+	targets.append(target_selected) 
 	enemy_selection.hide()
 	
-	change_state(BattleState.ATTACK)
+	change_state(BattleState.ACT)
+
+
 
 func enemy_turn():
 	#appeler une fonction qui permet de caluler la meilleure cible possible (enemy_AI_compute ou un truc du genre)
-	target = player_list.pick_random()
+	targets.append(player_list.pick_random())
 	move_used = actor.moveset.pick_random()
 	
-	change_state(BattleState.ATTACK)
+	change_state(BattleState.ACT)
 
-func attack():
+func act():
 	var actor_node = character_nodes[actor]
-	var target_node = character_nodes[target]
+	#var target_node = character_nodes[target]
 	var shift = Vector2(10,0)
 	if actor_node.position.x < 325:
 		shift = -shift
@@ -156,12 +159,17 @@ func resolve():
 func _variables_init():
 	for player in player_list_data.character_list:
 		player_list.append(player)
+	for player in player_list:
+		var button = character_button.instantiate()
+		button.character = player
+		ally_selection.add_child(button)
+		
 	for enemy in battle_data.enemy_list:
 		var new_enemy = enemy.duplicate() 
 		enemy_list.append(new_enemy)
 	duplicate_title_fix()
 	for enemy in enemy_list:
-		var button = enemy_button.instantiate() 
+		var button = character_button.instantiate() 
 		button.character = enemy
 		enemy_selection.add_child(button)
 		
@@ -233,7 +241,8 @@ func pop_out():
 func attack_compute():
 	if move_used.sp_cost < actor.SP:
 		actor.SP -= move_used.sp_cost
-		target.get_attacked(actor,move_used)
+		for target in targets:
+			target.get_attacked(actor,move_used)
 		print (actor.title, " now has ",actor.SP," SP")
 	else:
 		print(actor.title," does not have enough SP : ",actor.SP,", cost : ",move_used.sp_cost)
@@ -270,6 +279,12 @@ func show_move_selection():
 
 func move_button_pressed(move):
 	move_used = move
+	print ("range:")
+	match move_used.move_range:
+		move_used.Ranges.SELF:
+			print("SELF")
+		move_used.Ranges.ENEMY:
+			print("ENEMY")
 	enemy_selection.show()
 	move_selection.hide()
 

@@ -12,4 +12,5 @@ category = 1
 power = 50
 proc = 1.0
 effect = ExtResource("1_mrpqm")
+move_range = 1
 metadata/_custom_type_script = "uid://dwkthqmibmlio"

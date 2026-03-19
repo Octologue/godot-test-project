@@ -5,8 +5,8 @@
 [resource]
 script = ExtResource("1_srphn")
 title = "accurate"
-power = 20
-cost = 10
-acc = 1.0
 sp_cost = 10
+acc = 1.0
+power = 20
+move_range = 1
 metadata/_custom_type_script = "uid://dwkthqmibmlio"

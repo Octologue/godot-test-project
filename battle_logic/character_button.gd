@@ -7,4 +7,4 @@ extends Button
 		
 
 func _on_pressed():
-	EventBus.attacked_ennemy.emit(character)
+	EventBus.target_selected.emit(character)
