@@ -96,6 +96,7 @@ func next_turn():
 	check_end_of_battle()
 	timeline = timeline.filter(func(entry): return entry["character"].alive)
 	
+	targets.clear()
 	actor = timeline[0]["character"]
 	
 	if actor.is_player == true:
@@ -256,10 +257,11 @@ func _on_character_died(character):
 	timeline = timeline.filter(func(entry): return entry["character"] != character)
 	character_nodes[character].queue_free()
 	
-	for button in enemy_selection.get_children():
+	for button in enemy_selection.get_children()+ally_selection.get_children():
 		if button.character == character:
 			button.queue_free()
 			break  
+
 
 func show_options():
 	options.show()

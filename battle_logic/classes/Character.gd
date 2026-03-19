@@ -97,6 +97,8 @@ func effects_trigger():
 		effect.duration -= 1
 		if effect is not StatChange:
 			effect.trigger(self)
+			if HP <= 0:
+				die()
 		if effect.duration == 0:
 			effect.stop_trigger(self)
 			effects.erase(effect)
