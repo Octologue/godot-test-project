@@ -18,6 +18,7 @@ var character_nodes : Dictionary = {}
 @onready var timeline_UI = $UI/Timeline
 @onready var options = $UI/Options
 @onready var attack_button = $UI/Options/Attack
+@onready var defend_button = $UI/Options/Defend
 @onready var enemy_selection = $UI/EnemySelection
 @onready var ally_selection = $UI/AllySelection
 @onready var move_selection = $UI/MoveSelection
@@ -77,7 +78,7 @@ func _ready():
 	EventBus.selected_move.connect(move_button_pressed)
 	EventBus.speed_changed.connect(sort_and_display)
 	attack_button.pressed.connect(show_move_selection) 
-	
+	defend_button.pressed.connect(defend)
 	change_state(BattleState.START)
 
 func start():
@@ -110,6 +111,7 @@ func player_turn():
 func character_button_pressed(target_selected):
 	targets.append(target_selected) 
 	enemy_selection.hide()
+	ally_selection.hide()
 	
 	change_state(BattleState.ACT)
 
@@ -152,7 +154,7 @@ func check_end_of_battle():
 
 func resolve():
 	print("fin du combat")
-	await get_tree().create_timer(2.0).timeout
+	await get_tree().create_timer(10.0).timeout
 	get_tree().quit()
 	
 #region INIT
@@ -269,6 +271,11 @@ func show_options():
 func update_hp_bar():
 	return
 
+func defend():
+	options.hide()
+	pop_out()
+	change_state(BattleState.NEXT_TURN)
+
 func show_move_selection():
 	for child in move_selection.get_children():
 		child.queue_free()
@@ -285,9 +292,33 @@ func move_button_pressed(move):
 	match move_used.move_range:
 		move_used.Ranges.SELF:
 			print("SELF")
+			targets.append(actor)
+			change_state(BattleState.ACT)
 		move_used.Ranges.ENEMY:
 			print("ENEMY")
-	enemy_selection.show()
+			enemy_selection.show()
+		move_used.Ranges.ENEMIES:
+			print("ENEMIES")
+			for e in enemy_list:
+				targets.append(e)
+			change_state(BattleState.ACT)
+		move_used.Ranges.ALLY:
+			print("ALLY")
+			ally_selection.show()
+		move_used.Ranges.ALLIES:
+			print("ALLIES")
+			for a in player_list:
+				targets.append(a)
+			change_state(BattleState.ACT)
+		move_used.Ranges.R_ENEMY:
+			print("R ENEMY")
+			targets.append(enemy_list.pick_random())
+			change_state(BattleState.ACT)
+		move_used.Ranges.ALL:
+			for c in player_list+enemy_list:
+				targets.append(c)
+			change_state(BattleState.ACT)
+		
 	move_selection.hide()
 
 func duplicate_title_fix():

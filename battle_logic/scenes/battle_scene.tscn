@@ -117,6 +117,7 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="Options" type="VBoxContainer" parent="UI" unique_id=1987080037]
+visible = false
 anchors_preset = -1
 anchor_top = 0.997
 anchor_bottom = 0.997
@@ -132,6 +133,10 @@ size_flags_vertical = 4
 [node name="Attack" type="Button" parent="UI/Options" unique_id=866774532]
 layout_mode = 2
 text = "attack"
+
+[node name="Defend" type="Button" parent="UI/Options" unique_id=54243489]
+layout_mode = 2
+text = "defend"
 
 [node name="MoveSelection" type="VBoxContainer" parent="UI" unique_id=1566199477]
 visible = false

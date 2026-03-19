@@ -5,8 +5,8 @@
 [resource]
 script = ExtResource("1_74d2h")
 stat = 4
-power = 2.0
+power = 1.5
 title = "haste"
-duration = 3
+duration = 10
 cumulable = true
 metadata/_custom_type_script = "uid://b8eml4by4idlq"

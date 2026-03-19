@@ -12,4 +12,4 @@ enum Categories {MELEE,RANGED,HEAL,STATUS}
 @export_range(0,1) var proc : float
 @export var effect : Effect
 @export var move_range : Ranges
-enum Ranges {SELF, ENEMY, ALLY, ENEMIES, ALLIES}
+enum Ranges {SELF, ENEMY, ALLY, ENEMIES, ALLIES,R_ENEMY,ALL}
