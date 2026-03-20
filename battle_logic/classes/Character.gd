@@ -1,11 +1,10 @@
-extends Resource
+extends BattleEntity
 class_name Character
 
 @export var title : String
 @export var sprite : Texture2D
 @export var is_player : bool
 var alive : bool = true
-
 
 @export var HP : int:
 	set (value):
@@ -32,6 +31,9 @@ var queue : Array[float]
 
 @export var moveset : Array[Move]
 var effects : Array
+
+@export var resistances:Array[Types]
+@export var weaknesses:Array[Types]
 
 func queue_reset():
 #créer 8 valeurs d'après une suite arithmétique

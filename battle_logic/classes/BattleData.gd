@@ -5,4 +5,4 @@ class_name BattleData
 @export var is_enemy_order_random : bool
 @export var enemy_pos : Array[Vector2]
 
-#add stuff like background, music or event later
+#TODO: add stuff like background, music or event later

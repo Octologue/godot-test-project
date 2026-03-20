@@ -5,10 +5,12 @@ extends Node2D
 var list : Array = ["one","two","three"]
 @onready var attack = $CanvasLayer/VBoxContainer/attack
 @onready var return_button = $CanvasLayer/VBoxContainer2/return
-
+enum test {A,B,C}
 func _ready():
 	attack.pressed.connect(ui_list_show)
 	return_button.pressed.connect(ui_list_hide)
+
+	
 
 func ui_list_show():
 	for i in list:
