@@ -1,4 +1,4 @@
-extends BattleEntity
+extends BattleResource
 
 class_name Move
 
@@ -7,6 +7,7 @@ class_name Move
 @export var sp_cost : int
 @export_range(0,1) var acc : float
 @export var power : int
+@export var type : Types
 
 @export var category : Categories
 enum Categories {MELEE,RANGED,HEAL,STATUS}

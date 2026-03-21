@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dwkthqmibmlio" path="res://battle_logic/classes/Move.gd" id="1_6sqkr"]
 [ext_resource type="Script" uid="uid://daasw55bdrk7d" path="res://battle_logic/classes/Character.gd" id="1_lhxeu"]
 [ext_resource type="Resource" uid="uid://cv8lh8med48ox" path="res://battle_logic/data/moves/accurate.tres" id="2_ow74c"]
-[ext_resource type="Resource" path="res://battle_logic/data/moves/attack_poison.tres" id="3_wrwlk"]
+[ext_resource type="Resource" uid="uid://bgmxxytax8t2j" path="res://battle_logic/data/moves/attack_poison.tres" id="3_wrwlk"]
 [ext_resource type="Texture2D" uid="uid://cy22jmi8oycf2" path="res://battle_logic/sprites/New Piskel (5).png" id="4_ow74c"]
 
 [resource]
@@ -19,4 +19,6 @@ MDEF = 80
 RDEF = 90
 SPE = 50
 moveset = Array[ExtResource("1_6sqkr")]([ExtResource("2_ow74c"), ExtResource("3_wrwlk")])
+resistances = Array[int]([5])
+weaknesses = Array[int]([3])
 metadata/_custom_type_script = "uid://daasw55bdrk7d"

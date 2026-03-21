@@ -1,4 +1,4 @@
-extends BattleEntity
+extends BattleResource
 class_name Effect
 
 @export var title : String

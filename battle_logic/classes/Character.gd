@@ -1,4 +1,4 @@
-extends BattleEntity
+extends BattleResource
 class_name Character
 
 @export var title : String
@@ -18,6 +18,7 @@ var alive : bool = true
 		clamp (SP, 0, max_sp)
 @export var MATK : int
 @export var RATK : int
+
 @export var MDEF : int
 @export var RDEF : int
 
@@ -62,7 +63,21 @@ func get_attacked(attacker: Character, move: Move):
 		elif move.category == move.Categories.RANGED:
 			damage = (move.power * attacker.RATK) / RDEF
 		
-		damage *= randf_range(0.9,1.1)
+		var type_modifier : float = 1
+		
+		if not move.type == Types.NEUTRAL:
+			if not weaknesses.is_empty():
+				for w in weaknesses:
+					if w == move.type:
+						type_modifier = 1.5
+						print ("weak to ",move.type)
+			if not resistances.is_empty():
+				for r in resistances:
+					if r == move.type:
+						type_modifier = 0.5
+						print ("resist ",move.type)
+
+		damage = damage * randf_range(0.9,1.1) * type_modifier
 		
 		HP -= damage
 		print(title, " attacked by ", attacker.title, " with ",move.title, " and now has ", HP, " HP.")

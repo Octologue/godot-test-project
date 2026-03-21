@@ -19,4 +19,6 @@ MDEF = 80
 RDEF = 80
 SPE = 30
 moveset = Array[ExtResource("1_dctap")]([ExtResource("2_h5oh0"), ExtResource("3_gdai0")])
+resistances = Array[int]([2])
+weaknesses = Array[int]([5])
 metadata/_custom_type_script = "uid://daasw55bdrk7d"

@@ -18,4 +18,5 @@ MDEF = 60
 RDEF = 60
 SPE = 20
 moveset = Array[ExtResource("1_dyqxh")]([ExtResource("2_lty6p"), ExtResource("3_ksbm3")])
+resistances = Array[int]([5, 1, 2, 3, 4])
 metadata/_custom_type_script = "uid://daasw55bdrk7d"
