@@ -1,6 +1,7 @@
 #region VARIABLES and READY
 
 extends Node2D
+class_name BattleSystem
 
 # --- Data ---
 @onready var character_scene = preload("res://battle_logic/scenes/character_scene.tscn")
@@ -75,9 +76,6 @@ func _ready():
 	change_state(BattleState.START)
 
 #endregion
-
-
-
 #region START
 
 func start():
