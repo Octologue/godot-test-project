@@ -84,6 +84,11 @@ func start():
 	_variables_init()
 	_spawn_characters(player_list,players_node)
 	_spawn_characters(enemy_list,enemies_node)
+	
+	for c in enemy_list+player_list:
+		c.init_stats()
+		
+	
 	sort_and_display()
 	
 	change_state(BattleState.NEXT_TURN)
@@ -143,14 +148,18 @@ func duplicate_title_fix():
 #endregion
 
 func next_turn():
+	
 	for chara in player_list + enemy_list:
 		chara.effects_trigger()
+		chara.defending_check()
 	
 	check_end_of_battle()
 	timeline = timeline.filter(func(entry): return entry["character"].alive)
 	
 	targets.clear()
 	actor = timeline[0]["character"]
+	if actor.defending:
+		actor.defending_check()
 	
 	if actor.is_player == true:
 		change_state(BattleState.PLAYER_TURN)
@@ -164,8 +173,10 @@ func player_turn():
 
 func defend():
 	options.hide()
+	actor.defending = true
 	pop_out()
 	change_state(BattleState.NEXT_TURN)
+	
 
 func character_button_pressed(target_selected):
 	targets.append(target_selected) 
@@ -185,33 +196,34 @@ func show_move_selection():
 	options.hide()
 
 func move_button_pressed(move):
+	
 	move_used = move
-	print ("range:")
 	match move_used.move_range:
+		
 		move_used.Ranges.SELF:
-			print("SELF")
 			targets.append(actor)
 			change_state(BattleState.ACT)
+			
 		move_used.Ranges.ENEMY:
-			print("ENEMY")
 			enemy_selection.show()
+			
 		move_used.Ranges.ENEMIES:
-			print("ENEMIES")
 			for e in enemy_list:
 				targets.append(e)
 			change_state(BattleState.ACT)
+			
 		move_used.Ranges.ALLY:
-			print("ALLY")
 			ally_selection.show()
+			
 		move_used.Ranges.ALLIES:
-			print("ALLIES")
 			for a in player_list:
 				targets.append(a)
 			change_state(BattleState.ACT)
+			
 		move_used.Ranges.R_ENEMY:
-			print("R ENEMY")
 			targets.append(enemy_list.pick_random())
 			change_state(BattleState.ACT)
+			
 		move_used.Ranges.ALL:
 			for c in player_list+enemy_list:
 				targets.append(c)
@@ -253,13 +265,18 @@ func tween_movement(node,shift):
 	await tween.finished
 
 func attack_compute():
-	if move_used.sp_cost < actor.SP:
-		actor.SP -= move_used.sp_cost
+	if move_used.sp_cost < actor.sp:
+		actor.sp -= move_used.sp_cost
 		for target in targets:
-			target.get_attacked(actor,move_used)
-		print (actor.title, " now has ",actor.SP," SP")
+			if move_used.category == move_used.Categories.MELEE or move_used.category == move_used.Categories.RANGED:
+				target.get_attacked(actor, move_used)
+			if move_used.category == move_used.Categories.HEAL:
+				target.get_healed(move_used)
+			if move_used.category == move_used.Categories.STATUS:
+				target.get_status(move_used)
+		print (actor.title, " now has ",actor.sp," SP")
 	else:
-		print(actor.title," does not have enough SP : ",actor.SP,", cost : ",move_used.sp_cost)
+		print(actor.title," does not have enough SP : ",actor.sp,", cost : ",move_used.sp_cost)
 
 #endregion
 #region RESOLVE and DIED
@@ -288,7 +305,7 @@ func check_end_of_battle():
 
 func resolve():
 	print("fin du combat")
-	await get_tree().create_timer(10.0).timeout
+	await get_tree().create_timer(1.0).timeout
 	get_tree().quit()
 	
 #endregion

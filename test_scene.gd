@@ -6,23 +6,19 @@ var list : Array = ["one","two","three"]
 @onready var attack = $CanvasLayer/VBoxContainer/attack
 @onready var return_button = $CanvasLayer/VBoxContainer2/return
 enum test {A,B,C}
+
+@export var DEF : int = 10
+var def : int = DEF
+
 func _ready():
-	attack.pressed.connect(ui_list_show)
-	return_button.pressed.connect(ui_list_hide)
+	attack.pressed.connect(change_def)
+	return_button.pressed.connect(restore)
+	print(def,DEF)
 
-	
+func change_def():
+	def *= 1.5
+	print (def, DEF)
 
-func ui_list_show():
-	for i in list:
-		var button = Button.new()
-		button.text = i
-		container2.add_child(button)
-	container1.hide()
-	container2.show()
-
-func ui_list_hide():
-	for child in container2.get_children():
-		if child.text in list:
-			child.queue_free()
-	container1.show()
-	container2.hide()
+func restore():
+	def = DEF
+	print(def, DEF)

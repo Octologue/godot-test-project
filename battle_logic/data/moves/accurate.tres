@@ -8,5 +8,6 @@ title = "accurate"
 sp_cost = 10
 acc = 1.0
 power = 20
+category = 1
 move_range = 1
 metadata/_custom_type_script = "uid://dwkthqmibmlio"

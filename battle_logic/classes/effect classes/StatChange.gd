@@ -6,38 +6,32 @@ enum Stats {RATK,RDEF,MATK,MDEF,SPE}
 
 @export var power : float
 
-var base_stat : int
-
 func trigger(chara:Character):
 	match stat:
 		Stats.MATK:
-			base_stat = chara.MATK
-			chara.MATK *= power
+			chara.matk *= power
 		Stats.RATK:
-			base_stat = chara.RATK
-			chara.RATK *= power
+			chara.ratk *= power
 		Stats.MDEF:
-			base_stat = chara.MDEF
-			chara.MDEF *= power
+			chara.mdef *= power
 		Stats.RDEF:
-			base_stat = chara.RDEF
-			chara.RDEF *= power
+			chara.rdef *= power
 		Stats.SPE:
-			base_stat = chara.SPE
-			chara.SPE *= power
+			chara.spe *= power
 			
 	print(chara.title,"'s stats changed")
 	
 func stop_trigger(chara:Character):
 	match stat:
 		Stats.MATK:
-			chara.MATK = base_stat
+			chara.matk = chara.MATK
 		Stats.RATK:
-			chara.RATK = base_stat
+			chara.ratk = chara.RATK
 		Stats.MDEF:
-			chara.MDEF = base_stat
+			chara.mdef = chara.MDEF
 		Stats.RDEF:
-			chara.RDEF = base_stat
+			chara.rdef = chara.RDEF
 		Stats.SPE:
-			chara.SPE = base_stat
+			chara.spe = chara.SPE
+			EventBus.speed_changed.emit()
 	print(chara.title,"'s stats came back to normal")

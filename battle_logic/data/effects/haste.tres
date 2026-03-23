@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_74d2h")
 stat = 4
-power = 1.5
+power = 4.0
 title = "haste"
 duration = 10
 cumulable = true

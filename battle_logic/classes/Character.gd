@@ -1,40 +1,73 @@
 extends BattleResource
 class_name Character
 
+# --- identity ---
+
 @export var title : String
 @export var sprite : Texture2D
 @export var is_player : bool
 var alive : bool = true
 
-@export var HP : int:
-	set (value):
-		HP = value
-		var max_hp = HP
-		clamp (HP, 0, max_hp)
-@export var SP : int:
+
+# --- main stats ---
+
+@export var HP : int
+var hp : int:
 	set(value):
-		SP = value
-		var max_sp = SP
-		clamp (SP, 0, max_sp)
+		hp = clamp(value,0,HP)
+@export var SP : int
+var sp : int:
+	set(value):
+			sp = clamp(value,0,SP)
+
+# --- offense and defense ---
+
 @export var MATK : int
+var matk : int 
 @export var RATK : int
-
-@export var MDEF : int
+var ratk : int
+@export var MDEF : int 
+var mdef : int
 @export var RDEF : int
+var rdef : int
 
-@export var SPE : int : 
+# --- turn order ---
+
+@export var SPE : int 
+var spe : int :
 	set(value):
-		SPE = value
-		delay = 200 / (log(SPE) + 2) - 25
+		spe = value
+		delay = 200 / (log(spe) + 2) - 25
+		delay = max(delay,1) #avoid bug <1
 		queue_reset()
-var delay : float
+var delay : float 
 var queue : Array[float]
+
+# --- battle interactions ---
 
 @export var moveset : Array[Move]
 var effects : Array
 
 @export var resistances:Array[Types]
 @export var weaknesses:Array[Types]
+
+# --- defending ---
+
+var defending : bool = false
+var hold_def : Array[int] 
+var def_count : int 
+
+func init_stats():
+#appeler au début du combat et à la fin lors des montées de lvl
+	matk = MATK
+	ratk = RATK
+	mdef = MDEF
+	rdef = RDEF
+	spe = SPE
+	sp = SP
+	hp = HP
+	def_count = 0
+	
 
 func queue_reset():
 #créer 8 valeurs d'après une suite arithmétique
@@ -51,7 +84,20 @@ func pop_out():
 		return
 	queue.pop_front()
 	queue.append(queue[-1]*delay)
-	
+
+func defending_check():
+	if defending : 
+		def_count += 1
+		if def_count == 1:
+			hold_def = [rdef,mdef]
+			rdef *= 5
+			mdef *= 5
+	if def_count > 3 :
+		defending = false
+		rdef = hold_def[0]
+		mdef = hold_def[1]
+		def_count = 0
+
 func get_attacked(attacker: Character, move: Move):
 	if not alive:
 		return
@@ -59,9 +105,9 @@ func get_attacked(attacker: Character, move: Move):
 	if randf()<= move.acc:
 		var damage : int
 		if move.category == move.Categories.MELEE:
-			damage = (move.power * attacker.MATK) / MDEF
+			damage = (move.power * attacker.matk) / mdef
 		elif move.category == move.Categories.RANGED:
-			damage = (move.power * attacker.RATK) / RDEF
+			damage = (move.power * attacker.ratk) / rdef
 		
 		var type_modifier : float = 1
 		
@@ -79,8 +125,8 @@ func get_attacked(attacker: Character, move: Move):
 
 		damage = damage * randf_range(0.9,1.1) * type_modifier
 		
-		HP -= damage
-		print(title, " attacked by ", attacker.title, " with ",move.title, " and now has ", HP, " HP.")
+		hp -= damage
+		print(title, " attacked by ", attacker.title, " with ",move.title, " and now has ", hp, " HP.")
 		
 		if randf() <= move.proc:
 			effect_proc(move.effect)
@@ -88,8 +134,16 @@ func get_attacked(attacker: Character, move: Move):
 	else:
 		print(attacker.title," attack's missed ",title)
 	
-	if HP <= 0:
+	if hp <= 0:
 		die()
+
+func get_healed(move : Move):
+	hp += move.power
+	print(title," get healed ",move.power," and now has ",hp," HP")
+
+func get_status(move : Move):
+	if randf() <= move.acc and randf() <= move.proc:
+		effect_proc(move.effect)
 
 func effect_proc(effect:Effect):
 	var new = true
@@ -104,14 +158,15 @@ func effect_proc(effect:Effect):
 		effects.append(new_effect)
 		if new_effect is StatChange:
 			new_effect.trigger(self)
-			if new_effect.stat == SPE:
+			if new_effect.stat == effect.Stats.SPE:
 				EventBus.speed_changed.emit()
-		
+
 	print (effect.title, " has proc and affect ", title)
 
 func effects_trigger():
 	for effect in effects:
 		effect.duration -= 1
+		print(effect.duration," DURATIOOONNN")
 		if effect is not StatChange:
 			effect.trigger(self)
 			if HP <= 0:
@@ -119,10 +174,9 @@ func effects_trigger():
 		if effect.duration == 0:
 			effect.stop_trigger(self)
 			effects.erase(effect)
-			if effect is StatChange and effect.stat == SPE:
+			if effect is StatChange and effect.stat == effect.Stats.SPE:
 				EventBus.speed_changed.emit()
 
-	
 func die():
 	if not alive:
 		return  

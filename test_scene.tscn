@@ -23,11 +23,10 @@ layout_mode = 2
 text = "attack"
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer" unique_id=2137673533]
-visible = false
-offset_left = 208.0
-offset_top = 72.0
-offset_right = 468.0
-offset_bottom = 296.0
+offset_left = 203.0
+offset_top = 130.0
+offset_right = 463.0
+offset_bottom = 354.0
 
 [node name="return" type="Button" parent="CanvasLayer/VBoxContainer2" unique_id=1226351499]
 layout_mode = 2
