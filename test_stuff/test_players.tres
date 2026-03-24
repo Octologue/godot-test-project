@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="PlayerListData" format=3 uid="uid://cvx3ocdgofk1b"]
+
+[ext_resource type="Script" uid="uid://daasw55bdrk7d" path="res://battle_logic/classes/Character.gd" id="1_pjgda"]
+[ext_resource type="Script" uid="uid://cungq3mefsa3k" path="res://battle_logic/classes/PlayerListData.gd" id="2_0s128"]
+[ext_resource type="Resource" uid="uid://d4gt1o88u5epb" path="res://test_stuff/test_target.tres" id="2_8s0mi"]
+
+[resource]
+script = ExtResource("2_0s128")
+character_list = Array[ExtResource("1_pjgda")]([ExtResource("2_8s0mi")])
+metadata/_custom_type_script = "uid://cungq3mefsa3k"

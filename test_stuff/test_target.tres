@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Character" format=3 uid="uid://d4gt1o88u5epb"]
+
+[ext_resource type="Script" uid="uid://dwkthqmibmlio" path="res://battle_logic/classes/Move.gd" id="1_2cm3n"]
+[ext_resource type="Script" uid="uid://daasw55bdrk7d" path="res://battle_logic/classes/Character.gd" id="2_7cwi3"]
+
+[resource]
+script = ExtResource("2_7cwi3")
+title = "test target"
+resistances = Array[int]([2])
+weaknesses = Array[int]([5])
+metadata/_custom_type_script = "uid://daasw55bdrk7d"

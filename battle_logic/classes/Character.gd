@@ -109,19 +109,16 @@ func get_attacked(attacker: Character, move: Move):
 		elif move.category == move.Categories.RANGED:
 			damage = (move.power * attacker.ratk) / rdef
 		
-		var type_modifier : float = 1
+		var type_modifier : float 
 		
-		if not move.type == Types.NEUTRAL:
-			if not weaknesses.is_empty():
-				for w in weaknesses:
-					if w == move.type:
-						type_modifier = 1.5
-						print ("weak to ",move.type)
-			if not resistances.is_empty():
-				for r in resistances:
-					if r == move.type:
-						type_modifier = 0.5
-						print ("resist ",move.type)
+		if move.type in weaknesses:
+			type_modifier = 1.5
+			print ("weak to ",move.type)
+		elif move.type in resistances:
+			type_modifier = 0.5
+			print ("resist ",move.type)
+		else:
+			type_modifier = 1
 
 		damage = damage * randf_range(0.9,1.1) * type_modifier
 		
