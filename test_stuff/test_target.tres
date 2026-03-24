@@ -6,6 +6,11 @@
 [resource]
 script = ExtResource("2_7cwi3")
 title = "test target"
+HP = 10
+MATK = 10
+RATK = 10
+MDEF = 50
+RDEF = 50
 resistances = Array[int]([2])
 weaknesses = Array[int]([5])
 metadata/_custom_type_script = "uid://daasw55bdrk7d"

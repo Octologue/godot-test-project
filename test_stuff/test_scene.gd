@@ -18,13 +18,14 @@ var enemy_script = EnemyScript.new()
 func _ready():
 	attack.pressed.connect(test_ai)
 	return_button.pressed.connect(restore)
-	
+	player_list[0].init_stats()
+	enemy_list[0].init_stats()
+	print(player_list[0].mdef)
 
 func test_ai():
-	print(enemy_list[0].moveset[0].type)
-	print(player_list[0].weaknesses)
 	enemy_script.super_effective(enemy_list[0].moveset[0],player_list[0])
-	
+	enemy_script.kill_target(enemy_list[0],enemy_list[0].moveset[0],player_list[0])
+	print(enemy_script.sp_cost(enemy_list[0],enemy_list[0].moveset[0]))
 
 func restore():
 	pass

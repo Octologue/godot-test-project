@@ -29,7 +29,7 @@ func compute_single_score(actor : Character,move : Move, target : Character, on_
 	var score : int
 	match move.category:
 		move.Categories.MELEE or move.Categories.RANGED:
-			score = super_effective(move,target)
+			score = super_effective(move,target) + sp_cost(actor,move)
 		move.Categories.HEAL:
 			pass
 		move.Categories.STATUS:
@@ -51,3 +51,20 @@ func super_effective(move,target) :
 		return -50
 	else:
 		return 0
+
+func sp_cost(actor,move): #à équilibrer
+	if move.sp_cost <= actor.sp and actor.sp < actor.SP/2: #TODO à tester
+		return compute_sp(move.sp_cost,40) #le but est que enemy save ses moves lorsque low
+	elif move.sp_cost <= actor.sp: 
+		return compute_sp(move.sp_cost,80)
+	else:
+		return -1000
+func compute_sp(cost,max):
+	#max = valeur de cost en dessous de laquelle score n'augmente plus
+	var excess = max(0.0, cost - max)
+	return int(50 - pow(excess, 1.2)) #score max 50
+
+func kill_target(actor,move,target):
+	if target.compute_damage(actor,move) > target.hp:
+		print("achève l'enemy")
+		return 80

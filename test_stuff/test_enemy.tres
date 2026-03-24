@@ -7,5 +7,12 @@
 [resource]
 script = ExtResource("2_001a8")
 title = "test enemy"
+HP = 10
+SP = 1000
+MATK = 100
+RATK = 100
+MDEF = 10
+RDEF = 10
+SPE = 100
 moveset = Array[ExtResource("1_thiaa")]([ExtResource("2_71b43")])
 metadata/_custom_type_script = "uid://daasw55bdrk7d"

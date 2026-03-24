@@ -103,36 +103,38 @@ func get_attacked(attacker: Character, move: Move):
 		return
 	
 	if randf()<= move.acc:
-		var damage : int
-		if move.category == move.Categories.MELEE:
-			damage = (move.power * attacker.matk) / mdef
-		elif move.category == move.Categories.RANGED:
-			damage = (move.power * attacker.ratk) / rdef
-		
-		var type_modifier : float 
-		
-		if move.type in weaknesses:
-			type_modifier = 1.5
-			print ("weak to ",move.type)
-		elif move.type in resistances:
-			type_modifier = 0.5
-			print ("resist ",move.type)
-		else:
-			type_modifier = 1
-
-		damage = damage * randf_range(0.9,1.1) * type_modifier
-		
-		hp -= damage
+		hp -= compute_damage(attacker,move)
 		print(title, " attacked by ", attacker.title, " with ",move.title, " and now has ", hp, " HP.")
 		
 		if randf() <= move.proc:
 			effect_proc(move.effect)
-		
 	else:
 		print(attacker.title," attack's missed ",title)
 	
 	if hp <= 0:
 		die()
+
+func compute_damage(attacker,move):
+	var damage : int
+	if move.category == move.Categories.MELEE:
+		damage = (move.power * attacker.matk) / mdef
+	elif move.category == move.Categories.RANGED:
+		damage = (move.power * attacker.ratk) / rdef
+		
+	var type_modifier : float 
+		
+	if move.type in weaknesses:
+		type_modifier = 1.5
+		print ("weak to ",move.type)
+	elif move.type in resistances:
+		type_modifier = 0.5
+		print ("resist ",move.type)
+	else:
+		type_modifier = 1
+
+	damage = damage * randf_range(0.9,1.1) * type_modifier
+	print("damage = ",damage)
+	return damage
 
 func get_healed(move : Move):
 	hp += move.power
@@ -163,7 +165,6 @@ func effect_proc(effect:Effect):
 func effects_trigger():
 	for effect in effects:
 		effect.duration -= 1
-		print(effect.duration," DURATIOOONNN")
 		if effect is not StatChange:
 			effect.trigger(self)
 			if HP <= 0:
