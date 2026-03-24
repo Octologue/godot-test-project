@@ -3,6 +3,9 @@
 [ext_resource type="Script" uid="uid://dwkthqmibmlio" path="res://battle_logic/classes/Move.gd" id="1_thiaa"]
 [ext_resource type="Script" uid="uid://daasw55bdrk7d" path="res://battle_logic/classes/Character.gd" id="2_001a8"]
 [ext_resource type="Resource" uid="uid://cv8lh8med48ox" path="res://battle_logic/data/moves/accurate.tres" id="2_71b43"]
+[ext_resource type="Resource" uid="uid://bgmxxytax8t2j" path="res://battle_logic/data/moves/attack_poison.tres" id="3_u5081"]
+[ext_resource type="Resource" uid="uid://cy1700oi5gg43" path="res://battle_logic/data/moves/explosion.tres" id="4_u7dy0"]
+[ext_resource type="Resource" uid="uid://c50f42eg8hg2s" path="res://battle_logic/data/moves/haste_status.tres" id="5_t2ywd"]
 
 [resource]
 script = ExtResource("2_001a8")
@@ -14,5 +17,5 @@ RATK = 100
 MDEF = 10
 RDEF = 10
 SPE = 100
-moveset = Array[ExtResource("1_thiaa")]([ExtResource("2_71b43")])
+moveset = Array[ExtResource("1_thiaa")]([ExtResource("2_71b43"), ExtResource("3_u5081"), ExtResource("4_u7dy0"), ExtResource("5_t2ywd")])
 metadata/_custom_type_script = "uid://daasw55bdrk7d"

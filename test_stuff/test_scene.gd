@@ -7,25 +7,23 @@ var list : Array = ["one","two","three"]
 @onready var return_button = $CanvasLayer/VBoxContainer2/return
 enum test {A,B,C}
 
-var player_list_data = load("res://test_stuff/test_players.tres")
-var battle_data = load("res://test_stuff/test_enemies.tres")
-var player_list = player_list_data.character_list
-var enemy_list = battle_data.enemy_list
+var enemy_ai : EnemyAI = EnemyAI.new()
 
-var EnemyScript = load("res://battle_logic/enemy_ai.gd")
-var enemy_script = EnemyScript.new()
+
+@export var player_list : Array[Character]
+@export var enemy_list : Array[Character]
+@export var move : Move
+@export var actor : Character
 
 func _ready():
+	for c in enemy_list+player_list:
+		c.init_stats()
+	enemy_ai.find_moves_and_targets(actor,enemy_list,player_list)
 	attack.pressed.connect(test_ai)
 	return_button.pressed.connect(restore)
-	player_list[0].init_stats()
-	enemy_list[0].init_stats()
-	print(player_list[0].mdef)
 
 func test_ai():
-	enemy_script.super_effective(enemy_list[0].moveset[0],player_list[0])
-	enemy_script.kill_target(enemy_list[0],enemy_list[0].moveset[0],player_list[0])
-	print(enemy_script.sp_cost(enemy_list[0],enemy_list[0].moveset[0]))
+	pass
 
 func restore():
 	pass
