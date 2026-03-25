@@ -12,18 +12,13 @@ var enemy_ai : EnemyAI = EnemyAI.new()
 
 @export var player_list : Array[Character]
 @export var enemy_list : Array[Character]
-@export var move : Move
 @export var actor : Character
+
+@export var move : Move
+@export var target : Character
 
 func _ready():
 	for c in enemy_list+player_list:
 		c.init_stats()
+	print("TEST SP" ,enemy_ai.sp_cost(actor,move))
 	enemy_ai.find_moves_and_targets(actor,enemy_list,player_list)
-	attack.pressed.connect(test_ai)
-	return_button.pressed.connect(restore)
-
-func test_ai():
-	pass
-
-func restore():
-	pass

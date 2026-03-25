@@ -51,6 +51,7 @@ var actor : Character
 var move_used : Move
 var targets : Array[Character] 
 
+var enemy_ai : EnemyAI = EnemyAI.new()
 
 func change_state(new_state):
 	state = new_state
@@ -236,7 +237,7 @@ func enemy_turn():
 	#appeler une fonction qui permet de caluler la meilleure cible possible (enemy_AI_compute ou un truc du genre)
 	targets.append(player_list.pick_random())
 	move_used = actor.moveset.pick_random()
-	
+	enemy_ai.find_moves_and_targets(actor,enemy_list,player_list)
 	change_state(BattleState.ACT)
 
 #endregion

@@ -1,3 +1,4 @@
+
 class_name EnemyAI
 
 var scores : Array[Dictionary]
@@ -6,6 +7,7 @@ var scores : Array[Dictionary]
 func find_moves_and_targets(actor : Character,enemy_list:Array[Character] ,player_list:Array[Character]):
 	var targets : Array[Character]
 	var move : Move
+	
 	compute_total_scores(actor,enemy_list,player_list)
 	scores.sort_custom(sort_by_score)
 	
@@ -13,7 +15,6 @@ func find_moves_and_targets(actor : Character,enemy_list:Array[Character] ,playe
 		var target_names := []
 		for t in s["targets"]:
 			target_names.append(t.title)
-	
 		print("Move:", s["move"].title,
 		  "| Targets:", target_names,
 		  "| Score:", s["score"])
@@ -49,19 +50,25 @@ func compute_score(actor : Character,move : Move, targets : Array[Character]) :
 	for target in targets:
 		var score : int
 		match move.category:
-			move.Categories.MELEE or move.Categories.RANGED:
-				score = sp_cost(actor,move) + super_effective(move,target) + attack_category(move,target) + kill_target(actor,move,target) + boosted(actor)
+			move.Categories.MELEE, move.Categories.RANGED:
+				print("TEST")
+				score = sp_cost(actor,move)\
+				 + super_effective(move,target)\
+				 + attack_category(move,target)\
+				 + kill_target(actor,move,target)\
+				 + boosted(actor)
 			move.Categories.HEAL:
 				score = sp_cost(actor,move) + heal(move,target)
 			move.Categories.STATUS:
 				score = sp_cost(actor,move) + status(move,target)
 		total_scores.append(score)
-	
+	print (total_scores)
 	var score : int = average(total_scores)
+	print (score)
 	return score 
 
 func average(list):
-	var sum :int
+	var sum := 0.0
 	for i in list:
 		sum += i
 	return sum/list.size()
@@ -89,7 +96,9 @@ func sp_cost(actor,move): #à équilibrer
 	elif move.sp_cost <= actor.sp: 
 		return compute_sp(move.sp_cost,80)
 	else:
+		print("sp =",actor.get_sp())
 		return -1000
+
 func compute_sp(cost,max):
 	#max = valeur de cost en dessous de laquelle score n'augmente plus
 	var excess = max(0.0, cost - max)

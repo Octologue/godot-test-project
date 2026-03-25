@@ -182,3 +182,6 @@ func die():
 	print(title, " died")
 
 	EventBus.character_died.emit(self)
+
+func get_sp():
+	return sp
