@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_i673f")
 title = "heal ally"
-sp_cost = 10
+sp_cost = 11
 acc = 1.0
 power = 100
 category = 2

@@ -125,15 +125,12 @@ func compute_damage(attacker,move):
 		
 	if move.type in weaknesses:
 		type_modifier = 1.5
-		print ("weak to ",move.type)
 	elif move.type in resistances:
 		type_modifier = 0.5
-		print ("resist ",move.type)
 	else:
 		type_modifier = 1
 
 	damage = damage * randf_range(0.9,1.1) * type_modifier
-	print("damage = ",damage)
 	return damage
 
 func get_healed(move : Move):

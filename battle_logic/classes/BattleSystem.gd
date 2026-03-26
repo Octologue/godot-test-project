@@ -49,7 +49,7 @@ var character_nodes : Dictionary
 
 var actor : Character
 var move_used : Move
-var targets : Array[Character] 
+var targets : Array
 
 var enemy_ai : EnemyAI = EnemyAI.new()
 
@@ -146,6 +146,8 @@ func duplicate_title_fix():
 			
 #endregion
 
+#region NEXT TURN
+
 func next_turn():
 	
 	for chara in player_list + enemy_list:
@@ -164,6 +166,8 @@ func next_turn():
 		change_state(BattleState.PLAYER_TURN)
 	else:
 		change_state(BattleState.ENEMY_TURN)
+		
+#endregion
 
 #region PLAYER TURN
 
@@ -231,16 +235,23 @@ func move_button_pressed(move):
 	move_selection.hide()
 	
 #endregion
+
 #region ENEMY TURN
 
 func enemy_turn():
 	#appeler une fonction qui permet de caluler la meilleure cible possible (enemy_AI_compute ou un truc du genre)
-	targets.append(player_list.pick_random())
-	move_used = actor.moveset.pick_random()
-	enemy_ai.find_moves_and_targets(actor,enemy_list,player_list)
-	change_state(BattleState.ACT)
+	var action = enemy_ai.find_moves_and_targets(actor,enemy_list,player_list)
+	if action == null:
+		print(actor, "has no possible actions")
+		pop_out()
+		change_state(BattleState.NEXT_TURN)
+	else:
+		move_used = action["move"]
+		targets = action["targets"]
+		change_state(BattleState.ACT)
 
 #endregion
+
 #region ACT and ATTACK
 
 func act():
@@ -252,6 +263,7 @@ func act():
 	await tween_movement(actor_node,-shift)
 	#jouer les animations de move ici avec un await et en utilisant la variable qui store move
 	#refresh l'affichage de la barre de vie ici
+	
 	attack_compute()
 	pop_out()
 	await tween_movement(actor_node,shift)
@@ -264,7 +276,7 @@ func tween_movement(node,shift):
 	await tween.finished
 
 func attack_compute():
-	if move_used.sp_cost < actor.sp:
+	if move_used.sp_cost <= actor.sp:
 		actor.sp -= move_used.sp_cost
 		for target in targets:
 			if move_used.category == move_used.Categories.MELEE or move_used.category == move_used.Categories.RANGED:
@@ -278,6 +290,7 @@ func attack_compute():
 		print(actor.title," does not have enough SP : ",actor.sp,", cost : ",move_used.sp_cost)
 
 #endregion
+
 #region RESOLVE and DIED
 
 func _on_character_died(character):
@@ -308,6 +321,7 @@ func resolve():
 	get_tree().quit()
 	
 #endregion
+
 #region TIMELINE
 
 func sort_and_display():

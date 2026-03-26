@@ -5,13 +5,12 @@ var scores : Array[Dictionary]
 #TODO établir des behaviors différents (ex : enemy qui soigne bcp)
 
 func find_moves_and_targets(actor : Character,enemy_list:Array[Character] ,player_list:Array[Character]):
-	var targets : Array[Character]
-	var move : Move
+	var choosed_targets : Array
+	var choosed_move : Move
 	
 	compute_total_scores(actor,enemy_list,player_list)
 	scores.sort_custom(sort_by_score)
-	
-	for s in scores:
+	for s in scores: #print
 		var target_names := []
 		for t in s["targets"]:
 			target_names.append(t.title)
@@ -19,10 +18,37 @@ func find_moves_and_targets(actor : Character,enemy_list:Array[Character] ,playe
 		  "| Targets:", target_names,
 		  "| Score:", s["score"])
 	
-	return {"target":targets,"move":move}
+	var total := 0
+	var weights : Array[Dictionary]
+	for s in scores: 
+		var new_score := 0
+		if s["score"] >= -20:
+			new_score = int(pow(20 + s["score"],0.5))
+			total += new_score
+			s["score"] = new_score
+			weights.append(s)
+	
+	if total == 0:
+		return null
+	
+	var cumul := 0
+	
+	var r = randi()%total
+	for action in weights: 
+		cumul += action["score"]
+		if r <= cumul:
+			choosed_targets = action["targets"]
+			choosed_move = action["move"]
+			break
+	
+	scores.clear()
+	cumul = 0
+	print(actor.title," choosed move : ", choosed_move.title," and targets : ",choosed_targets.map(func(i):return i.title))
+	return {"targets":choosed_targets,"move":choosed_move}
 
 func sort_by_score(a,b):
-	return a["score"] < b["score"]
+	return a["score"] > b["score"]
+
 
 #region SCORE COMPUTING
 
@@ -48,23 +74,32 @@ func compute_score(actor : Character,move : Move, targets : Array[Character]) :
 #compute for single target or self moves
 	var total_scores :Array[int]
 	for target in targets:
+		
 		var score : int
 		match move.category:
 			move.Categories.MELEE, move.Categories.RANGED:
-				print("TEST")
 				score = sp_cost(actor,move)\
 				 + super_effective(move,target)\
 				 + attack_category(move,target)\
 				 + kill_target(actor,move,target)\
 				 + boosted(actor)
+				#print(
+				#"---------------------------- \n",
+				#"Move: ", move.title, " | Target: ", target.title, "\n",
+				#"sp_cost: ", sp_cost(actor,move), "\n",
+				#"super_effective: ", super_effective(move,target), "\n",
+				#"attack_category: ", attack_category(move,target), "\n",
+				#"kill_target:" , kill_target(actor,move,target), "\n",
+				#"boosted: ", boosted(actor), "\n",
+				#"TOTAL:", score,"\n",
+				#"----------------------------"
+				#)
 			move.Categories.HEAL:
 				score = sp_cost(actor,move) + heal(move,target)
 			move.Categories.STATUS:
 				score = sp_cost(actor,move) + status(move,target)
 		total_scores.append(score)
-	print (total_scores)
 	var score : int = average(total_scores)
-	print (score)
 	return score 
 
 func average(list):
@@ -90,20 +125,13 @@ func compute_range_all(actor : Character,move : Move,targets : Array[Character])
 #endregion
 #region CONDITIONS
 
-func sp_cost(actor,move): #à équilibrer
-	if move.sp_cost <= actor.sp and actor.sp < actor.SP/2: #TODO à tester
-		return compute_sp(move.sp_cost,40) #le but est que enemy save ses moves lorsque low
-	elif move.sp_cost <= actor.sp: 
-		return compute_sp(move.sp_cost,80)
-	else:
-		print("sp =",actor.get_sp())
-		return -1000
+func sp_cost(actor, move):
+	if move.sp_cost > actor.sp:
+		return -INF
+	var ratio = float(actor.sp / actor.SP) * 0.9
+	var cost_factor = float(move.sp_cost) / float(actor.SP)
+	return int(-cost_factor * (1.0 - ratio) * 100)
 
-func compute_sp(cost,max):
-	#max = valeur de cost en dessous de laquelle score n'augmente plus
-	var excess = max(0.0, cost - max)
-	print(int(50 - pow(excess, 1.2)))
-	return int(50 - pow(excess, 1.2)) #score max 50
 
 func super_effective(move,target) :
 	if move.type in target.weaknesses:
@@ -123,12 +151,12 @@ func kill_target(actor,move,target):
 
 func attack_category(move,target):
 	if move.category == move.Categories.MELEE:
-		if target.mdef<target.rdef:
+		if target.mdef<=target.rdef:
 			return 0
 		else : 
 			return -20
 	if move.category == move.Categories.RANGED:
-		if target.rdef<target.mdef:
+		if target.rdef<=target.mdef:
 			return 0
 		else : 
 			return -20
@@ -141,7 +169,7 @@ func boosted(actor):
 		return 0
 
 func heal(move,target):
-	if target.is_player:
+	if target.is_player or target.hp == target.HP:
 		return -1000
 	else:	
 		if target.hp >= target.HP/2:

@@ -5,19 +5,20 @@
 [ext_resource type="Texture2D" uid="uid://c5lepnllp8msa" path="res://battle_logic/sprites/New Piskel (1).png" id="2_kfhnk"]
 [ext_resource type="Resource" uid="uid://cv8lh8med48ox" path="res://battle_logic/data/moves/accurate.tres" id="2_r8uxk"]
 [ext_resource type="Resource" uid="uid://bf6iis5ysvasj" path="res://battle_logic/data/moves/unaccurate.tres" id="3_6m16n"]
+[ext_resource type="Resource" uid="uid://u5byi67no46i" path="res://battle_logic/data/moves/heal_ally.tres" id="4_6m16n"]
 
 [resource]
 script = ExtResource("1_bynng")
 title = "enemy 1"
 sprite = ExtResource("2_kfhnk")
-HP = 50
+HP = 70
 SP = 100
 MATK = 60
 RATK = 10
 MDEF = 30
 RDEF = 30
 SPE = 60
-moveset = Array[ExtResource("1_10q8h")]([ExtResource("2_r8uxk"), ExtResource("3_6m16n")])
+moveset = Array[ExtResource("1_10q8h")]([ExtResource("2_r8uxk"), ExtResource("3_6m16n"), ExtResource("4_6m16n")])
 resistances = Array[int]([1])
 weaknesses = Array[int]([2])
 metadata/_custom_type_script = "uid://daasw55bdrk7d"

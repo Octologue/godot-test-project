@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_srphn")
 title = "accurate"
-sp_cost = 80
+sp_cost = 20
 acc = 1.0
 power = 20
 type = 5

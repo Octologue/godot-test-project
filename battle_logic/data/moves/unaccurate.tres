@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_f0s07")
 title = "unaccurate"
-sp_cost = 20
+sp_cost = 50
 acc = 0.5
 power = 100
 type = 5
