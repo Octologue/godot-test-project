@@ -9,7 +9,7 @@ class_name BattleSystem
 @onready var character_button = preload("res://battle_logic/scenes/character_button.tscn")
 @onready var character_status_ui = preload("res://battle_logic/scenes/character_status.tscn")
 var player_list_data = load("res://battle_logic/data/player_list.tres")
-var battle_data = load("res://battle_logic/data/battle_test.tres")
+var battle_data : BattleData
 
 # --- nodes ---
 @onready var players_node = $players
@@ -30,7 +30,7 @@ var player_positions := [
 	Vector2(150, 250),
 	Vector2(150, 300)
 ]
-var enemy_positions = battle_data.enemy_pos
+var enemy_positions : Array
 
 # --- Battle state enum ---
 enum BattleState {
@@ -67,6 +67,9 @@ func change_state(new_state):
 
 func _ready():
 	randomize() # TODO: put in a global script later
+	
+	battle_data = Globals.current_battle
+	enemy_positions = battle_data.enemy_pos
 	
 	EventBus.character_died.connect(_on_character_died)
 	EventBus.target_selected.connect(character_button_pressed)
@@ -349,7 +352,7 @@ func check_end_of_battle():
 func resolve():
 	print("fin du combat")
 	await get_tree().create_timer(1.0).timeout
-	get_tree().quit()
+	get_tree().change_scene_to_file("res://overworld/overworld_test.tscn")
 	
 #endregion
 

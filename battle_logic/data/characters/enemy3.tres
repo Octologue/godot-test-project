@@ -11,12 +11,12 @@
 script = ExtResource("1_401yt")
 title = "enemy 3"
 sprite = ExtResource("2_i4uq8")
-HP = 150
+HP = 40
 SP = 100
 MATK = 20
 RATK = 20
-MDEF = 60
-RDEF = 60
+MDEF = 30
+RDEF = 30
 SPE = 40
 moveset = Array[ExtResource("1_dyqxh")]([ExtResource("2_lty6p"), ExtResource("3_lty6p"), ExtResource("4_ksbm3")])
 resistances = Array[int]([5, 1, 2, 3, 4])

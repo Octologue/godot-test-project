@@ -12,7 +12,7 @@
 script = ExtResource("1_bynng")
 title = "enemy 1"
 sprite = ExtResource("2_kfhnk")
-HP = 70
+HP = 30
 SP = 100
 MATK = 60
 RATK = 10
