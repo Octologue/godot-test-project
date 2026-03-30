@@ -109,7 +109,7 @@ func average(list):
 	return sum/list.size()
 
 func compute_range_all(actor : Character,move : Move,targets : Array[Character]):
-	var score : int = -40 #TODO équilibrer freq explosions ici
+	var score : int = -40 
 	var total_player_score : Array[int]
 	for target in targets:
 		var p_score : int
@@ -131,7 +131,6 @@ func sp_cost(actor, move):
 	var ratio = float(actor.sp / actor.SP) * 0.9
 	var cost_factor = float(move.sp_cost) / float(actor.SP)
 	return int(-cost_factor * (1.0 - ratio) * 100)
-
 
 func super_effective(move,target) :
 	if move.type in target.weaknesses:
@@ -175,12 +174,12 @@ func heal(move,target):
 		if target.hp >= target.HP/2:
 			return -10
 		else:
-			return 50
+			return 40
 
 func status(move,target):
 	for e in target.effects:
 		if e.title == move.effect.title:
-			return -10 #pas -1000 car ça peux ajouter de la duration
+			return -10 
 	return 50
 			
 #endregion

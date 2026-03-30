@@ -12,13 +12,16 @@ script = ExtResource("1_pihux")
 [node name="UI" type="CanvasLayer" parent="." unique_id=2132836209]
 
 [node name="Timeline" type="HBoxContainer" parent="UI" unique_id=421856488]
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -254.0
-offset_right = 254.0
+anchors_preset = -1
+anchor_left = 0.514
+anchor_right = 0.514
+offset_left = -215.95999
+offset_right = 292.04
 offset_bottom = 60.0
 grow_horizontal = 2
+scale = Vector2(0.8492315, 0.8492315)
+size_flags_horizontal = 4
+size_flags_vertical = 0
 
 [node name="TimelineSlot" type="Panel" parent="UI/Timeline" unique_id=275611016]
 custom_minimum_size = Vector2(60, 60)
@@ -118,13 +121,14 @@ stretch_mode = 5
 
 [node name="Options" type="VBoxContainer" parent="UI" unique_id=1987080037]
 visible = false
-anchors_preset = -1
-anchor_top = 0.997
-anchor_bottom = 0.997
-offset_left = 1.0
-offset_top = -187.92
-offset_right = 117.0
-offset_bottom = 0.0799866
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -58.0
+offset_top = -187.99998
+offset_right = 58.0
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_horizontal = 4
@@ -140,13 +144,14 @@ text = "defend"
 
 [node name="MoveSelection" type="VBoxContainer" parent="UI" unique_id=1566199477]
 visible = false
-anchors_preset = -1
-anchor_top = 0.997
-anchor_bottom = 0.997
-offset_left = 1.0
-offset_top = -187.92
-offset_right = 117.0
-offset_bottom = 0.07998657
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -58.0
+offset_top = -187.99998
+offset_right = 58.0
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_horizontal = 4
@@ -154,13 +159,14 @@ size_flags_vertical = 4
 
 [node name="AllySelection" type="VBoxContainer" parent="UI" unique_id=2144317351]
 visible = false
-anchors_preset = -1
-anchor_top = 0.997
-anchor_bottom = 0.997
-offset_left = 1.0
-offset_top = -187.92
-offset_right = 117.0
-offset_bottom = 0.07998657
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -58.0
+offset_top = -187.99998
+offset_right = 58.0
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_horizontal = 4
@@ -168,17 +174,39 @@ size_flags_vertical = 4
 
 [node name="EnemySelection" type="VBoxContainer" parent="UI" unique_id=1673753465]
 visible = false
-anchors_preset = -1
-anchor_top = 0.997
-anchor_bottom = 0.997
-offset_left = 1.0
-offset_top = -187.92
-offset_right = 117.0
-offset_bottom = 0.0799866
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -58.0
+offset_top = -187.99998
+offset_right = 58.0
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_horizontal = 4
 size_flags_vertical = 4
+
+[node name="PlayerStatus" type="VBoxContainer" parent="UI" unique_id=1988070978]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -20.0
+offset_right = 69.0
+offset_bottom = 20.0
+grow_vertical = 2
+
+[node name="EnemyStatus" type="VBoxContainer" parent="UI" unique_id=1946867825]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -69.0
+offset_top = -20.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=2076418231]
 visible = false
@@ -186,3 +214,6 @@ z_index = -5
 offset_right = 640.0
 offset_bottom = 360.0
 color = Color(0.564484, 0.609991, 0.607005, 1)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1925054576]
+position = Vector2(320, 160)

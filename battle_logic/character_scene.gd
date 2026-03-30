@@ -4,3 +4,4 @@ extends Node2D
 
 func setup(data):
 	sprite.texture = data.sprite
+	

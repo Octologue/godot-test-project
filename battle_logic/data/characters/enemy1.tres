@@ -6,6 +6,7 @@
 [ext_resource type="Resource" uid="uid://cv8lh8med48ox" path="res://battle_logic/data/moves/accurate.tres" id="2_r8uxk"]
 [ext_resource type="Resource" uid="uid://bf6iis5ysvasj" path="res://battle_logic/data/moves/unaccurate.tres" id="3_6m16n"]
 [ext_resource type="Resource" uid="uid://u5byi67no46i" path="res://battle_logic/data/moves/heal_ally.tres" id="4_6m16n"]
+[ext_resource type="Resource" uid="uid://cy1700oi5gg43" path="res://battle_logic/data/moves/explosion.tres" id="5_ryjj4"]
 
 [resource]
 script = ExtResource("1_bynng")
@@ -18,7 +19,7 @@ RATK = 10
 MDEF = 30
 RDEF = 30
 SPE = 60
-moveset = Array[ExtResource("1_10q8h")]([ExtResource("2_r8uxk"), ExtResource("3_6m16n"), ExtResource("4_6m16n")])
+moveset = Array[ExtResource("1_10q8h")]([ExtResource("2_r8uxk"), ExtResource("3_6m16n"), ExtResource("4_6m16n"), ExtResource("5_ryjj4")])
 resistances = Array[int]([1])
 weaknesses = Array[int]([2])
 metadata/_custom_type_script = "uid://daasw55bdrk7d"

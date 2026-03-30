@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://cs62d74xm8gv5"]
+
+[ext_resource type="PackedScene" uid="uid://dgc1n6gyhngsp" path="res://overworld/player_overworld.tscn" id="1_7aacu"]
+[ext_resource type="PackedScene" uid="uid://dbkis5dvec1fy" path="res://overworld/enemy_overworld.tscn" id="2_gmgvx"]
+
+[node name="OverworldTest" type="Node2D" unique_id=489681701]
+
+[node name="PlayerOverworld" parent="." unique_id=1795755204 instance=ExtResource("1_7aacu")]
+
+[node name="enemy_overworld" parent="." unique_id=1347632052 instance=ExtResource("2_gmgvx")]
+position = Vector2(153, -40)

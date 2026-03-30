@@ -1,8 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://05w6whdt5ti3"]
+[gd_scene format=3 uid="uid://05w6whdt5ti3"]
 
 [ext_resource type="Script" uid="uid://drif73cenxpsm" path="res://battle_logic/character_scene.gd" id="1_bmgyc"]
 
-[node name="CharacterScene" type="Node2D"]
+[node name="CharacterScene" type="Node2D" unique_id=1616665610]
 script = ExtResource("1_bmgyc")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=292038536]
+texture_filter = 1

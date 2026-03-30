@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://hfjldklehlef"]
+
+[ext_resource type="Script" uid="uid://7p7auy4lklqv" path="res://battle_logic/hp_bar.gd" id="1_20tfg"]
+[ext_resource type="Script" uid="uid://dlkkoxr30ycvy" path="res://battle_logic/sp_bar.gd" id="2_j1wm8"]
+
+[node name="CharacterStatus" type="VBoxContainer" unique_id=661129651]
+offset_right = 66.0
+offset_bottom = 118.0
+
+[node name="Panel" type="Panel" parent="." unique_id=478662203]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="Icon" type="TextureRect" parent="Panel" unique_id=1797567384]
+texture_filter = 1
+layout_mode = 0
+offset_right = 30.0
+offset_bottom = 30.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="HPBar" type="ProgressBar" parent="." unique_id=2060834740]
+layout_mode = 2
+theme_override_font_sizes/font_size = 5
+script = ExtResource("1_20tfg")
+
+[node name="SPBar" type="ProgressBar" parent="." unique_id=1366452820]
+layout_mode = 2
+theme_override_font_sizes/font_size = 5
+script = ExtResource("2_j1wm8")

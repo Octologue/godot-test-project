@@ -7,6 +7,7 @@ class_name BattleSystem
 @onready var character_scene = preload("res://battle_logic/scenes/character_scene.tscn")
 @onready var move_button = preload("res://battle_logic/scenes/move_button.tscn")
 @onready var character_button = preload("res://battle_logic/scenes/character_button.tscn")
+@onready var character_status_ui = preload("res://battle_logic/scenes/character_status.tscn")
 var player_list_data = load("res://battle_logic/data/player_list.tres")
 var battle_data = load("res://battle_logic/data/battle_test.tres")
 
@@ -20,6 +21,7 @@ var battle_data = load("res://battle_logic/data/battle_test.tres")
 @onready var enemy_selection = $UI/EnemySelection
 @onready var ally_selection = $UI/AllySelection
 @onready var move_selection = $UI/MoveSelection
+
 
 # --- Positions ---
 var player_positions := [
@@ -86,7 +88,9 @@ func start():
 	
 	for c in enemy_list+player_list:
 		c.init_stats()
-		
+
+	character_status_init(player_list,$UI/PlayerStatus)
+	character_status_init(enemy_list,$UI/EnemyStatus)
 	
 	sort_and_display()
 	
@@ -103,20 +107,22 @@ func _variables_init():
 	for enemy in battle_data.enemy_list:
 		var new_enemy = enemy.duplicate() 
 		enemy_list.append(new_enemy)
+		
 	duplicate_title_fix()
+	
+	if battle_data.is_enemy_order_random == true:
+		enemy_list.shuffle()
+		
 	for enemy in enemy_list:
 		var button = character_button.instantiate() 
 		button.character = enemy
 		enemy_selection.add_child(button)
 		
-	if battle_data.is_enemy_order_random == true:
-		enemy_list.shuffle()
-		
 func _spawn_characters(chara_list : Array,chara_node : Node2D):
 	for child in chara_node.get_children():
 		child.queue_free()
-	var count = min(chara_list.size(), player_positions.size())
-	for i in range(count):
+	
+	for i in range(chara_list.size()):
 		var chara_data = chara_list[i]
 		var chara_scene = character_scene.instantiate()
 		chara_node.add_child(chara_scene)
@@ -127,6 +133,15 @@ func _spawn_characters(chara_list : Array,chara_node : Node2D):
 			chara_scene.position = enemy_positions[i]
 		chara_scene.setup(chara_data)
 		character_nodes[chara_data] = chara_scene
+
+func character_status_init(c_list : Array[Character],parent : VBoxContainer):
+	for c in c_list :
+		var status_ui = character_status_ui.instantiate()
+		status_ui.find_child("Icon").texture = c.sprite 
+		status_ui.find_child("HPBar").character = c
+		status_ui.find_child("SPBar").character = c
+		parent.add_child(status_ui)
+	update_bars()
 
 func duplicate_title_fix():
 	var letter_list = ["a","b","c","d","e"]
@@ -149,12 +164,15 @@ func duplicate_title_fix():
 #region NEXT TURN
 
 func next_turn():
-	
+	if player_list.size()+enemy_list.size() == 0: #TODO emergency solution when everyone dies during a turn, to change
+		change_state(BattleState.RESOLVE)
+		return
+	check_end_of_battle()
 	for chara in player_list + enemy_list:
 		chara.effects_trigger()
 		chara.defending_check()
+		chara.sp += 10
 	
-	check_end_of_battle()
 	timeline = timeline.filter(func(entry): return entry["character"].alive)
 	
 	targets.clear()
@@ -239,9 +257,13 @@ func move_button_pressed(move):
 #region ENEMY TURN
 
 func enemy_turn():
-	#appeler une fonction qui permet de caluler la meilleure cible possible (enemy_AI_compute ou un truc du genre)
 	var action = enemy_ai.find_moves_and_targets(actor,enemy_list,player_list)
+	if player_list.is_empty():
+		change_state(BattleState.RESOLVE)
 	if action == null:
+		if player_list.size() == 0: #TODO same, emergency solution for end of battle
+			change_state(BattleState.RESOLVE)
+			return
 		print(actor, "has no possible actions")
 		pop_out()
 		change_state(BattleState.NEXT_TURN)
@@ -278,16 +300,25 @@ func tween_movement(node,shift):
 func attack_compute():
 	if move_used.sp_cost <= actor.sp:
 		actor.sp -= move_used.sp_cost
+		update_bars()
 		for target in targets:
 			if move_used.category == move_used.Categories.MELEE or move_used.category == move_used.Categories.RANGED:
 				target.get_attacked(actor, move_used)
+				update_bars()
 			if move_used.category == move_used.Categories.HEAL:
 				target.get_healed(move_used)
+				update_bars()
 			if move_used.category == move_used.Categories.STATUS:
 				target.get_status(move_used)
 		print (actor.title, " now has ",actor.sp," SP")
 	else:
 		print(actor.title," does not have enough SP : ",actor.sp,", cost : ",move_used.sp_cost)
+
+func update_bars():
+	for child in $UI/PlayerStatus.get_children()+$UI/EnemyStatus.get_children():
+		child.find_child("HPBar").update_bar()
+		child.find_child("SPBar").update_bar()
+	
 
 #endregion
 
@@ -355,6 +386,9 @@ func update_timeline_display():
 			slot.find_child("TextureRect").texture = null 
 
 func pop_out():
+	if player_list.size()+enemy_list.size() == 0: #TODO emergency solution blabblah
+		change_state(BattleState.RESOLVE)
+		return
 	if timeline[0]["character"].alive == false:
 		return
 	timeline[0]["character"].pop_out()
