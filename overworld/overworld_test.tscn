@@ -1,10 +1,9 @@
 [gd_scene format=3 uid="uid://cs62d74xm8gv5"]
 
 [ext_resource type="PackedScene" uid="uid://dgc1n6gyhngsp" path="res://overworld/player_overworld.tscn" id="1_7aacu"]
-[ext_resource type="Script" uid="uid://f8i8kchhifji" path="res://main.gd" id="1_h58hm"]
+[ext_resource type="Script" path="res://main.gd" id="1_h58hm"]
 [ext_resource type="PackedScene" uid="uid://dbkis5dvec1fy" path="res://overworld/enemy_overworld.tscn" id="2_gmgvx"]
 [ext_resource type="Resource" uid="uid://tlcu2vl4c42x" path="res://battle_logic/data/battle_test.tres" id="3_4y1wc"]
-[ext_resource type="PackedScene" uid="uid://dypy4oy4ron2l" path="res://battle_logic/scenes/battle_scene.tscn" id="4_4y1wc"]
 [ext_resource type="Resource" uid="uid://cuomjobrq4c3a" path="res://battle_logic/data/battle_test_2.tres" id="5_awh8p"]
 
 [node name="Main" type="Node2D" unique_id=489681701]
@@ -21,7 +20,3 @@ battle_data = ExtResource("3_4y1wc")
 [node name="enemy_overworld2" parent="Overworld" unique_id=1865161962 instance=ExtResource("2_gmgvx")]
 position = Vector2(-148, -98)
 battle_data = ExtResource("5_awh8p")
-
-[node name="battleScene" parent="." unique_id=582481188 instance=ExtResource("4_4y1wc")]
-process_mode = 4
-visible = false

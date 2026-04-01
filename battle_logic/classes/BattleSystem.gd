@@ -353,18 +353,7 @@ func check_end_of_battle():
 func resolve():
 	print("fin du combat")
 	await get_tree().create_timer(1.0).timeout
-	player_list.clear()
-	enemy_list.clear()
-	timeline.clear()
 	
-	for child in $UI/AllySelection.get_children()+$UI/EnemySelection.get_children():
-		child.queue_free()
-	for child in $UI/PlayerStatus.get_children()+$UI/EnemyStatus.get_children():
-		child.queue_free()
-	for child in $players.get_children()+$enemies.get_children():
-		child.queue_free()
-	
-	$UI.hide()
 	var main = get_tree().get_first_node_in_group("main")
 	main.stop_battle_encounter()
 	
