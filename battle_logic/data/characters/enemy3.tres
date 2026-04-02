@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="Character" format=3 uid="uid://c1tuxo1eb1o3e"]
 
-[ext_resource type="Script" uid="uid://daasw55bdrk7d" path="res://battle_logic/classes/Character.gd" id="1_401yt"]
+[ext_resource type="Script" uid="uid://daasw55bdrk7d" path="res://battle_logic/classes/character classes/Character.gd" id="1_401yt"]
 [ext_resource type="Script" uid="uid://dwkthqmibmlio" path="res://battle_logic/classes/Move.gd" id="1_dyqxh"]
 [ext_resource type="Texture2D" uid="uid://q1uvyss5iyyt" path="res://battle_logic/sprites/New Piskel (2).png" id="2_i4uq8"]
 [ext_resource type="Resource" uid="uid://cv8lh8med48ox" path="res://battle_logic/data/moves/accurate.tres" id="2_lty6p"]

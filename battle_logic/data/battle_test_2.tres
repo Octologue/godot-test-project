@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="BattleData" format=3 uid="uid://cuomjobrq4c3a"]
 
-[ext_resource type="Script" uid="uid://daasw55bdrk7d" path="res://battle_logic/classes/Character.gd" id="1_q1rg6"]
+[ext_resource type="Script" uid="uid://daasw55bdrk7d" path="res://battle_logic/classes/character classes/Character.gd" id="1_q1rg6"]
 [ext_resource type="Resource" uid="uid://xi6lhu7b8k2v" path="res://battle_logic/data/characters/enemy1.tres" id="2_4mej1"]
 [ext_resource type="Script" uid="uid://cei210h2ftix8" path="res://battle_logic/classes/BattleData.gd" id="2_isl8k"]
 [ext_resource type="Resource" uid="uid://lq3m0lwffkub" path="res://battle_logic/data/characters/enemy2.tres" id="3_ovoy4"]

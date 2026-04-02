@@ -5,9 +5,9 @@ class_name Character
 
 @export var title : String
 @export var sprite : Texture2D
-@export var is_player : bool
+@export var is_player : bool #TODO check la class à la place
 var alive : bool = true
-
+@export var LVL : int
 
 # --- main stats ---
 
@@ -57,8 +57,10 @@ var defending : bool = false
 var hold_def : Array[int] 
 var def_count : int 
 
-func init_stats():
-#appeler au début du combat et à la fin lors des montées de lvl
+
+#region INIT
+
+func first_init_stats():
 	matk = MATK
 	ratk = RATK
 	mdef = MDEF
@@ -66,8 +68,18 @@ func init_stats():
 	spe = SPE
 	sp = SP
 	hp = HP
+
+func init_stats():
+#appeler au début du combat et à la fin lors des montées de lvl
+	matk = MATK
+	ratk = RATK
+	mdef = MDEF
+	rdef = RDEF
+	spe = SPE
 	def_count = 0
-	
+#endregion
+
+#region LOGIC
 
 func queue_reset():
 #créer 8 valeurs d'après une suite arithmétique
@@ -84,6 +96,18 @@ func pop_out():
 		return
 	queue.pop_front()
 	queue.append(queue[-1]*delay)
+
+func die():
+	if not alive:
+		return  
+	alive = false
+	print(title, " died")
+
+	EventBus.character_died.emit(self)
+
+#endregion
+
+#region MOVE COMPUTE
 
 func defending_check():
 	if defending : 
@@ -172,13 +196,7 @@ func effects_trigger():
 			if effect is StatChange and effect.stat == effect.Stats.SPE:
 				EventBus.speed_changed.emit()
 
-func die():
-	if not alive:
-		return  
-	alive = false
-	print(title, " died")
+#endregion
 
-	EventBus.character_died.emit(self)
-
-func get_sp():
-	return sp
+func level_up():
+	pass

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Move" format=3 uid="uid://dhrlu7qtqc72e"]
+
+[ext_resource type="Script" uid="uid://dwkthqmibmlio" path="res://battle_logic/classes/Move.gd" id="1_3oysa"]
+
+[resource]
+script = ExtResource("1_3oysa")
+title = "thatsanattack"
+sp_cost = 10
+acc = 0.834
+power = 40
+move_range = 1
+metadata/_custom_type_script = "uid://dwkthqmibmlio"

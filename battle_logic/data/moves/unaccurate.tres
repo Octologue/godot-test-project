@@ -6,9 +6,9 @@
 script = ExtResource("1_f0s07")
 title = "unaccurate"
 sp_cost = 50
-acc = 1.0
-power = 300
-type = 1
+acc = 0.5
+power = 20
+type = 4
 category = 1
 move_range = 3
 metadata/_custom_type_script = "uid://dwkthqmibmlio"

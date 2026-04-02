@@ -1,7 +1,7 @@
-#region VARIABLES and READY
-
 extends Node2D
 class_name BattleSystem
+
+#region VARIABLES and READY
 
 # --- Data ---
 @onready var character_scene = preload("res://battle_logic/scenes/character_scene.tscn")
@@ -76,13 +76,11 @@ func _ready():
 
 #endregion
 
-
 #region START
 
 func battle_init(battle_data_OW):
 	battle_data = battle_data_OW
 	enemy_positions = battle_data.enemy_pos
-	$UI.show()
 	change_state(BattleState.START)
 
 func start():
@@ -90,9 +88,6 @@ func start():
 	_spawn_characters(player_list,players_node)
 	_spawn_characters(enemy_list,enemies_node)
 	
-	for c in enemy_list+player_list:
-		c.init_stats()
-
 	character_status_init(player_list,$UI/PlayerStatus)
 	character_status_init(enemy_list,$UI/EnemyStatus)
 	
@@ -101,16 +96,26 @@ func start():
 	change_state(BattleState.NEXT_TURN)
 
 func _variables_init():
+	
 	for player in player_list_data.character_list:
-		player_list.append(player)
+		if player.alive:
+			player_list.append(player)
 	for player in player_list:
-		var button = character_button.instantiate()
-		button.character = player
-		ally_selection.add_child(button)
+		if player.alive:
+			var button = character_button.instantiate()
+			button.character = player
+			ally_selection.add_child(button)
 		
 	for enemy in battle_data.enemy_list:
 		var new_enemy = enemy.duplicate() 
 		enemy_list.append(new_enemy)
+	
+	for e in enemy_list:
+		e.first_init_stats()
+	for p in player_list:
+		p.init_stats()
+		if not p.alive:
+			_on_character_died(p)
 		
 	duplicate_title_fix()
 	
@@ -131,7 +136,7 @@ func _spawn_characters(chara_list : Array,chara_node : Node2D):
 		var chara_scene = character_scene.instantiate()
 		chara_node.add_child(chara_scene)
 		
-		if chara_data.is_player == true:
+		if chara_data.is_player :
 			chara_scene.position = player_positions[i]
 		else :
 			chara_scene.position = enemy_positions[i]
@@ -175,7 +180,6 @@ func next_turn():
 	for chara in player_list + enemy_list:
 		chara.effects_trigger()
 		chara.defending_check()
-		chara.sp += 10
 	
 	timeline = timeline.filter(func(entry): return entry["character"].alive)
 	
@@ -353,7 +357,6 @@ func check_end_of_battle():
 func resolve():
 	print("fin du combat")
 	await get_tree().create_timer(1.0).timeout
-	
 	var main = get_tree().get_first_node_in_group("main")
 	main.stop_battle_encounter()
 	

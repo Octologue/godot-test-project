@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Character" format=3 uid="uid://b748wy4f7pjej"]
 
 [ext_resource type="Script" uid="uid://dwkthqmibmlio" path="res://battle_logic/classes/Move.gd" id="1_dup7b"]
-[ext_resource type="Script" uid="uid://daasw55bdrk7d" path="res://battle_logic/classes/Character.gd" id="2_3yjxn"]
+[ext_resource type="Script" uid="uid://daasw55bdrk7d" path="res://battle_logic/classes/character classes/Character.gd" id="2_3yjxn"]
 [ext_resource type="Resource" uid="uid://cv8lh8med48ox" path="res://battle_logic/data/moves/accurate.tres" id="2_tarlx"]
 [ext_resource type="Resource" uid="uid://bgmxxytax8t2j" path="res://battle_logic/data/moves/attack_poison.tres" id="3_tcyek"]
 [ext_resource type="Resource" uid="uid://c50f42eg8hg2s" path="res://battle_logic/data/moves/haste_status.tres" id="4_66p5c"]
@@ -12,7 +12,7 @@ script = ExtResource("2_3yjxn")
 title = "player 2"
 sprite = ExtResource("4_tarlx")
 is_player = true
-HP = 80
+HP = 60
 SP = 80
 MATK = 90
 RATK = 20

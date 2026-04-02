@@ -109,13 +109,13 @@ func average(list):
 	return sum/list.size()
 
 func compute_range_all(actor : Character,move : Move,targets : Array[Character]):
-	var score : int = -40 
+	var score : int = 0
+	
 	var total_player_score : Array[int]
 	for target in targets:
 		var p_score : int
 		if not target.is_player:
-			if target.hp < target.HP/3:
-				score += 10
+			score -=10 
 		else:
 			p_score = super_effective(move,target) + attack_category(move,target) + kill_target(actor,move,target) + boosted(actor)
 			total_player_score.append(p_score)
