@@ -6,9 +6,9 @@
 [resource]
 script = ExtResource("1_sc5fq")
 title = "attack poison"
-sp_cost = 20
+sp_cost = 5
 acc = 1.0
-power = 50
+power = 5
 type = 3
 category = 1
 proc = 1.0

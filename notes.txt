@@ -6,10 +6,4 @@ git commit -m "message"
 git push
 
 
-implémenter système de move avec:
-	catégorie ranged ou melee
-	hit défense ranged ou melee
-	a un cout en mp
-	a une précision
-	a une chance d'infliger un effet secondaire (status)
-	a un type, et les character ont une faiblesse
+problème avec l'appel de fin de combat

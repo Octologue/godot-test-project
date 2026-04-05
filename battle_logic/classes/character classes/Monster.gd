@@ -17,3 +17,14 @@ func init_stats_by_lvl():
 	MDEF += LVL*2
 	RDEF += LVL*2
 	SPE += LVL*2
+
+func init():
+	init_stats_by_lvl()
+	matk = MATK
+	ratk = RATK
+	mdef = MDEF
+	rdef = RDEF
+	spe = SPE
+	sp = SP
+	hp = HP
+	

@@ -22,16 +22,6 @@ var battle_data : BattleData
 @onready var ally_selection = $UI/AllySelection
 @onready var move_selection = $UI/MoveSelection
 
-
-# --- Positions ---
-var player_positions := [
-	Vector2(150, 150),
-	Vector2(150, 200),
-	Vector2(150, 250),
-	Vector2(150, 300)
-]
-var enemy_positions : Array
-
 # --- Battle state enum ---
 enum BattleState {
 	START,
@@ -80,78 +70,62 @@ func _ready():
 
 func battle_init(battle_data_OW):
 	battle_data = battle_data_OW
-	enemy_positions = battle_data.enemy_pos
 	change_state(BattleState.START)
 
 func start():
-	_variables_init()
-	_spawn_characters(player_list,players_node)
-	_spawn_characters(enemy_list,enemies_node)
-	
-	character_status_init(player_list,$UI/PlayerStatus)
-	character_status_init(enemy_list,$UI/EnemyStatus)
-	
+	for p in player_list_data.character_list:
+		player_setup(p)
+	for e in battle_data.enemy_list:
+		enemy_setup(e)
+	duplicate_title_fix()
 	sort_and_display()
 	
 	change_state(BattleState.NEXT_TURN)
 
-func _variables_init():
-	
-	for player in player_list_data.character_list:
-		if player.alive:
-			player_list.append(player)
-	for player in player_list:
-		if player.alive:
-			var button = character_button.instantiate()
-			button.character = player
-			ally_selection.add_child(button)
+func player_setup(player : Player):
+	if player.alive:
+		player_list.append(player)
+		player.init()
 		
-	for enemy in battle_data.enemy_list:
-		var new_enemy = enemy.duplicate() 
-		enemy_list.append(new_enemy)
-	
-	for e in enemy_list:
-		e.first_init_stats()
-	for p in player_list:
-		p.init_stats()
-		if not p.alive:
-			_on_character_died(p)
+		var chara_node = character_scene.instantiate()
+		chara_node.setup(player)
+		chara_node.position = player_list_data.positions[player]
+		$players.add_child(chara_node)
+		character_nodes[player] = chara_node
 		
-	duplicate_title_fix()
-	
-	if battle_data.is_enemy_order_random == true:
-		enemy_list.shuffle()
-		
-	for enemy in enemy_list:
-		var button = character_button.instantiate() 
-		button.character = enemy
-		enemy_selection.add_child(button)
-		
-func _spawn_characters(chara_list : Array,chara_node : Node2D):
-	for child in chara_node.get_children():
-		child.queue_free()
-	
-	for i in range(chara_list.size()):
-		var chara_data = chara_list[i]
-		var chara_scene = character_scene.instantiate()
-		chara_node.add_child(chara_scene)
-		
-		if chara_data.is_player :
-			chara_scene.position = player_positions[i]
-		else :
-			chara_scene.position = enemy_positions[i]
-		chara_scene.setup(chara_data)
-		character_nodes[chara_data] = chara_scene
+		chara_button_setup(player)
+		chara_status_setup(player,$UI/PlayerStatus)
+	elif player.alive == false or player.hp <= 0:
+		_on_character_died(player)
 
-func character_status_init(c_list : Array[Character],parent : VBoxContainer):
-	for c in c_list :
-		var status_ui = character_status_ui.instantiate()
-		status_ui.find_child("Icon").texture = c.sprite 
-		status_ui.find_child("HPBar").character = c
-		status_ui.find_child("SPBar").character = c
-		parent.add_child(status_ui)
+func enemy_setup(enemy_data : EnemyBattleData):
+	var enemy = enemy_data.enemy.duplicate(true)
+	enemy.LVL = enemy_data.lvl
+	enemy.init()
+	enemy_list.append(enemy)
+	
+	var chara_node = character_scene.instantiate()
+	chara_node.setup(enemy)
+	chara_node.position = enemy_data.position
+	$enemies.add_child(chara_node)
+	character_nodes[enemy] = chara_node
+	
+	chara_button_setup(enemy)
+	chara_status_setup(enemy,$UI/EnemyStatus)
+
+func chara_button_setup(chara: Character):
+	var button = character_button.instantiate()
+	button.character = chara
+	ally_selection.add_child(button)
+
+func chara_status_setup(chara: Character,group : Node2D):
+	var status_ui = character_status_ui.instantiate()
+	status_ui.find_child("Icon").texture = chara.sprite 
+	status_ui.find_child("HPBar").character = chara
+	status_ui.find_child("SPBar").character = chara
+	group.add_child(status_ui)
 	update_bars()
-
+	
 func duplicate_title_fix():
 	var letter_list = ["a","b","c","d","e"]
 	var title_total_count = {} 
@@ -180,7 +154,8 @@ func next_turn():
 	for chara in player_list + enemy_list:
 		chara.effects_trigger()
 		chara.defending_check()
-	
+		print(chara.title," : ", chara.hp)
+
 	timeline = timeline.filter(func(entry): return entry["character"].alive)
 	
 	targets.clear()
@@ -188,7 +163,7 @@ func next_turn():
 	if actor.defending:
 		actor.defending_check()
 	
-	if actor.is_player == true:
+	if actor is Player:
 		change_state(BattleState.PLAYER_TURN)
 	else:
 		change_state(BattleState.ENEMY_TURN)

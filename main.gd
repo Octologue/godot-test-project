@@ -30,5 +30,9 @@ func stop_battle_encounter():
 	camera_ow.enabled = true
 
 func init_player_stats():
-	for p in player_data.character_list:
-		p.first_init_stats()
+	var character_list : Array = player_data.character_list
+	var mon_list : Array = player_data.monster_list
+	for i in range(character_list.size()):
+		character_list[i].monster = mon_list[i].duplicate(true)
+		
+	

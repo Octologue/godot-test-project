@@ -1,12 +1,17 @@
 [gd_resource type="Resource" script_class="PlayerListData" format=3 uid="uid://4ujcajlfd680"]
 
-[ext_resource type="Script" uid="uid://daasw55bdrk7d" path="res://battle_logic/classes/character classes/Character.gd" id="1_bc6pm"]
-[ext_resource type="Resource" uid="uid://eg6g06t5dfmf" path="res://battle_logic/data/characters/player1.tres" id="2_y0wgl"]
-[ext_resource type="Resource" uid="uid://b748wy4f7pjej" path="res://battle_logic/data/characters/player2.tres" id="3_30ha4"]
-[ext_resource type="Script" uid="uid://cungq3mefsa3k" path="res://battle_logic/classes/PlayerListData.gd" id="4_6pedf"]
-[ext_resource type="Resource" uid="uid://cfigutl5jlspl" path="res://battle_logic/data/characters/player3.tres" id="4_35ync"]
-[ext_resource type="Resource" uid="uid://c2dt77w4vebu2" path="res://battle_logic/data/characters/player4.tres" id="5_kvetx"]
+[ext_resource type="Script" uid="uid://b3634gbmjyvdf" path="res://battle_logic/classes/character classes/Player.gd" id="1_j08fj"]
+[ext_resource type="Resource" uid="uid://da0gujohodbmt" path="res://battle_logic/data/characters/player/sam.tres" id="2_bc6pm"]
+[ext_resource type="Script" uid="uid://biyn0e4u1vgcb" path="res://battle_logic/classes/character classes/Monster.gd" id="3_y0wgl"]
+[ext_resource type="Script" uid="uid://cungq3mefsa3k" path="res://battle_logic/classes/data classes/PlayerListData.gd" id="4_6pedf"]
+[ext_resource type="Resource" uid="uid://doei1jjen51c6" path="res://battle_logic/data/characters/monster/lenvyzotl.tres" id="4_30ha4"]
+[ext_resource type="Resource" uid="uid://d3nncms6xvetm" path="res://battle_logic/data/characters/player/ruth.tres" id="5_30ha4"]
 
 [resource]
 script = ExtResource("4_6pedf")
-character_list = Array[ExtResource("1_bc6pm")]([ExtResource("2_y0wgl"), ExtResource("3_30ha4"), ExtResource("4_35ync"), ExtResource("5_kvetx")])
+character_list = Array[ExtResource("1_j08fj")]([ExtResource("2_bc6pm")])
+monster_list = Array[ExtResource("3_y0wgl")]([ExtResource("4_30ha4")])
+player_positions = Dictionary[ExtResource("1_j08fj"), Vector2]({
+ExtResource("2_bc6pm"): Vector2(150, 150),
+ExtResource("5_30ha4"): Vector2(150, 200)
+})

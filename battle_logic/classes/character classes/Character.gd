@@ -5,7 +5,6 @@ class_name Character
 
 @export var title : String
 @export var sprite : Texture2D
-@export var is_player : bool #TODO check la class à la place
 var alive : bool = true
 @export var LVL : int
 
@@ -59,24 +58,12 @@ var def_count : int
 
 
 #region INIT
+	
 
-func first_init_stats():
-	matk = MATK
-	ratk = RATK
-	mdef = MDEF
-	rdef = RDEF
-	spe = SPE
-	sp = SP
-	hp = HP
+func init():
+#appeler au début du combat
+	pass
 
-func init_stats():
-#appeler au début du combat et à la fin lors des montées de lvl
-	matk = MATK
-	ratk = RATK
-	mdef = MDEF
-	rdef = RDEF
-	spe = SPE
-	def_count = 0
 #endregion
 
 #region LOGIC

@@ -1,5 +1,6 @@
 extends Character
 class_name Player
+
 @export_range(0,2) var mult_hp : float
 @export_range(0,2) var mult_sp : float
 @export_range(0,2) var mult_ratk : float
@@ -9,6 +10,9 @@ class_name Player
 @export_range(0,2) var mult_spe : float
 
 @export var monster : Monster
+
+var last_hp : int
+var last_sp : int
 
 func init_pair_stats():
 	HP = mult_hp*monster.HP
@@ -25,12 +29,33 @@ func init_pair_types():
 	
 func init_pair_moves():
 	moveset += monster.moveset
+
+func init_pair_lvl():
+	monster.LVL = LVL
+	monster.init_stats_by_lvl()
+
+func init_pair():
+	init_pair_lvl()
+	init_pair_stats()
+	init_pair_types()
+	init_pair_moves()
 	
-func match_pair(mon : Monster):
-	if mon.tamed:
-		monster = mon
-		init_pair_stats()
-		init_pair_types()
+func init():
+	init_pair()
+	matk = MATK
+	ratk = RATK
+	mdef = MDEF
+	rdef = RDEF
+	spe = SPE
+	def_count = 0
+	if last_hp or last_sp == null:
+		hp = HP
+		sp = SP
+	else:
+		hp = last_hp
+		sp = last_sp
+	
+	
 
 
 	

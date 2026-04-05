@@ -18,5 +18,7 @@ mult_spe = 1.5
 monster = ExtResource("1_afj3f")
 title = "Sam"
 sprite = ExtResource("4_wisod")
+is_player = true
+LVL = 10
 moveset = Array[ExtResource("1_jfxlw")]([ExtResource("3_ni8em")])
 metadata/_custom_type_script = "uid://b3634gbmjyvdf"

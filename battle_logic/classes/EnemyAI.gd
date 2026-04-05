@@ -22,8 +22,8 @@ func find_moves_and_targets(actor : Character,enemy_list:Array[Character] ,playe
 	var weights : Array[Dictionary]
 	for s in scores: 
 		var new_score := 0
-		if s["score"] >= -20:
-			new_score = int(pow(20 + s["score"],0.5))
+		if s["score"] >= -40:
+			new_score = int(pow(40 + s["score"],0.5))
 			total += new_score
 			s["score"] = new_score
 			weights.append(s)
@@ -114,7 +114,7 @@ func compute_range_all(actor : Character,move : Move,targets : Array[Character])
 	var total_player_score : Array[int]
 	for target in targets:
 		var p_score : int
-		if not target.is_player:
+		if not target is Player:
 			score -=10 
 		else:
 			p_score = super_effective(move,target) + attack_category(move,target) + kill_target(actor,move,target) + boosted(actor)
@@ -168,7 +168,7 @@ func boosted(actor):
 		return 0
 
 func heal(move,target):
-	if target.is_player or target.hp == target.HP:
+	if target is Player or target.hp == target.HP:
 		return -1000
 	else:	
 		if target.hp >= target.HP/2:

@@ -5,8 +5,8 @@
 [resource]
 script = ExtResource("1_3oysa")
 title = "thatsanattack"
-sp_cost = 10
+sp_cost = 5
 acc = 0.834
-power = 40
+power = 10
 move_range = 1
 metadata/_custom_type_script = "uid://dwkthqmibmlio"
