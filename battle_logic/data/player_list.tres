@@ -6,12 +6,13 @@
 [ext_resource type="Script" uid="uid://cungq3mefsa3k" path="res://battle_logic/classes/data classes/PlayerListData.gd" id="4_6pedf"]
 [ext_resource type="Resource" uid="uid://doei1jjen51c6" path="res://battle_logic/data/characters/monster/lenvyzotl.tres" id="4_30ha4"]
 [ext_resource type="Resource" uid="uid://d3nncms6xvetm" path="res://battle_logic/data/characters/player/ruth.tres" id="5_30ha4"]
+[ext_resource type="Resource" uid="uid://fvhy0p8qkxco" path="res://battle_logic/data/characters/monster/Sataragnis.tres" id="6_6pedf"]
 
 [resource]
 script = ExtResource("4_6pedf")
-character_list = Array[ExtResource("1_j08fj")]([ExtResource("2_bc6pm")])
-monster_list = Array[ExtResource("3_y0wgl")]([ExtResource("4_30ha4")])
-player_positions = Dictionary[ExtResource("1_j08fj"), Vector2]({
+character_list = Array[ExtResource("1_j08fj")]([ExtResource("2_bc6pm"), ExtResource("5_30ha4")])
+monster_list = Array[ExtResource("3_y0wgl")]([ExtResource("4_30ha4"), ExtResource("6_6pedf")])
+positions = Dictionary[ExtResource("1_j08fj"), Vector2]({
 ExtResource("2_bc6pm"): Vector2(150, 150),
 ExtResource("5_30ha4"): Vector2(150, 200)
 })

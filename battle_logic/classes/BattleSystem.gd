@@ -88,37 +88,39 @@ func player_setup(player : Player):
 		player.init()
 		
 		var chara_node = character_scene.instantiate()
+		$players.add_child(chara_node)
 		chara_node.setup(player)
 		chara_node.position = player_list_data.positions[player]
-		$players.add_child(chara_node)
 		character_nodes[player] = chara_node
 		
-		chara_button_setup(player)
+		chara_button_setup(player,ally_selection)
 		chara_status_setup(player,$UI/PlayerStatus)
+		
 	elif player.alive == false or player.hp <= 0:
-		_on_character_died(player)
+		print(player.title, " already dead !")
 
 func enemy_setup(enemy_data : EnemyBattleData):
 	var enemy = enemy_data.enemy.duplicate(true)
 	enemy.LVL = enemy_data.lvl
+	enemy.wild = true
 	enemy.init()
 	enemy_list.append(enemy)
 	
 	var chara_node = character_scene.instantiate()
+	$enemies.add_child(chara_node)
 	chara_node.setup(enemy)
 	chara_node.position = enemy_data.position
-	$enemies.add_child(chara_node)
 	character_nodes[enemy] = chara_node
 	
-	chara_button_setup(enemy)
+	chara_button_setup(enemy,enemy_selection)
 	chara_status_setup(enemy,$UI/EnemyStatus)
 
-func chara_button_setup(chara: Character):
+func chara_button_setup(chara: Character,group:VBoxContainer):
 	var button = character_button.instantiate()
 	button.character = chara
-	ally_selection.add_child(button)
+	group.add_child(button)
 
-func chara_status_setup(chara: Character,group : Node2D):
+func chara_status_setup(chara: Character,group : VBoxContainer):
 	var status_ui = character_status_ui.instantiate()
 	status_ui.find_child("Icon").texture = chara.sprite 
 	status_ui.find_child("HPBar").character = chara
@@ -141,21 +143,20 @@ func duplicate_title_fix():
 			var seen = title_seen_count.get(title, 0)
 			enemy.title += " " + letter_list[seen]
 			title_seen_count[title] = seen + 1
-			
 #endregion
 
 #region NEXT TURN
 
 func next_turn():
-	if player_list.size()+enemy_list.size() == 0: #TODO emergency solution when everyone dies during a turn, to change
-		change_state(BattleState.RESOLVE)
-		return
-	check_end_of_battle()
+	
 	for chara in player_list + enemy_list:
 		chara.effects_trigger()
 		chara.defending_check()
 		print(chara.title," : ", chara.hp)
-
+		
+	if check_end_of_battle():
+		return
+	
 	timeline = timeline.filter(func(entry): return entry["character"].alive)
 	
 	targets.clear()
@@ -244,9 +245,6 @@ func enemy_turn():
 	if player_list.is_empty():
 		change_state(BattleState.RESOLVE)
 	if action == null:
-		if player_list.size() == 0: #TODO same, emergency solution for end of battle
-			change_state(BattleState.RESOLVE)
-			return
 		print(actor, "has no possible actions")
 		pop_out()
 		change_state(BattleState.NEXT_TURN)
@@ -268,8 +266,9 @@ func act():
 	await tween_movement(actor_node,-shift)
 	#jouer les animations de move ici avec un await et en utilisant la variable qui store move
 	#refresh l'affichage de la barre de vie ici
-	
 	attack_compute()
+	if check_end_of_battle():
+		return
 	pop_out()
 	await tween_movement(actor_node,shift)
 	
@@ -307,13 +306,14 @@ func update_bars():
 
 #region RESOLVE and DIED
 
-func _on_character_died(character):
+func _on_character_died(character : Character):
 	if character in player_list:
 		player_list.erase(character)
 	elif character in enemy_list:
 		enemy_list.erase(character)
 
 	timeline = timeline.filter(func(entry): return entry["character"] != character)
+	
 	character_nodes[character].queue_free()
 	
 	for button in enemy_selection.get_children()+ally_selection.get_children():
@@ -322,14 +322,27 @@ func _on_character_died(character):
 			break 
 	
 func check_end_of_battle():
+	if enemy_list.size()+player_list.size()==0:
+		print("all actors are dead")
+		change_state(BattleState.RESOLVE)
+		return true
 	if enemy_list.is_empty():
-		print("Tous les ennemis sont morts")
+		print("all enemies dead")
 		change_state(BattleState.RESOLVE)
+		return true
 	if player_list.is_empty():
-		print("Tous les joueurs sont morts")
+		print("all players dead")
 		change_state(BattleState.RESOLVE)
+		return true
+	return false
 
 func resolve():
+	for p in player_list_data.character_list :
+		p.last_hp = p.hp
+		p.last_sp = p.sp
+		if p.alive == false:
+			p.last_hp = 0
+			p.last_sp = 0
 	print("fin du combat")
 	await get_tree().create_timer(1.0).timeout
 	var main = get_tree().get_first_node_in_group("main")
@@ -371,9 +384,6 @@ func update_timeline_display():
 			slot.find_child("TextureRect").texture = null 
 
 func pop_out():
-	if player_list.size()+enemy_list.size() == 0: #TODO emergency solution blabblah
-		change_state(BattleState.RESOLVE)
-		return
 	if timeline[0]["character"].alive == false:
 		return
 	timeline[0]["character"].pop_out()

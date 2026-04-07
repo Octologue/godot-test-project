@@ -34,5 +34,6 @@ func init_player_stats():
 	var mon_list : Array = player_data.monster_list
 	for i in range(character_list.size()):
 		character_list[i].monster = mon_list[i].duplicate(true)
+		character_list[i].init_pair()
 		
 	

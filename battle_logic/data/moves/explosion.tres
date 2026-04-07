@@ -5,8 +5,8 @@
 [resource]
 script = ExtResource("1_n3x3c")
 title = "EXPLOSION"
-sp_cost = 80
-acc = 0.5
+sp_cost = 1
+acc = 1.0
 power = 500
 type = 1
 category = 1

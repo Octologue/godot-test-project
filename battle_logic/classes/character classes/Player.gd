@@ -11,8 +11,8 @@ class_name Player
 
 @export var monster : Monster
 
-var last_hp : int
-var last_sp : int
+var last_hp 
+var last_sp 
 
 func init_pair_stats():
 	HP = mult_hp*monster.HP
@@ -41,14 +41,13 @@ func init_pair():
 	init_pair_moves()
 	
 func init():
-	init_pair()
 	matk = MATK
 	ratk = RATK
 	mdef = MDEF
 	rdef = RDEF
 	spe = SPE
 	def_count = 0
-	if last_hp or last_sp == null:
+	if last_hp == null or last_sp == null:
 		hp = HP
 		sp = SP
 	else:

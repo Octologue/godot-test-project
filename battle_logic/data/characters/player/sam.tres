@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://dwkthqmibmlio" path="res://battle_logic/classes/Move.gd" id="1_jfxlw"]
 [ext_resource type="Script" uid="uid://b3634gbmjyvdf" path="res://battle_logic/classes/character classes/Player.gd" id="2_afj3f"]
 [ext_resource type="Resource" uid="uid://dhrlu7qtqc72e" path="res://battle_logic/data/moves/thatsanattack.tres" id="3_ni8em"]
+[ext_resource type="Resource" uid="uid://cy1700oi5gg43" path="res://battle_logic/data/moves/explosion.tres" id="4_urdw0"]
 [ext_resource type="Texture2D" uid="uid://bfxywgud0bk3s" path="res://battle_logic/sprites/New Piskel (3).png" id="4_wisod"]
 
 [resource]
@@ -18,7 +19,6 @@ mult_spe = 1.5
 monster = ExtResource("1_afj3f")
 title = "Sam"
 sprite = ExtResource("4_wisod")
-is_player = true
-LVL = 10
-moveset = Array[ExtResource("1_jfxlw")]([ExtResource("3_ni8em")])
+LVL = 2
+moveset = Array[ExtResource("1_jfxlw")]([ExtResource("3_ni8em"), ExtResource("4_urdw0")])
 metadata/_custom_type_script = "uid://b3634gbmjyvdf"
