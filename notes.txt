@@ -6,4 +6,20 @@ git commit -m "message"
 git push
 
 
-problème avec l'appel de fin de combat
+var base_HP = 50
+var base_SP = 30
+var base_MATK = 10
+var base_RATK = 10
+var base_MDEF = 8
+var base_RDEF = 8
+var base_SPE = 5
+
+var HP
+var SP
+var MATK
+var RATK
+var MDEF
+var RDEF
+var SPE
+
+donner à monster des valeurs de base de cette façon

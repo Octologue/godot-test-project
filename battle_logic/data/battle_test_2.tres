@@ -1,12 +1,17 @@
 [gd_resource type="Resource" script_class="BattleData" format=3 uid="uid://cuomjobrq4c3a"]
 
-[ext_resource type="Script" uid="uid://daasw55bdrk7d" path="res://battle_logic/classes/character classes/Character.gd" id="1_q1rg6"]
-[ext_resource type="Resource" path="res://battle_logic/data/characters/enemy1.tres" id="2_4mej1"]
+[ext_resource type="Script" uid="uid://kub2o8mb8p7b" path="res://battle_logic/classes/data classes/EnemyBattleData.gd" id="1_q1rg6"]
+[ext_resource type="Resource" uid="uid://fvhy0p8qkxco" path="res://battle_logic/data/characters/monster/Sataragnis.tres" id="2_4mej1"]
 [ext_resource type="Script" uid="uid://cei210h2ftix8" path="res://battle_logic/classes/data classes/BattleData.gd" id="2_isl8k"]
-[ext_resource type="Resource" path="res://battle_logic/data/characters/enemy2.tres" id="3_ovoy4"]
+
+[sub_resource type="Resource" id="Resource_ovoy4"]
+script = ExtResource("1_q1rg6")
+enemy = ExtResource("2_4mej1")
+lvl = 60
+position = Vector2(500, 200)
+metadata/_custom_type_script = "uid://kub2o8mb8p7b"
 
 [resource]
 script = ExtResource("2_isl8k")
-enemy_list = Array[ExtResource("1_q1rg6")]([ExtResource("2_4mej1"), ExtResource("3_ovoy4")])
-enemy_pos = Array[Vector2]([Vector2(500, 100), Vector2(500, 200)])
+enemy_list = Array[ExtResource("1_q1rg6")]([SubResource("Resource_ovoy4")])
 metadata/_custom_type_script = "uid://cei210h2ftix8"

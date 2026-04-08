@@ -1,0 +1,116 @@
+[gd_scene format=3 uid="uid://c3mykk33cw6vj"]
+
+[node name="StatusUI" type="Control" unique_id=418098878]
+custom_minimum_size = Vector2(300, 200)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 300.0
+offset_bottom = 200.0
+
+[node name="Title" type="Label" parent="." unique_id=1808615713]
+layout_mode = 0
+offset_left = 140.0
+offset_top = 1.0
+offset_right = 241.0
+offset_bottom = 29.0
+
+[node name="LVL" type="Label" parent="." unique_id=394340085]
+layout_mode = 0
+offset_left = 232.0
+offset_top = 1.0
+offset_right = 285.0
+offset_bottom = 29.0
+
+[node name="Monster" type="Label" parent="." unique_id=202703622]
+layout_mode = 0
+offset_left = 140.0
+offset_top = 31.0
+offset_right = 241.0
+offset_bottom = 59.0
+
+[node name="HPBar" type="ProgressBar" parent="." unique_id=1221809302]
+z_index = 1
+layout_mode = 0
+offset_left = 140.0
+offset_top = 59.000004
+offset_right = 335.6571
+offset_bottom = 86.0
+scale = Vector2(0.75131434, 0.75131434)
+show_percentage = false
+
+[node name="Label" type="Label" parent="HPBar" unique_id=1038945175]
+z_index = 2
+layout_mode = 0
+offset_left = 6.6549973
+offset_right = 69.21205
+offset_bottom = 27.95102
+text = "HP"
+
+[node name="SPBar" type="ProgressBar" parent="." unique_id=1217894981]
+z_index = 1
+layout_mode = 0
+offset_left = 140.0
+offset_top = 81.0
+offset_right = 335.6571
+offset_bottom = 108.0
+scale = Vector2(0.75131434, 0.75131434)
+show_percentage = false
+
+[node name="Label" type="Label" parent="SPBar" unique_id=1166471366]
+z_index = 2
+layout_mode = 0
+offset_left = 6.6549973
+offset_right = 69.21205
+offset_bottom = 27.95102
+text = "SP
+"
+
+[node name="Panel" type="Panel" parent="." unique_id=794748830]
+layout_mode = 1
+offset_right = 140.0
+offset_bottom = 140.0
+
+[node name="Icon" type="TextureRect" parent="Panel" unique_id=1167240382]
+texture_filter = 1
+layout_mode = 1
+offset_top = -1.0
+offset_right = 140.0
+offset_bottom = 139.0
+
+[node name="Stats" type="GridContainer" parent="." unique_id=932432789]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 0
+offset_left = 143.0
+offset_top = 102.0
+offset_right = 302.81998
+offset_bottom = 206.0
+scale = Vector2(0.90101373, 0.90101373)
+columns = 2
+
+[node name="HP" type="Label" parent="Stats" unique_id=1362013204]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
+[node name="SP" type="Label" parent="Stats" unique_id=1682198017]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
+[node name="MATK" type="Label" parent="Stats" unique_id=818413383]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
+[node name="RATK" type="Label" parent="Stats" unique_id=384833130]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
+[node name="MDEF" type="Label" parent="Stats" unique_id=280061099]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
+[node name="RDEF" type="Label" parent="Stats" unique_id=381395316]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
+[node name="SPE" type="Label" parent="Stats" unique_id=976858940]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2

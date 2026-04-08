@@ -4,18 +4,20 @@
 [ext_resource type="Resource" uid="uid://fvhy0p8qkxco" path="res://battle_logic/data/characters/monster/Sataragnis.tres" id="1_wshqq"]
 [ext_resource type="Script" uid="uid://b3634gbmjyvdf" path="res://battle_logic/classes/character classes/Player.gd" id="2_1upds"]
 [ext_resource type="Texture2D" uid="uid://dmngb0ey8t2kx" path="res://battle_logic/sprites/New Piskel (4).png" id="3_1upds"]
+[ext_resource type="Resource" uid="uid://c50f42eg8hg2s" path="res://battle_logic/data/moves/haste_status.tres" id="3_xd6ug"]
 
 [resource]
 script = ExtResource("2_1upds")
 mult_hp = 1.0
-mult_sp = 0.5
+mult_sp = 1.0
 mult_ratk = 1.0
-mult_matk = 2.0
-mult_rdef = 0.5
-mult_mdef = 1.0
-mult_spe = 2.0
+mult_matk = 1.5
+mult_rdef = 0.75
+mult_mdef = 0.75
+mult_spe = 1.5
 monster = ExtResource("1_wshqq")
 title = "Ruth"
 sprite = ExtResource("3_1upds")
-LVL = 2
+LVL = 10
+moveset = Array[ExtResource("1_jnovy")]([ExtResource("3_xd6ug")])
 metadata/_custom_type_script = "uid://b3634gbmjyvdf"

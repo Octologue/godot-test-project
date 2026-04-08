@@ -5,6 +5,7 @@ class_name Monster
 @export var LVL_r : int
 @export var LVL_g : int
 @export var LVL_m : int
+@export var xp_base : int
 var wild : bool = false
 
 func mon_level_up(chara : Player):

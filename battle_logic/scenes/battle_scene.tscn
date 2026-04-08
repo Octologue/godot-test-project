@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bwmvjsqmsetd1" path="res://battle_logic/classes/BattleSystem.gd" id="1_pihux"]
 
 [node name="battleScene" type="Node2D" unique_id=582481188]
+process_mode = 1
 script = ExtResource("1_pihux")
 
 [node name="players" type="Node2D" parent="." unique_id=650177504]

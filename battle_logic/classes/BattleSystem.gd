@@ -43,6 +43,8 @@ var actor : Character
 var move_used : Move
 var targets : Array
 
+var performances : Dictionary = {}
+
 var enemy_ai : EnemyAI = EnemyAI.new()
 
 func change_state(new_state):
@@ -75,6 +77,7 @@ func battle_init(battle_data_OW):
 func start():
 	for p in player_list_data.character_list:
 		player_setup(p)
+		performances[p] = {"damage": 0,"healing": 0,"status": 0,"enemies_killed":[]}
 	for e in battle_data.enemy_list:
 		enemy_setup(e)
 	duplicate_title_fix()
@@ -95,6 +98,7 @@ func player_setup(player : Player):
 		
 		chara_button_setup(player,ally_selection)
 		chara_status_setup(player,$UI/PlayerStatus)
+		
 		
 	elif player.alive == false or player.hp <= 0:
 		print(player.title, " already dead !")
@@ -266,7 +270,7 @@ func act():
 	await tween_movement(actor_node,-shift)
 	#jouer les animations de move ici avec un await et en utilisant la variable qui store move
 	#refresh l'affichage de la barre de vie ici
-	attack_compute()
+	move_compute()
 	if check_end_of_battle():
 		return
 	pop_out()
@@ -279,19 +283,29 @@ func tween_movement(node,shift):
 	tween.tween_property(node, "position", node.position + shift, 0.2)
 	await tween.finished
 
-func attack_compute():
+func move_compute():
 	if move_used.sp_cost <= actor.sp:
 		actor.sp -= move_used.sp_cost
 		update_bars()
 		for target in targets:
 			if move_used.category == move_used.Categories.MELEE or move_used.category == move_used.Categories.RANGED:
-				target.get_attacked(actor, move_used)
+				var dmg = target.get_attacked(actor, move_used)
+				if actor is Player:
+					performances[actor]["damage"] += dmg
+					if target.alive == false:
+						performances[actor]["enemies_killed"].append(target)
 				update_bars()
 			if move_used.category == move_used.Categories.HEAL:
-				target.get_healed(move_used)
+				var amount = target.get_healed(move_used)
+				if actor is Player:
+					performances[actor]["healing"] += amount
 				update_bars()
 			if move_used.category == move_used.Categories.STATUS:
-				target.get_status(move_used)
+				var applied = target.get_status(move_used)
+				if actor is Player:
+					performances[actor]["status"] += applied
+					if target is Monster and target.alive == false:
+						performances[actor]["enemies_killed"].append(target)
 		print (actor.title, " now has ",actor.sp," SP")
 	else:
 		print(actor.title," does not have enough SP : ",actor.sp,", cost : ",move_used.sp_cost)
@@ -336,6 +350,22 @@ func check_end_of_battle():
 		return true
 	return false
 
+func compute_xp_by_performances():
+	for player in performances.keys():
+		var stats = performances[player]
+
+		var xp := 0
+
+		xp += stats["damage"] * 0.5
+		print("damage : ",xp)
+		xp += stats["healing"] * 0.5
+		xp += stats["status"] * 10
+		
+		for e in stats["enemies_killed"]:
+			xp += e.xp_base * (float(e.LVL)/float(player.LVL))
+
+		player.add_xp(xp)
+	
 func resolve():
 	for p in player_list_data.character_list :
 		p.last_hp = p.hp
@@ -344,6 +374,10 @@ func resolve():
 			p.last_hp = 0
 			p.last_sp = 0
 	print("fin du combat")
+	print(performances)
+	compute_xp_by_performances()
+	for p in player_list:
+		print(p.XP)
 	await get_tree().create_timer(1.0).timeout
 	var main = get_tree().get_first_node_in_group("main")
 	main.stop_battle_encounter()

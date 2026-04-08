@@ -8,10 +8,11 @@
 
 [resource]
 script = ExtResource("2_i0vxc")
+xp_base = 600
 title = "Lenvyzotl"
 sprite = ExtResource("5_gbs0u")
-HP = 30
-SP = 30
+HP = 40
+SP = 40
 MATK = 20
 RATK = 20
 MDEF = 20

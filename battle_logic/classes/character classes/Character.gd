@@ -112,9 +112,10 @@ func defending_check():
 func get_attacked(attacker: Character, move: Move):
 	if not alive:
 		return
-	
+	var dmg := 0
 	if randf()<= move.acc:
-		hp -= compute_damage(attacker,move)
+		dmg = compute_damage(attacker,move)
+		hp -= dmg
 		print(title, " attacked by ", attacker.title, " with ",move.title, " and now has ", hp, " HP.")
 		
 		if randf() <= move.proc:
@@ -124,6 +125,7 @@ func get_attacked(attacker: Character, move: Move):
 	
 	if hp <= 0:
 		die()
+	return dmg
 
 func compute_damage(attacker,move):
 	var damage : int
@@ -145,12 +147,15 @@ func compute_damage(attacker,move):
 	return damage
 
 func get_healed(move : Move):
+	var hp_before = hp
 	hp += move.power
 	print(title," get healed ",move.power," and now has ",hp," HP")
-
+	return hp-hp_before
+	
 func get_status(move : Move):
 	if randf() <= move.acc and randf() <= move.proc:
 		effect_proc(move.effect)
+	return 1
 
 func effect_proc(effect:Effect):
 	var new = true

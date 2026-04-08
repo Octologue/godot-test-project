@@ -14,6 +14,10 @@ class_name Player
 var last_hp 
 var last_sp 
 
+var XP : int
+
+#FIXME à chaque init les stats se multiplies (voir dans monster init_stat_by_lvl)
+
 func init_pair_stats():
 	HP = mult_hp*monster.HP
 	SP = mult_sp*monster.SP
@@ -28,7 +32,9 @@ func init_pair_types():
 	weaknesses = monster.weaknesses
 	
 func init_pair_moves():
-	moveset += monster.moveset
+	for i in monster.moveset:
+		if i not in moveset:
+			moveset.append(i)
 
 func init_pair_lvl():
 	monster.LVL = LVL
@@ -41,6 +47,7 @@ func init_pair():
 	init_pair_moves()
 	
 func init():
+	init_pair()
 	matk = MATK
 	ratk = RATK
 	mdef = MDEF
@@ -54,7 +61,16 @@ func init():
 		hp = last_hp
 		sp = last_sp
 	
-	
+func add_xp(amount):
+	XP += amount
+	print(xp_to_next_lvl())
+	while XP >= xp_to_next_lvl():
+		XP -= xp_to_next_lvl()
+		LVL+=1
+		init()
+		print(title," got to level ",LVL," stats : HP = ",HP," hp = ",hp)
 
+func xp_to_next_lvl():
+	return 2*LVL*LVL+100*LVL
 
 	

@@ -11,14 +11,14 @@ func _ready():
 	add_to_group("main")
 	init_player_stats()
 	randomize() 
-
+	
 func initiate_battle_encounter(enemy_OW : CharacterBody2D):
 	overworld.process_mode = Node.PROCESS_MODE_DISABLED
 	overworld.hide()
 	enemy_OW.queue_free()
 	battle_scene = battle_scene_data.instantiate()
 	self.add_child(battle_scene)
-	battle_scene.process_mode = Node.PROCESS_MODE_INHERIT
+	battle_scene.process_mode = Node.PROCESS_MODE_PAUSABLE
 	battle_scene.battle_init(enemy_OW.battle_data)
 	camera_ow.enabled = false
 	
@@ -26,7 +26,7 @@ func stop_battle_encounter():
 	battle_scene.queue_free()
 	battle_scene.process_mode = Node.PROCESS_MODE_DISABLED
 	overworld.show()
-	overworld.process_mode = Node.PROCESS_MODE_INHERIT
+	overworld.process_mode = Node.PROCESS_MODE_PAUSABLE
 	camera_ow.enabled = true
 
 func init_player_stats():
@@ -34,6 +34,14 @@ func init_player_stats():
 	var mon_list : Array = player_data.monster_list
 	for i in range(character_list.size()):
 		character_list[i].monster = mon_list[i].duplicate(true)
-		character_list[i].init_pair()
-		
+		character_list[i].init()
+
+func _input(event):
+	if event.is_action_pressed("pause"):
+		toggle_pause()
 	
+func toggle_pause():
+	var is_paused = get_tree().paused
+	get_tree().paused = !is_paused
+	$CanvasLayer/PauseMenu.visible = !is_paused
+	$CanvasLayer/PauseMenu.open_menu($CanvasLayer/PauseMenu/Menu)
