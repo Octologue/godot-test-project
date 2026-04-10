@@ -30,18 +30,20 @@ func stop_battle_encounter():
 	camera_ow.enabled = true
 
 func init_player_stats():
-	var character_list : Array = player_data.character_list
-	var mon_list : Array = player_data.monster_list
+	var character_list : Array = player_data.player_list
 	for i in range(character_list.size()):
-		character_list[i].monster = mon_list[i].duplicate(true)
 		character_list[i].init()
+	
+	for i in player_data.monster_list.size():
+		player_data.monster_list[i] = player_data.monster_list[i].duplicate(true)
 
 func _input(event):
 	if event.is_action_pressed("pause"):
 		toggle_pause()
 	
 func toggle_pause():
-	var is_paused = get_tree().paused
-	get_tree().paused = !is_paused
-	$CanvasLayer/PauseMenu.visible = !is_paused
-	$CanvasLayer/PauseMenu.open_menu($CanvasLayer/PauseMenu/Menu)
+	if get_node_or_null("/root/Main/battleScene") == null:
+		var is_paused = get_tree().paused
+		get_tree().paused = !is_paused
+		$CanvasLayer/PauseMenu.visible = !is_paused
+		$CanvasLayer/PauseMenu.open_menu($CanvasLayer/PauseMenu/Menu)

@@ -10,29 +10,29 @@ var alive : bool = true
 
 # --- main stats ---
 
-@export var HP : int
+var HP : int
 var hp : int:
 	set(value):
 		hp = clamp(value,0,HP)
-@export var SP : int
+var SP : int
 var sp : int:
 	set(value):
 			sp = clamp(value,0,SP)
 
 # --- offense and defense ---
 
-@export var MATK : int
+var MATK : int
 var matk : int 
-@export var RATK : int
+var RATK : int
 var ratk : int
-@export var MDEF : int 
+var MDEF : int 
 var mdef : int
-@export var RDEF : int
+var RDEF : int
 var rdef : int
 
 # --- turn order ---
 
-@export var SPE : int 
+var SPE : int 
 var spe : int :
 	set(value):
 		spe = value

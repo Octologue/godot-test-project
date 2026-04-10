@@ -5,20 +5,30 @@ class_name Monster
 @export var LVL_r : int
 @export var LVL_g : int
 @export var LVL_m : int
+
 @export var xp_base : int
+
+@export var base_HP : int
+@export var base_SP : int
+@export var base_MATK : int
+@export var base_RATK : int
+@export var base_MDEF : int
+@export var base_RDEF : int
+@export var base_SPE : int
+
 var wild : bool = false
 
 func mon_level_up(chara : Player):
 	pass #apprendra des movesets en fonction du personnage
 
 func init_stats_by_lvl():
-	HP += LVL*2
-	SP += LVL*2
-	MATK += LVL*2
-	RATK += LVL*2
-	MDEF += LVL*2
-	RDEF += LVL*2
-	SPE += LVL*2
+	HP = base_HP + LVL*2
+	SP = base_SP + LVL*2
+	MATK = base_MATK + LVL*2
+	RATK = base_RATK + LVL*2
+	MDEF = base_MDEF + LVL*2
+	RDEF = base_RDEF + LVL*2
+	SPE = base_SPE + LVL*2
 
 func init():
 	var mult := 0.0

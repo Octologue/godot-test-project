@@ -9,15 +9,15 @@
 [resource]
 script = ExtResource("2_i0vxc")
 xp_base = 600
+base_HP = 40
+base_SP = 40
+base_MATK = 20
+base_RATK = 20
+base_MDEF = 20
+base_RDEF = 20
+base_SPE = 10
 title = "Lenvyzotl"
 sprite = ExtResource("5_gbs0u")
-HP = 40
-SP = 40
-MATK = 20
-RATK = 20
-MDEF = 20
-RDEF = 20
-SPE = 10
 moveset = Array[ExtResource("1_ulq42")]([ExtResource("2_i5qm6"), ExtResource("3_gbs0u")])
 resistances = Array[int]([1])
 weaknesses = Array[int]([3])

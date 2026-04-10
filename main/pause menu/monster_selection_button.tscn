@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://o8in3k2j88uo"]
+
+[ext_resource type="Script" uid="uid://dmdp2c2d02nyx" path="res://main/pause menu/monster_selection_button.gd" id="1_3jgxx"]
+
+[node name="MonsterSelectionButton" type="Button" unique_id=953349415]
+offset_right = 8.0
+offset_bottom = 8.0
+script = ExtResource("1_3jgxx")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

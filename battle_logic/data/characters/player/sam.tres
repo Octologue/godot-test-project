@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Player" format=3 uid="uid://da0gujohodbmt"]
 
-[ext_resource type="Resource" uid="uid://doei1jjen51c6" path="res://battle_logic/data/characters/monster/lenvyzotl.tres" id="1_afj3f"]
 [ext_resource type="Script" uid="uid://dwkthqmibmlio" path="res://battle_logic/classes/Move.gd" id="1_jfxlw"]
+[ext_resource type="Resource" uid="uid://biqemdwdn7ca1" path="res://battle_logic/data/characters/monster/no_monster.tres" id="1_urdw0"]
 [ext_resource type="Script" uid="uid://b3634gbmjyvdf" path="res://battle_logic/classes/character classes/Player.gd" id="2_afj3f"]
 [ext_resource type="Resource" uid="uid://dhrlu7qtqc72e" path="res://battle_logic/data/moves/thatsanattack.tres" id="3_ni8em"]
 [ext_resource type="Resource" uid="uid://u5byi67no46i" path="res://battle_logic/data/moves/heal_ally.tres" id="4_urdw0"]
@@ -16,7 +16,7 @@ mult_matk = 1.25
 mult_rdef = 1.25
 mult_mdef = 1.25
 mult_spe = 1.25
-monster = ExtResource("1_afj3f")
+monster = ExtResource("1_urdw0")
 title = "Sam"
 sprite = ExtResource("4_wisod")
 LVL = 10

@@ -1,6 +1,6 @@
 extends Button
 
-@export var move : Move :
+var move : Move :
 	set(value):
 		move = value
 		text = value.title

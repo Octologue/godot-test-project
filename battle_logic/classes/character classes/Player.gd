@@ -9,14 +9,18 @@ class_name Player
 @export_range(0,2) var mult_mdef : float
 @export_range(0,2) var mult_spe : float
 
-@export var monster : Monster
+@export var monster : Monster:
+	set(value):
+		if value == null:
+			monster = no_monster
+		else:
+			monster = value
+var no_monster : Monster = preload("res://battle_logic/data/characters/monster/no_monster.tres")
 
 var last_hp 
 var last_sp 
 
 var XP : int
-
-#FIXME à chaque init les stats se multiplies (voir dans monster init_stat_by_lvl)
 
 func init_pair_stats():
 	HP = mult_hp*monster.HP

@@ -8,7 +8,7 @@ class_name BattleSystem
 @onready var move_button = preload("res://battle_logic/scenes/move_button.tscn")
 @onready var character_button = preload("res://battle_logic/scenes/character_button.tscn")
 @onready var character_status_ui = preload("res://battle_logic/scenes/character_status.tscn")
-var player_list_data = load("res://battle_logic/data/player_list.tres")
+var player_data = load("res://battle_logic/data/player_list.tres")
 var battle_data : BattleData
 
 # --- nodes ---
@@ -62,9 +62,9 @@ func _ready():
 	EventBus.target_selected.connect(character_button_pressed)
 	EventBus.selected_move.connect(move_button_pressed)
 	EventBus.speed_changed.connect(sort_and_display)
-	
 	attack_button.pressed.connect(show_move_selection) 
 	defend_button.pressed.connect(defend)
+	print(get_path())
 
 #endregion
 
@@ -75,7 +75,7 @@ func battle_init(battle_data_OW):
 	change_state(BattleState.START)
 
 func start():
-	for p in player_list_data.character_list:
+	for p in player_data.player_list:
 		player_setup(p)
 		performances[p] = {"damage": 0,"healing": 0,"status": 0,"enemies_killed":[]}
 	for e in battle_data.enemy_list:
@@ -93,7 +93,7 @@ func player_setup(player : Player):
 		var chara_node = character_scene.instantiate()
 		$players.add_child(chara_node)
 		chara_node.setup(player)
-		chara_node.position = player_list_data.positions[player]
+		chara_node.position = player_data.player_positions[player]
 		character_nodes[player] = chara_node
 		
 		chara_button_setup(player,ally_selection)
@@ -367,7 +367,7 @@ func compute_xp_by_performances():
 		player.add_xp(xp)
 	
 func resolve():
-	for p in player_list_data.character_list :
+	for p in player_data.player_list :
 		p.last_hp = p.hp
 		p.last_sp = p.sp
 		if p.alive == false:

@@ -7,6 +7,13 @@
 [resource]
 script = ExtResource("2_eyoj1")
 xp_base = 10
+base_HP = 10
+base_SP = 10
+base_MATK = 10
+base_RATK = 10
+base_MDEF = 10
+base_RDEF = 10
+base_SPE = 10
 title = "test mon"
 sprite = ExtResource("3_eyoj1")
 LVL = 1
