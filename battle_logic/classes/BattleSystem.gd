@@ -183,6 +183,8 @@ func player_turn():
 func defend():
 	options.hide()
 	actor.defending = true
+	actor.sp += 10
+	update_bars()
 	pop_out()
 	change_state(BattleState.NEXT_TURN)
 	

@@ -1,11 +1,9 @@
 [gd_scene format=3 uid="uid://cs62d74xm8gv5"]
 
 [ext_resource type="Script" uid="uid://f8i8kchhifji" path="res://main/main.gd" id="1_3wy1v"]
-[ext_resource type="PackedScene" uid="uid://dbkis5dvec1fy" path="res://overworld/enemy_overworld.tscn" id="2_kfbq2"]
-[ext_resource type="Resource" uid="uid://tlcu2vl4c42x" path="res://battle_logic/data/battle_test.tres" id="3_4dugh"]
 [ext_resource type="PackedScene" uid="uid://dgc1n6gyhngsp" path="res://overworld/player_overworld.tscn" id="4_67ri8"]
-[ext_resource type="Resource" uid="uid://cuomjobrq4c3a" path="res://battle_logic/data/battle_test_2.tres" id="5_grrlh"]
 [ext_resource type="Script" uid="uid://cghfce5eg4ec1" path="res://main/pause menu/pause_menu.gd" id="6_kfbq2"]
+[ext_resource type="PackedScene" uid="uid://cx63t31a5ge3v" path="res://main/debug.tscn" id="7_4dugh"]
 
 [node name="Main" type="Node2D" unique_id=489681701]
 process_mode = 3
@@ -14,23 +12,7 @@ script = ExtResource("1_3wy1v")
 [node name="Overworld" type="Node2D" parent="." unique_id=198990490]
 process_mode = 1
 
-[node name="enemy_overworld" parent="Overworld" unique_id=1347632052 instance=ExtResource("2_kfbq2")]
-position = Vector2(153, -40)
-battle_data = ExtResource("3_4dugh")
-
-[node name="enemy_overworld3" parent="Overworld" unique_id=939962912 instance=ExtResource("2_kfbq2")]
-position = Vector2(67, 39)
-battle_data = ExtResource("3_4dugh")
-
-[node name="enemy_overworld4" parent="Overworld" unique_id=1936897355 instance=ExtResource("2_kfbq2")]
-position = Vector2(83, -117)
-battle_data = ExtResource("3_4dugh")
-
 [node name="PlayerOverworld" parent="Overworld" unique_id=1795755204 instance=ExtResource("4_67ri8")]
-
-[node name="enemy_overworld2" parent="Overworld" unique_id=1865161962 instance=ExtResource("2_kfbq2")]
-position = Vector2(-148, -98)
-battle_data = ExtResource("5_grrlh")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1466001128]
 
@@ -45,6 +27,19 @@ offset_left = -640.0
 offset_bottom = 320.0
 grow_horizontal = 0
 script = ExtResource("6_kfbq2")
+
+[node name="Back" type="Button" parent="CanvasLayer/PauseMenu" unique_id=1749524245]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -66.0
+offset_top = -31.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "back"
 
 [node name="Menu" type="VBoxContainer" parent="CanvasLayer/PauseMenu" unique_id=1407588737]
 layout_mode = 1
@@ -64,17 +59,14 @@ alignment = 1
 layout_mode = 2
 text = "status"
 
-[node name="InventoryButton" type="Button" parent="CanvasLayer/PauseMenu/Menu" unique_id=1665398850]
-layout_mode = 2
-text = "inventory"
-
-[node name="Monsters" type="Button" parent="CanvasLayer/PauseMenu/Menu" unique_id=2121773596]
-layout_mode = 2
-text = "monsters"
-
 [node name="Settings" type="Button" parent="CanvasLayer/PauseMenu/Menu" unique_id=1533621174]
+visible = false
 layout_mode = 2
 text = "settings"
+
+[node name="DebugButton" type="Button" parent="CanvasLayer/PauseMenu/Menu" unique_id=1765003478]
+layout_mode = 2
+text = "debug"
 
 [node name="Quit" type="Button" parent="CanvasLayer/PauseMenu/Menu" unique_id=2089039229]
 layout_mode = 2
@@ -107,19 +99,6 @@ offset_right = 1198.0
 offset_bottom = 296.0
 scale = Vector2(0.5, 0.5)
 alignment = 1
-
-[node name="Back" type="Button" parent="CanvasLayer/PauseMenu" unique_id=1749524245]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -66.0
-offset_top = -31.0
-grow_horizontal = 0
-grow_vertical = 0
-text = "back"
 
 [node name="Monsters" type="Control" parent="CanvasLayer/PauseMenu" unique_id=907978661]
 visible = false
@@ -167,9 +146,12 @@ offset_right = 347.0
 offset_bottom = 222.0
 text = "pair"
 
-[connection signal="pressed" from="CanvasLayer/PauseMenu/Menu/StatusButton" to="CanvasLayer/PauseMenu" method="_on_status_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/PauseMenu/Menu/InventoryButton" to="CanvasLayer/PauseMenu" method="_on_inventory_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/PauseMenu/Menu/Monsters" to="CanvasLayer/PauseMenu" method="_on_monsters_pressed"]
-[connection signal="pressed" from="CanvasLayer/PauseMenu/Menu/Quit" to="CanvasLayer/PauseMenu" method="_on_quit_pressed"]
+[node name="Debug" parent="CanvasLayer/PauseMenu" unique_id=793920557 instance=ExtResource("7_4dugh")]
+visible = false
+layout_mode = 1
+
 [connection signal="pressed" from="CanvasLayer/PauseMenu/Back" to="CanvasLayer/PauseMenu" method="_on_back_pressed"]
+[connection signal="pressed" from="CanvasLayer/PauseMenu/Menu/StatusButton" to="CanvasLayer/PauseMenu" method="_on_status_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/PauseMenu/Menu/DebugButton" to="CanvasLayer/PauseMenu" method="_on_debug_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/PauseMenu/Menu/Quit" to="CanvasLayer/PauseMenu" method="_on_quit_pressed"]
 [connection signal="pressed" from="CanvasLayer/PauseMenu/Monsters/PairButton" to="CanvasLayer/PauseMenu" method="_on_pair_button_pressed"]

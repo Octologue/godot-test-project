@@ -1,8 +1,7 @@
 [gd_resource type="Resource" script_class="BattleData" format=3 uid="uid://tlcu2vl4c42x"]
 
 [ext_resource type="Script" uid="uid://kub2o8mb8p7b" path="res://battle_logic/classes/data classes/EnemyBattleData.gd" id="1_euk07"]
-[ext_resource type="Resource" uid="uid://doei1jjen51c6" path="res://battle_logic/data/characters/monster/lenvyzotl.tres" id="2_euk07"]
-[ext_resource type="Resource" uid="uid://d3p161ogmgau7" path="res://battle_logic/data/characters/monster/test_monster.tres" id="3_aox2c"]
+[ext_resource type="Resource" uid="uid://doei1jjen51c6" path="res://battle_logic/data/characters/monsters/01_lenvyzotl_l.tres" id="2_euk07"]
 [ext_resource type="Script" uid="uid://cei210h2ftix8" path="res://battle_logic/classes/data classes/BattleData.gd" id="3_q0f2h"]
 
 [sub_resource type="Resource" id="Resource_v3gdg"]
@@ -12,9 +11,12 @@ lvl = 6
 position = Vector2(450, 100)
 metadata/_custom_type_script = "uid://kub2o8mb8p7b"
 
+[sub_resource type="Resource" id="Resource_q0f2h"]
+metadata/__load_path__ = "res://battle_logic/data/characters/monster/test_monster.tres"
+
 [sub_resource type="Resource" id="Resource_4avrj"]
 script = ExtResource("1_euk07")
-enemy = ExtResource("3_aox2c")
+enemy = SubResource("Resource_q0f2h")
 lvl = 2
 position = Vector2(400, 150)
 metadata/_custom_type_script = "uid://kub2o8mb8p7b"

@@ -1,10 +1,10 @@
 extends Character
 class_name Monster
 
-@export var LVL_s : int
-@export var LVL_r : int
-@export var LVL_g : int
-@export var LVL_m : int
+var LVL_s : int
+var LVL_r : int
+var LVL_g : int
+var LVL_m : int
 
 @export var xp_base : int
 

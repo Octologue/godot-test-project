@@ -12,16 +12,25 @@ func _ready():
 	init_player_stats()
 	randomize() 
 	
-func initiate_battle_encounter(enemy_OW : CharacterBody2D):
+#func initiate_battle_encounter(enemy_OW : CharacterBody2D):
+	#overworld.process_mode = Node.PROCESS_MODE_DISABLED
+	#overworld.hide()
+	#enemy_OW.queue_free()
+	#battle_scene = battle_scene_data.instantiate()
+	#self.add_child(battle_scene)
+	#battle_scene.process_mode = Node.PROCESS_MODE_PAUSABLE
+	#battle_scene.battle_init(enemy_OW.battle_data)
+	#camera_ow.enabled = false
+
+func initiate_battle_encounter(battle_data):
 	overworld.process_mode = Node.PROCESS_MODE_DISABLED
 	overworld.hide()
-	enemy_OW.queue_free()
 	battle_scene = battle_scene_data.instantiate()
 	self.add_child(battle_scene)
 	battle_scene.process_mode = Node.PROCESS_MODE_PAUSABLE
-	battle_scene.battle_init(enemy_OW.battle_data)
+	battle_scene.battle_init(battle_data)
 	camera_ow.enabled = false
-	
+
 func stop_battle_encounter():
 	battle_scene.queue_free()
 	battle_scene.process_mode = Node.PROCESS_MODE_DISABLED
@@ -33,9 +42,6 @@ func init_player_stats():
 	var character_list : Array = player_data.player_list
 	for i in range(character_list.size()):
 		character_list[i].init()
-	
-	for i in player_data.monster_list.size():
-		player_data.monster_list[i] = player_data.monster_list[i].duplicate(true)
 
 func _input(event):
 	if event.is_action_pressed("pause"):

@@ -8,7 +8,8 @@ var history := []
 var current_menu = null
 
 func _ready():
-	EventBus.target_selected.connect(on_character_selected)
+	#EventBus.target_selected.connect(on_character_selected)
+	pass
 
 func open_menu(new_menu:Control):
 	if current_menu != null:
@@ -19,9 +20,12 @@ func open_menu(new_menu:Control):
 
 func _on_inventory_button_pressed() :
 	for p in player_data.player_list:
-		p.last_hp += 1000
-		p.last_sp += 1000
-		p.alive = true
+		if p.last_hp == null:
+			pass
+		else:
+			p.last_hp += 1000
+			p.last_sp += 1000
+			p.alive = true
 
 #back --------------------------------------------------------------------------
 
@@ -71,39 +75,7 @@ func refresh_status():
 		ui.find_child("RDEF").text = "RDEF : " + str(p.RDEF)
 		ui.find_child("SPE").text = "SPE : " + str(p.SPE)
 
-#monster selection -------------------------------------------------------------
-#FIXME faire en sorte qu'on ne puisse pas associer le même monstre à deux persos
-var selected_player = Player
-var selected_monster = Monster
+#debug -------------------------------------------------------------------------
 
-func _on_monsters_pressed() :
-	refresh_monster_selection()
-	open_menu($Monsters)
-
-func refresh_monster_selection():
-	selected_player = null
-	selected_monster = null
-	for child in $Monsters/MonsterSelect.get_children()+$Monsters/PlayerSelect.get_children():
-		child.queue_free()
-	for p in player_data.player_list:
-		var button = character_button.instantiate()
-		button.character = p
-		$Monsters/PlayerSelect.add_child(button)
-	for m in player_data.monster_list:
-		for p in player_data.player_list:
-			if p.monster == m:
-				break
-		var button = character_button.instantiate()
-		button.character = m
-		$Monsters/MonsterSelect.add_child(button)
-
-func on_character_selected(chara):
-	if chara is Player :
-		selected_player = chara
-	elif chara is Monster:
-		selected_monster = chara
-
-func _on_pair_button_pressed() :
-	if selected_player != null:
-		selected_player.monster = selected_monster
-		selected_player.init()
+func _on_debug_button_pressed() -> void:
+	open_menu($Debug)

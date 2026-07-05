@@ -15,7 +15,7 @@ class_name Player
 			monster = no_monster
 		else:
 			monster = value
-var no_monster : Monster = preload("res://battle_logic/data/characters/monster/no_monster.tres")
+var no_monster : Monster = preload("res://battle_logic/data/characters/monsters/no_monster.tres")
 
 var last_hp 
 var last_sp 

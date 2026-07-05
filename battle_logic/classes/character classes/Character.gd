@@ -6,7 +6,7 @@ class_name Character
 @export var title : String
 @export var sprite : Texture2D
 var alive : bool = true
-@export var LVL : int
+var LVL : int
 
 # --- main stats ---
 

@@ -9,16 +9,16 @@
 [resource]
 script = ExtResource("2_i0vxc")
 xp_base = 600
-base_HP = 40
+base_HP = 20
 base_SP = 40
-base_MATK = 20
-base_RATK = 20
-base_MDEF = 20
+base_MATK = 35
+base_RATK = 30
+base_MDEF = 25
 base_RDEF = 20
-base_SPE = 10
+base_SPE = 30
 title = "Lenvyzotl"
 sprite = ExtResource("5_gbs0u")
 moveset = Array[ExtResource("1_ulq42")]([ExtResource("2_i5qm6"), ExtResource("3_gbs0u")])
-resistances = Array[int]([1])
-weaknesses = Array[int]([3])
+resistances = Array[int]([3])
+weaknesses = Array[int]([2])
 metadata/_custom_type_script = "uid://biyn0e4u1vgcb"
