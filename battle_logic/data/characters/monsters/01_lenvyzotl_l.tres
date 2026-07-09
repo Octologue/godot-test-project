@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Monster" format=3 uid="uid://doei1jjen51c6"]
 
-[ext_resource type="Script" uid="uid://dwkthqmibmlio" path="res://battle_logic/classes/Move.gd" id="1_ulq42"]
-[ext_resource type="Script" uid="uid://biyn0e4u1vgcb" path="res://battle_logic/classes/character classes/Monster.gd" id="2_i0vxc"]
+[ext_resource type="Script" uid="uid://dwkthqmibmlio" path="res://battle_logic/scripts/Move.gd" id="1_ulq42"]
+[ext_resource type="Script" uid="uid://biyn0e4u1vgcb" path="res://battle_logic/scripts/character classes/Monster.gd" id="2_i0vxc"]
 [ext_resource type="Resource" uid="uid://cv8lh8med48ox" path="res://battle_logic/data/moves/accurate.tres" id="2_i5qm6"]
 [ext_resource type="Resource" uid="uid://bgmxxytax8t2j" path="res://battle_logic/data/moves/attack_poison.tres" id="3_gbs0u"]
 [ext_resource type="Texture2D" uid="uid://q1uvyss5iyyt" path="res://battle_logic/sprites/New Piskel (2).png" id="5_gbs0u"]

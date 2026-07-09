@@ -21,7 +21,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-EventBus="*uid://bdl58y6sq6uo8"
+BattleEvent="*uid://bdl58y6sq6uo8"
 Globals="*uid://c41234ewnp3m1"
 
 [display]

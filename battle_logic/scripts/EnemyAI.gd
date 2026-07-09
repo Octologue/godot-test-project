@@ -14,9 +14,9 @@ func find_moves_and_targets(actor : Character,enemy_list:Array[Character] ,playe
 		var target_names := []
 		for t in s["targets"]:
 			target_names.append(t.title)
-		print("Move:", s["move"].title,
-		  "| Targets:", target_names,
-		  "| Score:", s["score"])
+		#print("Move:", s["move"].title,
+		  #"| Targets:", target_names,
+		  #"| Score:", s["score"])
 	
 	var total := 0
 	var weights : Array[Dictionary]
@@ -43,7 +43,7 @@ func find_moves_and_targets(actor : Character,enemy_list:Array[Character] ,playe
 	
 	scores.clear()
 	cumul = 0
-	print(actor.title," choosed move : ", choosed_move.title," and targets : ",choosed_targets.map(func(i):return i.title))
+	#print(actor.title," choosed move : ", choosed_move.title," and targets : ",choosed_targets.map(func(i):return i.title))
 	return {"targets":choosed_targets,"move":choosed_move}
 
 func sort_by_score(a,b):
@@ -143,7 +143,6 @@ func super_effective(move,target) :
 func kill_target(actor,move,target):
 	#do not count in normalization
 	if target.compute_damage(actor,move) > target.hp:
-		print("achève l'enemy")
 		return 80
 	else:
 		return 0

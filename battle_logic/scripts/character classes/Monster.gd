@@ -35,11 +35,19 @@ func init():
 	if wild:
 		mult = 1.5
 	init_stats_by_lvl()
-	matk = MATK*mult
-	ratk = RATK*mult
-	mdef = MDEF*mult
-	rdef = RDEF*mult
-	spe = SPE*mult
-	sp = SP*mult
-	hp = HP*mult
-	
+	MATK = MATK*mult
+	RATK = RATK*mult
+	MDEF = MDEF*mult
+	RDEF = RDEF*mult
+	SPE = SPE*mult
+	SP = SP*mult
+	if wild:
+		SP*=2
+	HP = HP*mult
+	matk = MATK
+	ratk = RATK
+	mdef = MDEF
+	rdef = RDEF
+	spe = SPE
+	hp = HP
+	sp = SP

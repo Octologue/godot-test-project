@@ -6,7 +6,7 @@ class_name Character
 @export var title : String
 @export var sprite : Texture2D
 var alive : bool = true
-var LVL : int
+@export var LVL : int
 
 # --- main stats ---
 
@@ -77,6 +77,7 @@ func queue_reset():
 			queue.append(delay)
 		else:
 			queue.append(queue[-1] + delay)
+		
 
 func pop_out():
 	if not alive:
@@ -88,9 +89,8 @@ func die():
 	if not alive:
 		return  
 	alive = false
-	print(title, " died")
 
-	EventBus.character_died.emit(self)
+	BattleEvent.character_died.emit(self)
 
 #endregion
 
@@ -99,15 +99,18 @@ func die():
 func defending_check():
 	if defending : 
 		def_count += 1
+		sp += 30
 		if def_count == 1:
 			hold_def = [rdef,mdef]
 			rdef *= 5
 			mdef *= 5
+			BattleEvent.started_defending.emit(self)
 	if def_count > 3 :
 		defending = false
 		rdef = hold_def[0]
 		mdef = hold_def[1]
 		def_count = 0
+		BattleEvent.stoped_defending.emit(self)
 
 func get_attacked(attacker: Character, move: Move):
 	if not alive:
@@ -116,12 +119,13 @@ func get_attacked(attacker: Character, move: Move):
 	if randf()<= move.acc:
 		dmg = compute_damage(attacker,move)
 		hp -= dmg
-		print(title, " attacked by ", attacker.title, " with ",move.title, " and now has ", hp, " HP.")
-		
+		BattleEvent.damage_inflicted.emit(dmg, self)
 		if randf() <= move.proc:
-			effect_proc(move.effect)
+			effect_proc(move, attacker)
 	else:
-		print(attacker.title," attack's missed ",title)
+		BattleEvent.attack_missed.emit(self)
+		pass
+		
 	
 	if hp <= 0:
 		die()
@@ -144,49 +148,47 @@ func compute_damage(attacker,move):
 		type_modifier = 1
 
 	damage = damage * randf_range(0.9,1.1) * type_modifier
+	
 	return damage
 
 func get_healed(move : Move):
 	var hp_before = hp
 	hp += move.power
-	print(title," get healed ",move.power," and now has ",hp," HP")
+	
 	return hp-hp_before
 	
-func get_status(move : Move):
+func get_status(move : Move, attacker : Character):
 	if randf() <= move.acc and randf() <= move.proc:
-		effect_proc(move.effect)
+		effect_proc(move, attacker)
 	return 1
 
-func effect_proc(effect:Effect):
-	var new = true
-	for e in effects:
-		if e.title == effect.title:
-			if effect.cumulable == true:
-				e.duration += effect.duration
-			new = false
-			break
-	if new != false:
-		var new_effect = effect.duplicate()
-		effects.append(new_effect)
-		if new_effect is StatChange:
-			new_effect.trigger(self)
-			if new_effect.stat == effect.Stats.SPE:
-				EventBus.speed_changed.emit()
+func effect_proc(move:Move, attacker : Character):
+	if move.effect is OneTimeEffect:
+		move.effect.trigger(self,move,attacker)
+	elif move.effect is StatusEffect:
+		var new = true
+		for e in effects:
+			if e.title == move.effect.title:
+				if move.effect.cumulable == true:
+					e.duration += move.effect.duration
+				new = false
+				break
+		if new != false:
+			var new_effect = move.effect.duplicate()
+			new_effect.owner = self
+			new_effect.sender = attacker
+			new_effect.signal_init()
+			effects.append(new_effect)
+			new_effect.apply()
+			BattleEvent.status_proc.emit(new_effect,self)
 
-	print (effect.title, " has proc and affect ", title)
-
-func effects_trigger():
+func effects_tick():
 	for effect in effects:
 		effect.duration -= 1
-		if effect is not StatChange:
-			effect.trigger(self)
-			if HP <= 0:
-				die()
 		if effect.duration == 0:
-			effect.stop_trigger(self)
+			BattleEvent.status_stop.emit(effect,self)
+			effect.remove()
 			effects.erase(effect)
-			if effect is StatChange and effect.stat == effect.Stats.SPE:
-				EventBus.speed_changed.emit()
 
 #endregion
 

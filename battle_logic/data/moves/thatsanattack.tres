@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="Move" format=3 uid="uid://dhrlu7qtqc72e"]
 
-[ext_resource type="Script" uid="uid://dwkthqmibmlio" path="res://battle_logic/classes/Move.gd" id="1_3oysa"]
+[ext_resource type="Script" uid="uid://dwkthqmibmlio" path="res://battle_logic/scripts/Move.gd" id="1_3oysa"]
 
 [resource]
 script = ExtResource("1_3oysa")

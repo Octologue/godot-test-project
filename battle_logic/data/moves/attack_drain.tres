@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="Move" format=3 uid="uid://b1p8tj5q5gg7o"]
+
+[ext_resource type="Script" uid="uid://bemff31tx5qc7" path="res://battle_logic/scripts/effect classes/Drain.gd" id="1_ai43e"]
+[ext_resource type="Script" uid="uid://dwkthqmibmlio" path="res://battle_logic/scripts/Move.gd" id="1_feicc"]
+
+[sub_resource type="Resource" id="Resource_1fsp6"]
+script = ExtResource("1_ai43e")
+power = 0.5
+title = "drain"
+metadata/_custom_type_script = "uid://bemff31tx5qc7"
+
+[resource]
+script = ExtResource("1_feicc")
+title = "attack drain"
+acc = 1.0
+power = 50
+type = 11
+proc = 1.0
+effect = SubResource("Resource_1fsp6")
+move_range = 1
+metadata/_custom_type_script = "uid://dwkthqmibmlio"

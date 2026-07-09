@@ -8,7 +8,7 @@ class_name BattleSystem
 @onready var move_button = preload("res://battle_logic/scenes/move_button.tscn")
 @onready var character_button = preload("res://battle_logic/scenes/character_button.tscn")
 @onready var character_status_ui = preload("res://battle_logic/scenes/character_status.tscn")
-var player_data = load("res://battle_logic/data/player_list.tres")
+var player_data = load("res://battle_logic/data/player_data.tres")
 var battle_data : BattleData
 
 # --- nodes ---
@@ -58,13 +58,14 @@ func change_state(new_state):
 		BattleState.RESOLVE: resolve()
 
 func _ready():
-	EventBus.character_died.connect(_on_character_died)
-	EventBus.target_selected.connect(character_button_pressed)
-	EventBus.selected_move.connect(move_button_pressed)
-	EventBus.speed_changed.connect(sort_and_display)
+	BattleEvent.character_died.connect(_on_character_died)
+	BattleEvent.target_selected.connect(character_button_pressed)
+	BattleEvent.selected_move.connect(move_button_pressed)
+	BattleEvent.speed_changed.connect(sort_and_display)
+	BattleEvent.hp_or_sp_changed.connect(update_bars)
 	attack_button.pressed.connect(show_move_selection) 
 	defend_button.pressed.connect(defend)
-	print(get_path())
+
 
 #endregion
 
@@ -99,7 +100,6 @@ func player_setup(player : Player):
 		chara_button_setup(player,ally_selection)
 		chara_status_setup(player,$UI/PlayerStatus)
 		
-		
 	elif player.alive == false or player.hp <= 0:
 		print(player.title, " already dead !")
 
@@ -126,9 +126,11 @@ func chara_button_setup(chara: Character,group:VBoxContainer):
 
 func chara_status_setup(chara: Character,group : VBoxContainer):
 	var status_ui = character_status_ui.instantiate()
+	status_ui.character = chara
 	status_ui.find_child("Icon").texture = chara.sprite 
 	status_ui.find_child("HPBar").character = chara
 	status_ui.find_child("SPBar").character = chara
+	status_ui.find_child("Title").text = chara.title
 	group.add_child(status_ui)
 	update_bars()
 	
@@ -154,25 +156,28 @@ func duplicate_title_fix():
 func next_turn():
 	
 	for chara in player_list + enemy_list:
-		chara.effects_trigger()
+		chara.effects_tick()
 		chara.defending_check()
-		print(chara.title," : ", chara.hp)
-		
+	
+	$battleLog.show_current_text()
+	BattleEvent.turn_end.emit()
+	$battleLog.new_turn()
+
 	if check_end_of_battle():
 		return
-	
+
 	timeline = timeline.filter(func(entry): return entry["character"].alive)
-	
+
 	targets.clear()
 	actor = timeline[0]["character"]
 	if actor.defending:
 		actor.defending_check()
-	
+		
 	if actor is Player:
 		change_state(BattleState.PLAYER_TURN)
 	else:
 		change_state(BattleState.ENEMY_TURN)
-		
+
 #endregion
 
 #region PLAYER TURN
@@ -251,7 +256,8 @@ func enemy_turn():
 	if player_list.is_empty():
 		change_state(BattleState.RESOLVE)
 	if action == null:
-		print(actor, "has no possible actions")
+		
+		BattleEvent.enemy_cant_act.emit(actor)
 		pop_out()
 		change_state(BattleState.NEXT_TURN)
 	else:
@@ -287,6 +293,7 @@ func tween_movement(node,shift):
 
 func move_compute():
 	if move_used.sp_cost <= actor.sp:
+		BattleEvent.action_done.emit(actor,move_used,targets)
 		actor.sp -= move_used.sp_cost
 		update_bars()
 		for target in targets:
@@ -303,20 +310,23 @@ func move_compute():
 					performances[actor]["healing"] += amount
 				update_bars()
 			if move_used.category == move_used.Categories.STATUS:
-				var applied = target.get_status(move_used)
+				var applied = target.get_status(move_used,actor)
 				if actor is Player:
 					performances[actor]["status"] += applied
 					if target is Monster and target.alive == false:
 						performances[actor]["enemies_killed"].append(target)
-		print (actor.title, " now has ",actor.sp," SP")
+		
 	else:
-		print(actor.title," does not have enough SP : ",actor.sp,", cost : ",move_used.sp_cost)
+		BattleEvent.not_enough_sp.emit(actor,move_used)
 
 func update_bars():
 	for child in $UI/PlayerStatus.get_children()+$UI/EnemyStatus.get_children():
 		child.find_child("HPBar").update_bar()
 		child.find_child("SPBar").update_bar()
-	
+
+func update_status():
+	for child in $UI/PlayerStatus.get_children()+$UI/EnemyStatus.get_children():
+		pass
 
 #endregion
 
@@ -327,6 +337,7 @@ func _on_character_died(character : Character):
 		player_list.erase(character)
 	elif character in enemy_list:
 		enemy_list.erase(character)
+	character.effects.clear()
 
 	timeline = timeline.filter(func(entry): return entry["character"] != character)
 	
@@ -336,6 +347,7 @@ func _on_character_died(character : Character):
 		if button.character == character:
 			button.queue_free()
 			break 
+	BattleEvent.character_died_log.emit(character)
 	
 func check_end_of_battle():
 	if enemy_list.size()+player_list.size()==0:
@@ -359,7 +371,6 @@ func compute_xp_by_performances():
 		var xp := 0
 
 		xp += stats["damage"] * 0.5
-		print("damage : ",xp)
 		xp += stats["healing"] * 0.5
 		xp += stats["status"] * 10
 		
@@ -376,10 +387,8 @@ func resolve():
 			p.last_hp = 0
 			p.last_sp = 0
 	print("fin du combat")
-	print(performances)
+	#print(performances)
 	compute_xp_by_performances()
-	for p in player_list:
-		print(p.XP)
 	await get_tree().create_timer(1.0).timeout
 	var main = get_tree().get_first_node_in_group("main")
 	main.stop_battle_encounter()
@@ -391,7 +400,7 @@ func resolve():
 
 func sort_and_display():
 	sort_combined_queue()
-	update_timeline_display()
+	$graphics.update_timeline_display()
 
 func sort_combined_queue():
 	var player_time_list = []
@@ -407,17 +416,9 @@ func sort_combined_queue():
 	timeline = player_time_list
 	timeline.append_array(enemy_time_list)
 	timeline.sort_custom(sort_by_time)
+	
 func sort_by_time(a,b):
 	return a["time"] < b["time"]
-
-func update_timeline_display():
-	var index : int = 0
-	for slot in timeline_UI.get_children():
-		if index < timeline.size():
-			slot.find_child("TextureRect").texture = timeline[index]["character"].sprite
-			index += 1
-		else:
-			slot.find_child("TextureRect").texture = null 
 
 func pop_out():
 	if timeline[0]["character"].alive == false:

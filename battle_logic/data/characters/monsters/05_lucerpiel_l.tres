@@ -1,9 +1,8 @@
 [gd_resource type="Resource" script_class="Monster" format=3 uid="uid://hbtmpt4bsok5"]
 
-[ext_resource type="Script" uid="uid://dwkthqmibmlio" path="res://battle_logic/classes/Move.gd" id="1_tb0qu"]
-[ext_resource type="Resource" uid="uid://c50f42eg8hg2s" path="res://battle_logic/data/moves/haste_status.tres" id="2_b7amc"]
+[ext_resource type="Script" uid="uid://dwkthqmibmlio" path="res://battle_logic/scripts/Move.gd" id="1_tb0qu"]
 [ext_resource type="Resource" uid="uid://cv8lh8med48ox" path="res://battle_logic/data/moves/accurate.tres" id="3_vk6l5"]
-[ext_resource type="Script" uid="uid://biyn0e4u1vgcb" path="res://battle_logic/classes/character classes/Monster.gd" id="4_7pqrn"]
+[ext_resource type="Script" uid="uid://biyn0e4u1vgcb" path="res://battle_logic/scripts/character classes/Monster.gd" id="4_7pqrn"]
 [ext_resource type="Texture2D" uid="uid://c5lepnllp8msa" path="res://battle_logic/sprites/New Piskel (1).png" id="5_op8m0"]
 
 [resource]
@@ -18,7 +17,7 @@ base_RDEF = 30
 base_SPE = 30
 title = "Lucerpiel"
 sprite = ExtResource("5_op8m0")
-moveset = Array[ExtResource("1_tb0qu")]([ExtResource("2_b7amc"), ExtResource("3_vk6l5")])
+moveset = Array[ExtResource("1_tb0qu")]([ExtResource("3_vk6l5")])
 resistances = Array[int]([5])
 weaknesses = Array[int]([8])
 metadata/_custom_type_script = "uid://biyn0e4u1vgcb"

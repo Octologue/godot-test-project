@@ -1,11 +1,11 @@
 [gd_resource type="Resource" script_class="BattleResourcesList" format=3 uid="uid://dgbgalh5y1tis"]
 
-[ext_resource type="Script" uid="uid://biyn0e4u1vgcb" path="res://battle_logic/classes/character classes/Monster.gd" id="1_46pgd"]
+[ext_resource type="Script" uid="uid://biyn0e4u1vgcb" path="res://battle_logic/scripts/character classes/Monster.gd" id="1_46pgd"]
 [ext_resource type="Resource" uid="uid://doei1jjen51c6" path="res://battle_logic/data/characters/monsters/01_lenvyzotl_l.tres" id="2_wp0o1"]
 [ext_resource type="Resource" uid="uid://fvhy0p8qkxco" path="res://battle_logic/data/characters/monsters/03_sataragnis_l.tres" id="3_7iaxr"]
 [ext_resource type="Resource" uid="uid://hbtmpt4bsok5" path="res://battle_logic/data/characters/monsters/05_lucerpiel_l.tres" id="4_pe1mv"]
 [ext_resource type="Resource" uid="uid://b51w467p6khjq" path="res://battle_logic/data/characters/monsters/07_pasynaloth_l.tres" id="5_16b4r"]
-[ext_resource type="Script" uid="uid://dwkthqmibmlio" path="res://battle_logic/classes/Move.gd" id="6_wvyck"]
+[ext_resource type="Script" uid="uid://dwkthqmibmlio" path="res://battle_logic/scripts/Move.gd" id="6_wvyck"]
 [ext_resource type="Resource" uid="uid://cv8lh8med48ox" path="res://battle_logic/data/moves/accurate.tres" id="7_e6ipu"]
 [ext_resource type="Resource" uid="uid://c50f42eg8hg2s" path="res://battle_logic/data/moves/haste_status.tres" id="8_cmylq"]
 [ext_resource type="Resource" uid="uid://cy1700oi5gg43" path="res://battle_logic/data/moves/explosion.tres" id="9_55n6a"]
@@ -13,7 +13,7 @@
 [ext_resource type="Resource" uid="uid://bf6iis5ysvasj" path="res://battle_logic/data/moves/unaccurate.tres" id="11_23miv"]
 [ext_resource type="Resource" uid="uid://bgmxxytax8t2j" path="res://battle_logic/data/moves/attack_poison.tres" id="12_xqdcn"]
 [ext_resource type="Resource" uid="uid://dhrlu7qtqc72e" path="res://battle_logic/data/moves/thatsanattack.tres" id="13_45jup"]
-[ext_resource type="Script" uid="uid://uy7fpdvbgjnl" path="res://battle_logic/classes/data classes/battle_resources_list.gd" id="14_h4wq0"]
+[ext_resource type="Script" uid="uid://uy7fpdvbgjnl" path="res://battle_logic/scripts/data classes/battle_resources_list.gd" id="14_h4wq0"]
 
 [resource]
 script = ExtResource("14_h4wq0")

@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="Poison" format=3 uid="uid://bgi2c2f6emgpy"]
 
-[ext_resource type="Script" uid="uid://bqnrnm1pydene" path="res://battle_logic/classes/effect classes/Poison.gd" id="1_uo3nj"]
+[ext_resource type="Script" uid="uid://bqnrnm1pydene" path="res://battle_logic/scripts/effect classes/Poison.gd" id="1_uo3nj"]
 
 [resource]
 script = ExtResource("1_uo3nj")

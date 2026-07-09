@@ -1,12 +1,12 @@
 [gd_resource type="Resource" script_class="PlayerData" format=3 uid="uid://4ujcajlfd680"]
 
-[ext_resource type="Script" uid="uid://b3634gbmjyvdf" path="res://battle_logic/classes/character classes/Player.gd" id="1_j08fj"]
+[ext_resource type="Script" uid="uid://b3634gbmjyvdf" path="res://battle_logic/scripts/character classes/Player.gd" id="1_j08fj"]
 [ext_resource type="Resource" uid="uid://da0gujohodbmt" path="res://battle_logic/data/characters/players/sam.tres" id="2_y0wgl"]
 [ext_resource type="Resource" uid="uid://d3nncms6xvetm" path="res://battle_logic/data/characters/players/ruth.tres" id="3_30ha4"]
-[ext_resource type="Script" uid="uid://biyn0e4u1vgcb" path="res://battle_logic/classes/character classes/Monster.gd" id="3_y0wgl"]
+[ext_resource type="Script" uid="uid://biyn0e4u1vgcb" path="res://battle_logic/scripts/character classes/Monster.gd" id="3_y0wgl"]
 [ext_resource type="Resource" uid="uid://b21err8sfviq5" path="res://battle_logic/data/characters/players/gabriel.tres" id="4_6pedf"]
 [ext_resource type="Resource" uid="uid://dmxiajnh42ewa" path="res://battle_logic/data/characters/players/morgane.tres" id="5_35ync"]
-[ext_resource type="Script" uid="uid://cungq3mefsa3k" path="res://battle_logic/classes/data classes/PlayerData.gd" id="7_6pedf"]
+[ext_resource type="Script" uid="uid://cungq3mefsa3k" path="res://battle_logic/scripts/data classes/PlayerData.gd" id="7_6pedf"]
 
 [resource]
 script = ExtResource("7_6pedf")

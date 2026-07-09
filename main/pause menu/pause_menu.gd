@@ -1,6 +1,6 @@
 extends Control
 
-@onready var player_data = preload("res://battle_logic/data/player_list.tres")
+@onready var player_data = preload("res://battle_logic/data/player_data.tres")
 @onready var status_ui = preload("res://main/pause menu/status_ui.tscn")
 @onready var character_button = preload("res://battle_logic/scenes/character_button.tscn")
 

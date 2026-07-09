@@ -7,4 +7,4 @@ var move : Move :
 		
 
 func _on_pressed():
-	EventBus.selected_move.emit(move)
+	BattleEvent.selected_move.emit(move)

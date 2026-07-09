@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="Monster" format=3 uid="uid://fvhy0p8qkxco"]
 
-[ext_resource type="Script" uid="uid://dwkthqmibmlio" path="res://battle_logic/classes/Move.gd" id="1_xappy"]
+[ext_resource type="Script" uid="uid://dwkthqmibmlio" path="res://battle_logic/scripts/Move.gd" id="1_xappy"]
 [ext_resource type="Resource" uid="uid://cv8lh8med48ox" path="res://battle_logic/data/moves/accurate.tres" id="2_82i8a"]
-[ext_resource type="Script" uid="uid://biyn0e4u1vgcb" path="res://battle_logic/classes/character classes/Monster.gd" id="3_7c8qg"]
+[ext_resource type="Script" uid="uid://biyn0e4u1vgcb" path="res://battle_logic/scripts/character classes/Monster.gd" id="3_7c8qg"]
 [ext_resource type="Texture2D" uid="uid://k0p4yw0c7ipv" path="res://battle_logic/sprites/New Piskel.png" id="4_chkj2"]
 
 [resource]
@@ -18,6 +18,6 @@ base_SPE = 45
 title = "Sataragnis"
 sprite = ExtResource("4_chkj2")
 moveset = Array[ExtResource("1_xappy")]([ExtResource("2_82i8a")])
-resistances = Array[int]([1])
-weaknesses = Array[int]([2])
+resistances = Array[int]([2])
+weaknesses = Array[int]([1])
 metadata/_custom_type_script = "uid://biyn0e4u1vgcb"

@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="Monster" format=3 uid="uid://biqemdwdn7ca1"]
 
-[ext_resource type="Script" uid="uid://dwkthqmibmlio" path="res://battle_logic/classes/Move.gd" id="1_d5sbo"]
-[ext_resource type="Script" uid="uid://biyn0e4u1vgcb" path="res://battle_logic/classes/character classes/Monster.gd" id="2_u24s4"]
+[ext_resource type="Script" uid="uid://dwkthqmibmlio" path="res://battle_logic/scripts/Move.gd" id="1_d4h75"]
+[ext_resource type="Script" uid="uid://biyn0e4u1vgcb" path="res://battle_logic/scripts/character classes/Monster.gd" id="2_qngbh"]
 
 [resource]
-script = ExtResource("2_u24s4")
+script = ExtResource("2_qngbh")
 base_HP = 10
 base_SP = 10
 base_MATK = 10
