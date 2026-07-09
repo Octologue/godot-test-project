@@ -20,7 +20,7 @@ func apply():
 			BattleEvent.speed_changed.emit()
 			owner.spe *= power
 
-	
+
 func remove():
 	match stat:
 		Stats.MATK:

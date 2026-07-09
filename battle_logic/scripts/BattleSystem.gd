@@ -162,10 +162,9 @@ func next_turn():
 	$battleLog.show_current_text()
 	BattleEvent.turn_end.emit()
 	$battleLog.new_turn()
-
+	
 	if check_end_of_battle():
 		return
-
 	timeline = timeline.filter(func(entry): return entry["character"].alive)
 
 	targets.clear()
@@ -252,11 +251,12 @@ func move_button_pressed(move):
 #region ENEMY TURN
 
 func enemy_turn():
+
 	var action = enemy_ai.find_moves_and_targets(actor,enemy_list,player_list)
+
 	if player_list.is_empty():
 		change_state(BattleState.RESOLVE)
 	if action == null:
-		
 		BattleEvent.enemy_cant_act.emit(actor)
 		pop_out()
 		change_state(BattleState.NEXT_TURN)
@@ -279,12 +279,13 @@ func act():
 	#jouer les animations de move ici avec un await et en utilisant la variable qui store move
 	#refresh l'affichage de la barre de vie ici
 	move_compute()
+	
 	if check_end_of_battle():
 		return
 	pop_out()
 	await tween_movement(actor_node,shift)
-	
 	change_state(BattleState.NEXT_TURN)
+	
 
 func tween_movement(node,shift):
 	var tween = get_tree().create_tween()

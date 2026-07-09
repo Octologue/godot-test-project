@@ -1,4 +1,3 @@
-
 class_name EnemyAI
 
 var scores : Array[Dictionary]
@@ -59,16 +58,16 @@ func compute_total_scores(actor,enemy_list,player_list):
 				for p in player_list:
 					scores.append({"targets":[p],"move":move,"score":compute_score(actor,move,[p])})
 			move.Ranges.ENEMIES:
-				scores.append({"targets":player_list,"move":move,"score":compute_score(actor,move,player_list)})
+				scores.append({"targets":player_list.duplicate(),"move":move,"score":compute_score(actor,move,player_list)})
 			move.Ranges.ALLY:
 				for e in enemy_list:
 					scores.append({"targets":[e],"move":move,"score":compute_score(actor,move,[e])})
 			move.Ranges.ALLIES:
-				scores.append({"targets":enemy_list,"move":move,"score":compute_score(actor,move,enemy_list)})
+				scores.append({"targets":enemy_list.duplicate(),"move":move,"score":compute_score(actor,move,enemy_list)})
 			move.Ranges.SELF:
-				scores.append({"targets":[actor],"move":move,"score":compute_score(actor,move,actor)})
+				scores.append({"targets":[actor],"move":move,"score":compute_score(actor,move,[actor])})
 			move.Ranges.ALL:
-				scores.append({"targets":enemy_list+player_list,"move":move,"score":compute_range_all(actor,move,enemy_list+player_list)})
+				scores.append({"targets":enemy_list.duplicate()+player_list.duplicate(),"move":move,"score":compute_range_all(actor,move,enemy_list+player_list)})
 
 func compute_score(actor : Character,move : Move, targets : Array[Character]) :
 #compute for single target or self moves
