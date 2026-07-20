@@ -1,11 +1,11 @@
 extends Node2D
 
 @onready var overworld = $Overworld
-@onready var battle_scene_data = preload("res://battle_logic/scenes/battle_scene.tscn")
+@onready var battle_scene_data = preload("res://battle_system/battle_scene.tscn")
 var battle_scene
 @onready var camera_ow = $Overworld/PlayerOverworld/CameraOW
 @onready var camera_battle = $battleScene/CameraBattle
-@onready var player_data = preload("res://battle_logic/data/player_data.tres")
+@onready var player_data = preload("res://battle_system/data/player_data.tres")
 
 func _ready():
 	add_to_group("main")

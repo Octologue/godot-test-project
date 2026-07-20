@@ -1,7 +1,7 @@
 extends Control
 
-var player_data = load("res://battle_logic/data/player_data.tres")
-var resource_list_data = load("res://battle_logic/data/battle_resources_list.tres")
+var player_data = load("res://battle_system/data/player_data.tres")
+var resource_list_data = load("res://battle_system/data/battle_resources_list.tres")
 var monster_list : Array[Monster]
 @onready var mon_select_list = [$SAMcontainer/HBoxContainer2/SamMonsterOptions,
 								$RUTHcontainer/HBoxContainer2/RuthMonsterOptions,

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Move" format=3 uid="uid://c50f42eg8hg2s"]
+
+[ext_resource type="Resource" uid="uid://bs1lrj35ivw3l" path="res://battle_system/data/effects/haste.tres" id="1_3c56t"]
+[ext_resource type="Script" uid="uid://dwkthqmibmlio" path="res://battle_system/battle_logic/classes/Move.gd" id="2_avge5"]
+
+[resource]
+script = ExtResource("2_avge5")
+title = "haste"
+acc = 1.0
+power = 10
+category = 3
+proc = 1.0
+effect = ExtResource("1_3c56t")
+move_range = 4
+metadata/_custom_type_script = "uid://dwkthqmibmlio"

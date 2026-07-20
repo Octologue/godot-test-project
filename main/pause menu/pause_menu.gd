@@ -1,8 +1,8 @@
 extends Control
 
-@onready var player_data = preload("res://battle_logic/data/player_data.tres")
+@onready var player_data = preload("res://battle_system/data/player_data.tres")
 @onready var status_ui = preload("res://main/pause menu/status_ui.tscn")
-@onready var character_button = preload("res://battle_logic/scenes/character_button.tscn")
+@onready var character_button = preload("res://battle_system/UI/scenes/character_button.tscn")
 
 var history := []
 var current_menu = null

@@ -1,0 +1,21 @@
+[gd_resource type="Theme" format=3 uid="uid://xhpe33r4quah"]
+
+[ext_resource type="FontFile" uid="uid://c52r4klt8kwak" path="res://assets/fonts/PixeloidMono-nAOpP.ttf" id="1_y7dmo"]
+[ext_resource type="StyleBox" uid="uid://jmpcq1a0efri" path="res://assets/themes/basic_button.tres" id="2_hqevx"]
+[ext_resource type="StyleBox" uid="uid://bbjq58j8s5bdw" path="res://assets/themes/basic_button_hover.tres" id="2_n00km"]
+[ext_resource type="StyleBox" uid="uid://bhtnn1l3s0dy5" path="res://assets/themes/basic_window.tres" id="2_y7dmo"]
+[ext_resource type="StyleBox" uid="uid://dwhrt7d4y3fh2" path="res://assets/themes/basic_button_pressed.tres" id="4_50n4c"]
+
+[resource]
+Button/colors/font_color = Color(0, 0.3254902, 0.3372549, 1)
+Button/colors/font_focus_color = Color(0, 0.23921569, 0.3019608, 1)
+Button/colors/font_hover_color = Color(0, 0.23921569, 0.3019608, 1)
+Button/colors/font_pressed_color = Color(0, 0.3254902, 0.3372549, 1)
+Button/font_sizes/font_size = 9
+Button/fonts/font = ExtResource("1_y7dmo")
+Button/styles/focus = ExtResource("2_n00km")
+Button/styles/hover = ExtResource("2_n00km")
+Button/styles/normal = ExtResource("2_hqevx")
+Button/styles/pressed = ExtResource("4_50n4c")
+Panel/styles/panel = ExtResource("2_y7dmo")
+PanelContainer/styles/panel = ExtResource("2_y7dmo")

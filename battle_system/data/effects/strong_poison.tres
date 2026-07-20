@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Poison" format=3 uid="uid://bgi2c2f6emgpy"]
+
+[ext_resource type="Script" uid="uid://bqnrnm1pydene" path="res://battle_system/battle_logic/classes/effect_classes/Poison.gd" id="1_uo3nj"]
+
+[resource]
+script = ExtResource("1_uo3nj")
+damage = 50
+title = "strong poison"
+duration = 3
+metadata/_custom_type_script = "uid://bqnrnm1pydene"

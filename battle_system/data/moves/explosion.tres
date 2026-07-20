@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Move" format=3 uid="uid://cy1700oi5gg43"]
+
+[ext_resource type="Script" uid="uid://dwkthqmibmlio" path="res://battle_system/battle_logic/classes/Move.gd" id="1_n3x3c"]
+
+[resource]
+script = ExtResource("1_n3x3c")
+title = "EXPLOSION"
+sp_cost = 1
+acc = 1.0
+power = 500
+type = 1
+category = 1
+move_range = 6
+metadata/_custom_type_script = "uid://dwkthqmibmlio"

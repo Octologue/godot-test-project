@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://ekoq3jeefcxa"]
+
+[ext_resource type="Shader" uid="uid://cy5bsapwdnwsj" path="res://assets/materials/shaders/repeated_texture_overlay.gdshader" id="1_tqxv0"]
+[ext_resource type="Texture2D" uid="uid://beo0l4rij1rsq" path="res://assets/UI/paper_texture_under.png" id="2_r7hid"]
+
+[resource]
+shader = ExtResource("1_tqxv0")
+shader_parameter/overlay_tex = ExtResource("2_r7hid")
+shader_parameter/tolerance = 0.01

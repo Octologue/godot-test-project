@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://cwxxay4y8tw36"]
+
+[sub_resource type="GDScript" id="GDScript_6lf56"]
+script/source = "extends Panel
+var character = Character
+var effect = Effect
+"
+
+[node name="EffectPanel" type="Panel" unique_id=1690609698]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -624.0
+offset_bottom = -304.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_6lf56")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1908351643]
+texture_filter = 1
+layout_mode = 0
+offset_right = 16.0
+offset_bottom = 16.0

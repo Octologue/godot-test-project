@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="StatChange" format=3 uid="uid://b6yt0dwqgcfv4"]
+
+[ext_resource type="Script" uid="uid://b8eml4by4idlq" path="res://battle_system/battle_logic/classes/effect_classes/StatChange.gd" id="1_8uub6"]
+
+[resource]
+script = ExtResource("1_8uub6")
+stat = 2
+power = 1.25
+duration = 10
+cumulable = true
+title = "attack up"
+metadata/_custom_type_script = "uid://b8eml4by4idlq"

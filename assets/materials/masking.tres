@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://yhp462as22kn"]
+
+[ext_resource type="Shader" uid="uid://cyc6ydl6jra4" path="res://assets/materials/shaders/masking.gdshader" id="1_ndjtx"]
+[ext_resource type="Texture2D" uid="uid://8cajrklyb87c" path="res://assets/UI/Battle_UI/menu_mask.png" id="2_o6y3n"]
+
+[resource]
+shader = ExtResource("1_ndjtx")
+shader_parameter/mask_texture = ExtResource("2_o6y3n")

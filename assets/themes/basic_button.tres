@@ -1,0 +1,13 @@
+[gd_resource type="StyleBoxTexture" format=3 uid="uid://jmpcq1a0efri"]
+
+[ext_resource type="Texture2D" uid="uid://d3osvptmb5o75" path="res://assets/UI/button_menu_style_box.png" id="1_35sim"]
+
+[resource]
+texture = ExtResource("1_35sim")
+texture_margin_left = 3.0
+texture_margin_top = 3.0
+texture_margin_right = 3.0
+texture_margin_bottom = 2.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+region_rect = Rect2(0, 0, 123, 15)

@@ -1,0 +1,278 @@
+[gd_scene format=3 uid="uid://dypy4oy4ron2l"]
+
+[ext_resource type="Script" uid="uid://bwmvjsqmsetd1" path="res://battle_system/BattleSystem.gd" id="1_pihux"]
+[ext_resource type="Script" uid="uid://bfslm6i4xy542" path="res://battle_system/battle_logic/scripts/battle_log.gd" id="4_1xpmh"]
+[ext_resource type="Script" uid="uid://bf62ihhj0ip23" path="res://battle_logic(old)/graphics.gd" id="4_nslbn"]
+
+[node name="battleScene" type="Node2D" unique_id=582481188]
+process_mode = 1
+script = ExtResource("1_pihux")
+
+[node name="graphics" type="Node2D" parent="." unique_id=365363942]
+script = ExtResource("4_nslbn")
+
+[node name="battleLog" type="Node2D" parent="." unique_id=1239503197]
+script = ExtResource("4_1xpmh")
+
+[node name="players" type="Node2D" parent="." unique_id=650177504]
+
+[node name="enemies" type="Node2D" parent="." unique_id=749141455]
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=2132836209]
+
+[node name="battleLogUI" type="Control" parent="UI" unique_id=106645597]
+visible = false
+z_index = 5
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="back_log" type="Button" parent="UI/battleLogUI" unique_id=1214714585]
+layout_mode = 0
+offset_right = 45.0
+offset_bottom = 31.0
+text = "back"
+
+[node name="log" type="RichTextLabel" parent="UI/battleLogUI" unique_id=1799938929]
+layout_mode = 0
+offset_left = 66.0
+offset_top = 32.0
+offset_right = 584.0
+offset_bottom = 304.0
+
+[node name="ColorRect" type="ColorRect" parent="UI/battleLogUI" unique_id=734364158]
+process_mode = 4
+show_behind_parent = true
+z_index = -2
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 620.0
+offset_bottom = 320.0
+grow_horizontal = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.7254902)
+
+[node name="Timeline" type="HBoxContainer" parent="UI" unique_id=421856488]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -213.0
+offset_right = 295.0
+offset_bottom = 60.0
+grow_horizontal = 2
+scale = Vector2(0.8492315, 0.8492315)
+size_flags_horizontal = 4
+size_flags_vertical = 0
+
+[node name="TimelineSlot" type="Panel" parent="UI/Timeline" unique_id=275611016]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="UI/Timeline/TimelineSlot" unique_id=625505500]
+texture_filter = 1
+layout_mode = 0
+offset_right = 60.0
+offset_bottom = 60.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TimelineSlot2" type="Panel" parent="UI/Timeline" unique_id=2075556099]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="UI/Timeline/TimelineSlot2" unique_id=1321442688]
+texture_filter = 1
+layout_mode = 0
+offset_right = 60.0
+offset_bottom = 60.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TimelineSlot3" type="Panel" parent="UI/Timeline" unique_id=1519115276]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="UI/Timeline/TimelineSlot3" unique_id=1248874955]
+texture_filter = 1
+layout_mode = 0
+offset_right = 60.0
+offset_bottom = 60.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TimelineSlot4" type="Panel" parent="UI/Timeline" unique_id=387104239]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="UI/Timeline/TimelineSlot4" unique_id=1106795764]
+texture_filter = 1
+layout_mode = 0
+offset_right = 60.0
+offset_bottom = 60.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TimelineSlot5" type="Panel" parent="UI/Timeline" unique_id=1513212450]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="UI/Timeline/TimelineSlot5" unique_id=1292334344]
+texture_filter = 1
+layout_mode = 0
+offset_right = 60.0
+offset_bottom = 60.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TimelineSlot6" type="Panel" parent="UI/Timeline" unique_id=1516595112]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="UI/Timeline/TimelineSlot6" unique_id=1557515806]
+texture_filter = 1
+layout_mode = 0
+offset_right = 60.0
+offset_bottom = 60.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TimelineSlot7" type="Panel" parent="UI/Timeline" unique_id=1551904421]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="UI/Timeline/TimelineSlot7" unique_id=1032664436]
+texture_filter = 1
+layout_mode = 0
+offset_right = 60.0
+offset_bottom = 60.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TimelineSlot8" type="Panel" parent="UI/Timeline" unique_id=777541428]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="UI/Timeline/TimelineSlot8" unique_id=532078818]
+texture_filter = 1
+layout_mode = 0
+offset_right = 60.0
+offset_bottom = 60.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Options" type="VBoxContainer" parent="UI" unique_id=1987080037]
+visible = false
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -58.0
+offset_top = -187.99998
+offset_right = 58.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Attack" type="Button" parent="UI/Options" unique_id=866774532]
+layout_mode = 2
+text = "attack"
+
+[node name="Defend" type="Button" parent="UI/Options" unique_id=54243489]
+layout_mode = 2
+text = "defend"
+
+[node name="MoveSelection" type="VBoxContainer" parent="UI" unique_id=1566199477]
+visible = false
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -58.0
+offset_top = -187.99998
+offset_right = 58.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="AllySelection" type="VBoxContainer" parent="UI" unique_id=2144317351]
+visible = false
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -58.0
+offset_top = -187.99998
+offset_right = 58.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="EnemySelection" type="VBoxContainer" parent="UI" unique_id=1673753465]
+visible = false
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -58.0
+offset_top = -187.99998
+offset_right = 58.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="PlayerStatus" type="VBoxContainer" parent="UI" unique_id=1988070978]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -20.0
+offset_right = 69.0
+offset_bottom = 20.0
+grow_vertical = 2
+alignment = 1
+
+[node name="EnemyStatus" type="VBoxContainer" parent="UI" unique_id=1946867825]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -69.0
+offset_top = -20.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+alignment = 1
+
+[node name="battleLogButton" type="Button" parent="UI" unique_id=1340489406]
+z_index = -3
+offset_left = 422.0
+offset_top = 246.0
+offset_right = 479.0
+offset_bottom = 268.0
+theme_override_font_sizes/font_size = 10
+text = "Battle Log"
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=2076418231]
+visible = false
+z_index = -5
+offset_right = 640.0
+offset_bottom = 320.0
+color = Color(0.43643492, 0.4813822, 0.47768867, 1)
+
+[node name="CameraBattle" type="Camera2D" parent="." unique_id=1925054576]
+position = Vector2(240, 135)
+
+[connection signal="pressed" from="UI/battleLogUI/back_log" to="graphics" method="_on_back_log_pressed"]
+[connection signal="pressed" from="UI/battleLogButton" to="graphics" method="_on_battle_log_button_pressed"]
