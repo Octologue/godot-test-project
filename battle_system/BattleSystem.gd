@@ -86,6 +86,7 @@ func start():
 	sort_and_display()
 	
 	ui.init_character_status()
+	ui.init_effect_UI()
 	
 	change_state(BattleState.NEXT_TURN)
 
@@ -259,8 +260,8 @@ func tween_movement(node,shift):
 
 func move_compute():
 	if move_used.sp_cost <= actor.sp:
-		BattleEvent.action_done.emit(actor,move_used,targets)
 		actor.sp -= move_used.sp_cost
+		BattleEvent.action_done.emit(actor,move_used,targets)
 		for target in targets:
 			if move_used.category == move_used.Categories.MELEE or move_used.category == move_used.Categories.RANGED:
 				var dmg = target.get_attacked(actor, move_used)

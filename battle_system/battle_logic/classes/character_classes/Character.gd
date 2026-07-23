@@ -195,9 +195,9 @@ func effects_tick():
 	for effect in effects:
 		effect.duration -= 1
 		if effect.duration == 0:
-			BattleEvent.status_stop.emit(effect,self)
 			effect.remove()
 			effects.erase(effect)
+			BattleEvent.status_stop.emit(effect,self)
 
 #endregion
 

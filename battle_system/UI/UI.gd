@@ -1,16 +1,27 @@
 extends CanvasLayer
 class_name BattleUI
 
-@onready var bs = $".."
+@onready var bs :BattleSystem = $".."
 @onready var character_button = preload("res://battle_system/UI/scenes/character_button.tscn")
 @onready var move_button = preload("res://battle_system/UI/scenes/move_button.tscn")
 @onready var move_label = preload("res://battle_system/UI/scenes/move_info_label.tscn")
 #var effects_dict : Dictionary[Character,Array]
+var effect_loop_timer = Timer.new()
+var effect_dictionary : Dictionary
+var effect_index : Dictionary
+
 
 func _ready():
 	#BattleEvent.target_selected.connect(character_button_pressed)
 	BattleEvent.selected_move.connect(move_button_pressed)
 	BattleEvent.hp_or_sp_changed.connect(update_bars)
+	BattleEvent.status_proc.connect(add_effect)
+	BattleEvent.status_stop.connect(remove_effect)
+	
+	effect_loop_timer.autostart = true
+	effect_loop_timer.wait_time = 2.0
+	self.add_child(effect_loop_timer)
+	effect_loop_timer.timeout.connect(update_effect_display)
 
 func init_character_status():
 	for i in range(len(bs.player_list)):
@@ -18,9 +29,7 @@ func init_character_status():
 		$statusOverview/characters.get_children()[i].find_child("iconMonster").texture = bs.player_list[i].monster.half_icon
 		$statusOverview/characters.get_children()[i].find_child("hpBar").character = bs.player_list[i]
 		$statusOverview/characters.get_children()[i].find_child("spBar").character = bs.player_list[i]
-		
 	update_bars()
-	update_status_effects()
 
 func update_bars():
 	for i in range(len(bs.player_list)):
@@ -28,25 +37,44 @@ func update_bars():
 		$statusOverview/characters.get_children()[i].find_child("spBar").update_bar()
 		print()
 
-func update_status_effects():
-	pass
-	#for i in range(len(bs.player_list)):
-		#for e in bs.player_list[i].effects:
-			#
-		#$statusOverview/characters.get_children()[i].find_child("iconEffect").texture = bs.player_list[i].effect.icon
+func update_effect_display():
 
-#func menu_appear():
-	#$battleMenu.position = bs.player_data.player_positions[bs.actor] + Vector2(45,-50)
-	#$battleMenu/actionButtons.position=Vector2(-$battleMenu/actionButtons.size.x,$battleMenu/actionButtons.position.y)
-	#$battleMenu/actionButtons.show()
-	#$battleMenu/animatedMenu.play("appear_alt")
+	for c in bs.player_list :
+		if c.effects.is_empty():
+			$statusOverview/characters.get_children()[bs.player_list.find(c)].find_child("iconEffect").texture = null
+			continue
+		var effects = effect_dictionary[c]
+		var index = effect_index[c]
+		var effect = effects[index]
+		
+		$statusOverview/characters.get_children()[bs.player_list.find(c)].find_child("iconEffect").texture = effect.icon
+		effect_index[c]+=1
+		if effect_index[c] == effects.size():
+			effect_index[c] = 0
+	
+func init_effect_UI():
+	for c in bs.player_list:
+		effect_dictionary[c]=[]
+		effect_index[c] = null
+		print("EFFECT DICO :",effect_dictionary)
+		
+func add_effect(effect,chara):
+	print(chara.title,' ',effect.title)
+	effect_dictionary[chara].append(effect)
+	effect_index[chara] = chara.effects.size()-1
+	update_effect_display()
+
+func remove_effect(effect,chara):
+	effect_dictionary[chara].erase(effect)
+	effect_index[chara] = chara.effects.size()-1
+	update_effect_display()
 	
 func menu_appear():
 	$battleMenu.position = bs.player_data.player_positions[bs.actor] + Vector2(45,-50)
+	
 	$battleMenu/animatedMenu.play("appear")
 	await $battleMenu/animatedMenu.animation_finished
 	$battleMenu/actionButtons.show()
-	
 
 func duplicate_title_fix():
 	var letter_list = ["a","b","c","d","e"]
@@ -144,7 +172,7 @@ func _on_animated_menu_frame_changed() -> void:
 		menu_slide($battleMenu/moveMenu/menuBackground,Vector2(0,0))
 	if $battleMenu/animatedMenu.animation == "disappear_alt" and $battleMenu/animatedMenu.frame == 1 :
 		menu_slide($battleMenu/moveMenu/menuBackground,Vector2(0,-$battleMenu/moveMenu/menuBackground.size.y))
-
+	
 func close_move_menu():
 	$battleMenu/animatedMenu.play("disappear_alt")
 	await $battleMenu/animatedMenu.animation_finished
@@ -155,4 +183,5 @@ func move_button_pressed(move):
 
 func _on_defend_button_pressed() :
 	$battleMenu/actionButtons.hide()
+	await $battleMenu/animatedMenu.animation_finished
 	$battleMenu/animatedMenu.play("disappear")

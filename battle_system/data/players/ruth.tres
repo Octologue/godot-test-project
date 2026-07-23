@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="Player" format=3 uid="uid://d3nncms6xvetm"]
 
-[ext_resource type="Resource" uid="uid://biqemdwdn7ca1" path="res://battle_system/data/monsters/no_monster.tres" id="1_xd6ug"]
+[ext_resource type="Resource" uid="uid://fvhy0p8qkxco" path="res://battle_system/data/monsters/03_sataragnis_l.tres" id="1_lh4rn"]
 [ext_resource type="Script" uid="uid://dwkthqmibmlio" path="res://battle_system/battle_logic/classes/Move.gd" id="2_fjesa"]
 [ext_resource type="Texture2D" uid="uid://dmngb0ey8t2kx" path="res://assets/placeholder/New Piskel (4).png" id="3_1upds"]
 [ext_resource type="Resource" uid="uid://c50f42eg8hg2s" path="res://battle_system/data/moves/haste_status.tres" id="3_xd6ug"]
@@ -18,9 +18,9 @@ mult_matk = 1.5
 mult_rdef = 0.75
 mult_mdef = 0.75
 mult_spe = 1.5
-monster = ExtResource("1_xd6ug")
+monster = ExtResource("1_lh4rn")
 title = "Ruth"
 sprite = ExtResource("3_1upds")
-LVL = 20
+LVL = 100
 moveset = Array[ExtResource("2_fjesa")]([ExtResource("3_xd6ug"), ExtResource("4_fjesa"), ExtResource("5_ud14i"), ExtResource("6_ud14i")])
 metadata/_custom_type_script = "uid://b3634gbmjyvdf"

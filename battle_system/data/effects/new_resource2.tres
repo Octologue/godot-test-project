@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="StatusEffect" format=3 uid="uid://j62x5878dv0j"]
+
+[ext_resource type="Texture2D" uid="uid://c5lepnllp8msa" path="res://assets/placeholder/New Piskel (1).png" id="1_y3i77"]
+[ext_resource type="Script" uid="uid://caulbumscgxu" path="res://battle_system/battle_logic/classes/effect_classes/StatusEffect.gd" id="2_aua47"]
+
+[resource]
+script = ExtResource("2_aua47")
+duration = 10
+cumulable = true
+title = "self2"
+icon = ExtResource("1_y3i77")
+metadata/_custom_type_script = "uid://caulbumscgxu"

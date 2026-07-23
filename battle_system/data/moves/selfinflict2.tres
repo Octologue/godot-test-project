@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Move" format=3 uid="uid://cdbdjsgkh6f4"]
+
+[ext_resource type="Script" uid="uid://dwkthqmibmlio" path="res://battle_system/battle_logic/classes/Move.gd" id="1_5o6sk"]
+[ext_resource type="Resource" uid="uid://j62x5878dv0j" path="res://battle_system/data/effects/new_resource2.tres" id="1_h37fp"]
+
+[resource]
+script = ExtResource("1_5o6sk")
+title = "self inflict effect 2"
+acc = 1.0
+category = 3
+proc = 1.0
+effect = ExtResource("1_h37fp")
+metadata/_custom_type_script = "uid://dwkthqmibmlio"
