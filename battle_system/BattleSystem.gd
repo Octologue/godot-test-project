@@ -162,8 +162,11 @@ func defend():
 	actor.sp += 10
 	ui.update_bars()
 	pop_out()
+	
+	ui.close_menu()
+	await $UI/battleMenu/animatedMenu.animation_finished
+	
 	change_state(BattleState.NEXT_TURN)
-
 
 func _on_defend_button_pressed() :
 	defend()
@@ -176,7 +179,6 @@ func character_button_pressed(target_selected):
 	change_state(BattleState.ACT)
 
 func move_button_pressed(move):
-	
 	move_used = move
 	match move_used.move_range:
 		

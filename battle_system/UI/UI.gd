@@ -8,8 +8,11 @@ class_name BattleUI
 #var effects_dict : Dictionary[Character,Array]
 var effect_loop_timer = Timer.new()
 var effect_dictionary : Dictionary
-var effect_index : Dictionary
+var effect_index : Dictionary 
+@onready var anim_menu = $battleMenu/animatedMenu
 
+
+#region INIT
 
 func _ready():
 	#BattleEvent.target_selected.connect(character_button_pressed)
@@ -30,89 +33,15 @@ func init_character_status():
 		$statusOverview/characters.get_children()[i].find_child("hpBar").character = bs.player_list[i]
 		$statusOverview/characters.get_children()[i].find_child("spBar").character = bs.player_list[i]
 	update_bars()
-
-func update_bars():
-	for i in range(len(bs.player_list)):
-		$statusOverview/characters.get_children()[i].find_child("hpBar").update_bar()
-		$statusOverview/characters.get_children()[i].find_child("spBar").update_bar()
-		print()
-
-func update_effect_display():
-
-	for c in bs.player_list :
-		if c.effects.is_empty():
-			$statusOverview/characters.get_children()[bs.player_list.find(c)].find_child("iconEffect").texture = null
-			continue
-		var effects = effect_dictionary[c]
-		var index = effect_index[c]
-		var effect = effects[index]
-		
-		$statusOverview/characters.get_children()[bs.player_list.find(c)].find_child("iconEffect").texture = effect.icon
-		effect_index[c]+=1
-		if effect_index[c] == effects.size():
-			effect_index[c] = 0
 	
 func init_effect_UI():
 	for c in bs.player_list:
 		effect_dictionary[c]=[]
 		effect_index[c] = null
 		print("EFFECT DICO :",effect_dictionary)
-		
-func add_effect(effect,chara):
-	print(chara.title,' ',effect.title)
-	effect_dictionary[chara].append(effect)
-	effect_index[chara] = chara.effects.size()-1
-	update_effect_display()
-
-func remove_effect(effect,chara):
-	effect_dictionary[chara].erase(effect)
-	effect_index[chara] = chara.effects.size()-1
-	update_effect_display()
-	
-func menu_appear():
-	$battleMenu.position = bs.player_data.player_positions[bs.actor] + Vector2(45,-50)
-	
-	$battleMenu/animatedMenu.play("appear")
-	await $battleMenu/animatedMenu.animation_finished
-	$battleMenu/actionButtons.show()
-
-func duplicate_title_fix():
-	var letter_list = ["a","b","c","d","e"]
-	var title_total_count = {} 
-
-	for enemy in bs.enemy_list:
-		var title = enemy.title
-		title_total_count[title] = title_total_count.get(title, 0) + 1
-		
-	var title_seen_count = {} 
-	for enemy in bs.enemy_list:
-		var title = enemy.title
-		if title_total_count[title] > 1:
-			var seen = title_seen_count.get(title, 0)
-			enemy.title += " " + letter_list[seen]
-			title_seen_count[title] = seen + 1
-
-func update_timeline_display():
-	var index : int = 0
-	for slot in $timeline/HBoxContainer.get_children():
-		if index < bs.timeline.size():
-			slot.find_child("icon").texture = bs.timeline[index]["character"].full_icon
-			index += 1
-		else:
-			slot.find_child("icon").texture = null 
-
-#TODO TEMPORARY
-func chara_button_setup(chara: Character,group:VBoxContainer):
-	var button = character_button.instantiate()
-	button.character = chara
-	group.add_child(button)
-
-func _on_moves_button_pressed() :
-	init_moves()
-	show_move_menu()
 
 func init_moves():
-	
+
 	var button_container = $battleMenu/moveMenu/menuBackground/buttonContainer
 	var info_container = $battleMenu/moveMenu/menuBackground/infoContainer
 	for child in button_container.get_children() + info_container.get_children():
@@ -150,38 +79,125 @@ func init_moves():
 		label.text+= "\n"+ "SP "+ str(move.sp_cost)
 		info_container.add_child(label)
 
+func duplicate_title_fix():
+	var letter_list = ["a","b","c","d","e"]
+	var title_total_count = {} 
+
+	for enemy in bs.enemy_list:
+		var title = enemy.title
+		title_total_count[title] = title_total_count.get(title, 0) + 1
+
+	var title_seen_count = {} 
+	for enemy in bs.enemy_list:
+		var title = enemy.title
+		if title_total_count[title] > 1:
+			var seen = title_seen_count.get(title, 0)
+			enemy.title += " " + letter_list[seen]
+			title_seen_count[title] = seen + 1
+
+#endregion
+
+#region MENU
+
+func menu_appear():
+	print("MENU APPEAR")
+	menu_slide($battleMenu,bs.player_data.player_positions[bs.actor] + Vector2(45,-50))
+	anim_menu.play("appear")
+	await $battleMenu/animatedMenu.animation_finished
+	$battleMenu/actionButtons.show()
+	print("VISIBILITY : ",$battleMenu/actionButtons.visible)
+
+func _on_moves_button_pressed() :
+	init_moves()
+	show_move_menu()
+
 func show_move_menu():
 	init_moves()
 	$battleMenu/actionButtons.hide()
 	
 	$battleMenu/moveMenu.show()
 	await get_tree().process_frame
-	
+
 	$battleMenu/moveMenu/menuBackground.size = Vector2(131,$battleMenu/moveMenu/menuBackground/buttonContainer.size.y+8)
 	$battleMenu/moveMenu/menuBackground.position = Vector2(0,-$battleMenu/moveMenu/menuBackground.size.y)
-	
-	$battleMenu/animatedMenu.play("transition")
-	
+
+	anim_menu.play("transition")
+
 func menu_slide(menu,target_position):
 	var tween = get_tree().create_tween()
 	tween.tween_property(menu,"position",target_position,0.1)
 	await tween.finished
 
 func _on_animated_menu_frame_changed() -> void:
-	if $battleMenu/animatedMenu.animation == "transition" and $battleMenu/animatedMenu.frame == 8 :
+	if anim_menu.animation == "transition" and anim_menu.frame == 8 :
 		menu_slide($battleMenu/moveMenu/menuBackground,Vector2(0,0))
-	if $battleMenu/animatedMenu.animation == "disappear_alt" and $battleMenu/animatedMenu.frame == 1 :
+	if anim_menu.animation == "disappear_alt" and anim_menu.frame == 1 :
 		menu_slide($battleMenu/moveMenu/menuBackground,Vector2(0,-$battleMenu/moveMenu/menuBackground.size.y))
-	
-func close_move_menu():
-	$battleMenu/animatedMenu.play("disappear_alt")
-	await $battleMenu/animatedMenu.animation_finished
-	$battleMenu/moveMenu.hide()
 
 func move_button_pressed(move):
 	close_move_menu()
 
-func _on_defend_button_pressed() :
+func close_menu():
 	$battleMenu/actionButtons.hide()
-	await $battleMenu/animatedMenu.animation_finished
-	$battleMenu/animatedMenu.play("disappear")
+	if !anim_menu.is_playing():
+		anim_menu.play("disappear")
+
+func close_move_menu():
+	anim_menu.play("disappear_alt")
+	await anim_menu.animation_finished
+	$battleMenu/moveMenu.hide()
+
+#endregion
+
+#region UPDATE
+
+func update_bars():
+	for i in range(len(bs.player_list)):
+		$statusOverview/characters.get_children()[i].find_child("hpBar").update_bar()
+		$statusOverview/characters.get_children()[i].find_child("spBar").update_bar()
+		print()
+
+func update_timeline_display():
+	var index : int = 0
+	for slot in $timeline/HBoxContainer.get_children():
+		if index < bs.timeline.size():
+			slot.find_child("icon").texture = bs.timeline[index]["character"].full_icon
+			index += 1
+		else:
+			slot.find_child("icon").texture = null 
+
+func update_effect_display():
+	for c in bs.player_list :
+		if c.effects.is_empty():
+			$statusOverview/characters.get_children()[bs.player_list.find(c)].find_child("iconEffect").texture = null
+			continue
+		var effects = effect_dictionary[c]
+		var index = effect_index[c]
+		var effect = effects[index]
+		
+		$statusOverview/characters.get_children()[bs.player_list.find(c)].find_child("iconEffect").texture = effect.icon
+		effect_index[c]+=1
+		if effect_index[c] == effects.size():
+			effect_index[c] = 0
+		
+func add_effect(effect,chara):
+	print(chara.title,' ',effect.title)
+	effect_dictionary[chara].append(effect)
+	effect_index[chara] = chara.effects.size()-1
+	update_effect_display()
+
+func remove_effect(effect,chara):
+	effect_dictionary[chara].erase(effect)
+	effect_index[chara] = chara.effects.size()-1
+	update_effect_display()
+#endregion
+
+
+
+
+
+#TODO TEMPORARY
+func chara_button_setup(chara: Character,group:VBoxContainer):
+	var button = character_button.instantiate()
+	button.character = chara
+	group.add_child(button)

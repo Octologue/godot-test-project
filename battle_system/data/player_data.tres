@@ -11,5 +11,5 @@ script = ExtResource("7_6pedf")
 player_list = Array[ExtResource("1_j08fj")]([ExtResource("2_y0wgl"), ExtResource("3_lp3k4")])
 player_positions = Dictionary[ExtResource("1_j08fj"), Vector2]({
 ExtResource("2_y0wgl"): Vector2(50, 150),
-ExtResource("3_lp3k4"): Vector2(50, 200)
+ExtResource("3_lp3k4"): Vector2(50, 100)
 })

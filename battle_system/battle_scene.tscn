@@ -775,12 +775,12 @@ offset_bottom = 221.0
 
 [node name="animatedMenu" type="AnimatedSprite2D" parent="UI/battleMenu" unique_id=1747835051]
 sprite_frames = SubResource("SpriteFrames_j3x6a")
-animation = &"appear"
+animation = &"transition"
 centered = false
 
 [node name="actionButtons" type="Control" parent="UI/battleMenu" unique_id=692702596]
 visible = false
-z_index = 2
+z_index = 6
 anchors_preset = 0
 offset_top = 29.0
 offset_right = 94.0
