@@ -79,11 +79,11 @@ func _on_heal_all_pressed():
 func create_new_battle_data():
 	var debug_battle_data= BattleData.new()
 	var enemy_positions: Array[Vector2] = [
-	Vector2(450, 100),
-	Vector2(400, 150),
-	Vector2(450, 200),
-	Vector2(400, 250),
-	Vector2(450, 300)]
+	Vector2(400, 25),
+	Vector2(350, 75),
+	Vector2(400, 125),
+	Vector2(350, 175),
+	Vector2(400, 225)]
 	
 	for child in $EnemiesContainer.get_children():
 		var new_enemy = EnemyBattleData.new()

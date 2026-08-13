@@ -17,10 +17,6 @@ func _input(event : InputEvent) :
 		toggle_log()
 	if event.is_action_pressed("back (in battle)"):
 		go_back()
-	if event.is_action_pressed("up"):
-		navigation_up()
-	if event.is_action_pressed("down"):
-		navigation_down()
 
 #region INIT
 
@@ -30,6 +26,7 @@ func _ready():
 	BattleEvent.hp_or_sp_changed.connect(update_bars)
 	BattleEvent.status_proc.connect(add_effect)
 	BattleEvent.status_stop.connect(remove_effect)
+	BattleEvent.target_selected.connect(on_target_selected)
 	
 	effect_loop_timer.autostart = true
 	effect_loop_timer.wait_time = 2.0
@@ -144,9 +141,14 @@ func _on_animated_menu_frame_changed() -> void:
 		menu_slide($battleMenu/moveMenu/menuBackground,Vector2(0,1))
 	if anim_menu.animation == "disappear_alt" and anim_menu.frame == 1 :
 		menu_slide($battleMenu/moveMenu/menuBackground,Vector2(0,-$battleMenu/moveMenu/menuBackground.size.y))
+	if anim_menu.animation == "disappear_choice" and anim_menu.frame == 1 :
+		menu_slide($battleMenu/moveMenu/menuBackground,Vector2(0,-$battleMenu/moveMenu/menuBackground.size.y))
 
 func move_button_pressed(move):
-	close_move_menu()
+	if move.move_range == move.Ranges.ALLY or move.move_range == move.Ranges.ENEMY:
+		close_move_menu_with_target()
+	else:
+		close_move_menu()
 
 func close_menu():
 	$battleMenu/actionButtons.hide()
@@ -157,6 +159,17 @@ func close_move_menu():
 	anim_menu.play("disappear_alt")
 	await anim_menu.animation_finished
 	$battleMenu/moveMenu.hide()
+
+func close_move_menu_with_target():
+	anim_menu.play("disappear_choice")
+	await anim_menu.animation_finished
+	$battleMenu/moveMenu.hide()
+
+func close_target_prompt():
+	anim_menu.play("target_prompt_close")
+
+func on_target_selected(character):
+	close_target_prompt()
 
 func go_back():
 	if $battleMenu/moveMenu.visible:
@@ -236,12 +249,6 @@ func init_key_selection():
 		for i in $"../players":
 			i.index = index
 			index += 1
-
-func navigation_up():
-	pass
-	
-func navigation_down():
-	pass
 
 func clear_UI():
 	effect_loop_timer.queue_free()

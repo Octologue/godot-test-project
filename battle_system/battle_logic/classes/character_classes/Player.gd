@@ -54,11 +54,11 @@ func init_pair():
 	init_pair_stats()
 	init_pair_types()
 	init_pair_moves()
-	ability = monster.ability
+	#ability = monster.ability
 	
 func init():
 	init_pair()
-	ability.init(self)
+	#ability.init(self)
 	matk = MATK
 	ratk = RATK
 	mdef = MDEF

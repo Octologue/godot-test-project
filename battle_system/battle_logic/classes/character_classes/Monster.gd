@@ -34,7 +34,7 @@ func init():
 	var mult := 0.0
 	if wild:
 		mult = 1.5
-	ability.init(self)
+	#ability.init(self)
 	init_stats_by_lvl()
 	MATK = MATK*mult
 	RATK = RATK*mult

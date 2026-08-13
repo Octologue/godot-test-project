@@ -9,13 +9,13 @@ class_name Character
 @export var full_icon:Texture2D
 var alive : bool = true
 @export var LVL : int
-var no_ability : Ability = load("res://battle_system/data/abilities/no_ability.tres")
-@export var ability: Ability:
-	set(value):
-		if value == null:
-			ability = no_ability
-		else:
-			ability = value.duplicate(true)
+#var no_ability : Ability = load("res://battle_system/data/abilities/no_ability.tres")
+#@export var ability: Ability:
+	#set(value):
+		#if value == null:
+			#ability = no_ability
+		#else:
+			#ability = value.duplicate(true)
 
 # --- main stats ---
 
@@ -81,7 +81,7 @@ func pop_out():
 	if not alive:
 		return
 	queue.pop_front()
-	queue.append(queue[-1]*delay)
+	queue.append(queue[-1]+delay)
 
 func die():
 	if not alive:

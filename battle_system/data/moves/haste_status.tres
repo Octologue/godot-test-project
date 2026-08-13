@@ -11,5 +11,5 @@ power = 10
 category = 3
 proc = 1.0
 effect = ExtResource("1_3c56t")
-move_range = 2
+move_range = 4
 metadata/_custom_type_script = "uid://dwkthqmibmlio"

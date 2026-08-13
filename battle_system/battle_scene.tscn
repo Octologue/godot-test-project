@@ -170,6 +170,42 @@ region = Rect2(146, 0, 146, 127)
 atlas = ExtResource("23_kc0me")
 region = Rect2(0, 0, 146, 127)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_c4bbt"]
+atlas = ExtResource("23_kc0me")
+region = Rect2(0, 508, 146, 127)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_shnto"]
+atlas = ExtResource("23_kc0me")
+region = Rect2(146, 508, 146, 127)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gh3c7"]
+atlas = ExtResource("23_kc0me")
+region = Rect2(292, 508, 146, 127)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g2qxa"]
+atlas = ExtResource("23_kc0me")
+region = Rect2(438, 508, 146, 127)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gmv07"]
+atlas = ExtResource("23_kc0me")
+region = Rect2(438, 508, 146, 127)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_osqof"]
+atlas = ExtResource("23_kc0me")
+region = Rect2(292, 508, 146, 127)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fltlx"]
+atlas = ExtResource("23_kc0me")
+region = Rect2(146, 508, 146, 127)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4i50h"]
+atlas = ExtResource("23_kc0me")
+region = Rect2(0, 508, 146, 127)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ovnyj"]
+atlas = ExtResource("23_kc0me")
+region = Rect2(0, 0, 146, 127)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_d5jor"]
 atlas = ExtResource("23_kc0me")
 region = Rect2(292, 127, 146, 127)
@@ -345,6 +381,70 @@ animations = [{
 }],
 "loop": 0,
 "name": &"disappear_alt",
+"speed": 24.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a0rbb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v6tqu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_38xas")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kuo1q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1gxxm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ita0i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ssc64")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h1xe7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c4bbt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_shnto")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gh3c7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g2qxa")
+}],
+"loop": 0,
+"name": &"disappear_choice",
+"speed": 24.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gmv07")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_osqof")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fltlx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4i50h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ovnyj")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": 0,
+"name": &"target_prompt_close",
 "speed": 24.0
 }, {
 "frames": [{
@@ -794,6 +894,7 @@ offset_right = 43.0
 offset_bottom = 19.0
 
 [node name="focusedEnemy" type="Control" parent="UI/statusOverview" unique_id=1973595900]
+visible = false
 anchors_preset = 0
 offset_left = 396.0
 offset_top = 3.0
@@ -810,7 +911,9 @@ offset_bottom = 221.0
 
 [node name="animatedMenu" type="AnimatedSprite2D" parent="UI/battleMenu" unique_id=1747835051]
 sprite_frames = SubResource("SpriteFrames_j3x6a")
-animation = &"appear"
+animation = &"target_prompt_close"
+frame = 4
+frame_progress = 1.0
 centered = false
 
 [node name="actionButtons" type="Control" parent="UI/battleMenu" unique_id=692702596]
