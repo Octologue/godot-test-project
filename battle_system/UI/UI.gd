@@ -5,12 +5,22 @@ class_name BattleUI
 @onready var character_button = preload("res://battle_system/UI/scenes/character_button.tscn")
 @onready var move_button = preload("res://battle_system/UI/scenes/move_button.tscn")
 @onready var move_label = preload("res://battle_system/UI/scenes/move_info_label.tscn")
-#var effects_dict : Dictionary[Character,Array]
+
 var effect_loop_timer = Timer.new()
-var effect_dictionary : Dictionary
-var effect_index : Dictionary 
+var effect_dictionary : Dictionary[Character,Array]
+var effect_index_dico : Dictionary[Character,int]
+
 @onready var anim_menu = $battleMenu/animatedMenu
 
+func _input(event : InputEvent) :
+	if event.is_action_pressed("log"):
+		toggle_log()
+	if event.is_action_pressed("back (in battle)"):
+		go_back()
+	if event.is_action_pressed("up"):
+		navigation_up()
+	if event.is_action_pressed("down"):
+		navigation_down()
 
 #region INIT
 
@@ -35,10 +45,11 @@ func init_character_status():
 	update_bars()
 	
 func init_effect_UI():
+	effect_dictionary.clear()
+	effect_index_dico.clear()
 	for c in bs.player_list:
 		effect_dictionary[c]=[]
-		effect_index[c] = null
-		print("EFFECT DICO :",effect_dictionary)
+		effect_index_dico[c] = 0
 
 func init_moves():
 
@@ -58,6 +69,7 @@ func init_moves():
 		button_text += move.title
 		button.text = button_text
 		button.move = move
+		button.set_instance_shader_parameter("offset",Vector2(randi_range(-200,200),randi_range(-200,200)))
 		button_container.add_child(button)
 		match move.type:
 			move.Types.FIERY,move.Types.LUSH,move.Types.TERRA,move.Types.NULL,move.Types.WIND:
@@ -100,15 +112,12 @@ func duplicate_title_fix():
 #region MENU
 
 func menu_appear():
-	print("MENU APPEAR")
-	menu_slide($battleMenu,bs.player_data.player_positions[bs.actor] + Vector2(45,-50))
+	$battleMenu.position = (bs.player_data.player_positions[bs.actor] + Vector2(45,-50))
 	anim_menu.play("appear")
 	await $battleMenu/animatedMenu.animation_finished
 	$battleMenu/actionButtons.show()
-	print("VISIBILITY : ",$battleMenu/actionButtons.visible)
 
 func _on_moves_button_pressed() :
-	init_moves()
 	show_move_menu()
 
 func show_move_menu():
@@ -120,7 +129,7 @@ func show_move_menu():
 
 	$battleMenu/moveMenu/menuBackground.size = Vector2(131,$battleMenu/moveMenu/menuBackground/buttonContainer.size.y+8)
 	$battleMenu/moveMenu/menuBackground.position = Vector2(0,-$battleMenu/moveMenu/menuBackground.size.y)
-
+	
 	anim_menu.play("transition")
 
 func menu_slide(menu,target_position):
@@ -130,7 +139,9 @@ func menu_slide(menu,target_position):
 
 func _on_animated_menu_frame_changed() -> void:
 	if anim_menu.animation == "transition" and anim_menu.frame == 8 :
-		menu_slide($battleMenu/moveMenu/menuBackground,Vector2(0,0))
+		menu_slide($battleMenu/moveMenu/menuBackground,Vector2(0,1))
+	if anim_menu.animation == "transition_alt" and anim_menu.frame == 4 :
+		menu_slide($battleMenu/moveMenu/menuBackground,Vector2(0,1))
 	if anim_menu.animation == "disappear_alt" and anim_menu.frame == 1 :
 		menu_slide($battleMenu/moveMenu/menuBackground,Vector2(0,-$battleMenu/moveMenu/menuBackground.size.y))
 
@@ -147,6 +158,19 @@ func close_move_menu():
 	await anim_menu.animation_finished
 	$battleMenu/moveMenu.hide()
 
+func go_back():
+	if $battleMenu/moveMenu.visible:
+		close_move_menu()
+		await anim_menu.animation_finished
+		menu_appear()
+	if bs.selection_is_ally or bs.selection_is_enemy:
+		$battleMenu/moveMenu.show()
+		$battleMenu/moveMenu/menuBackground.size = Vector2(131,$battleMenu/moveMenu/menuBackground/buttonContainer.size.y+8)
+		$battleMenu/moveMenu/menuBackground.position = Vector2(0,-$battleMenu/moveMenu/menuBackground.size.y)
+		anim_menu.play("transition_alt")
+		bs.selection_is_ally = false
+		bs.selection_is_enemy = false
+
 #endregion
 
 #region UPDATE
@@ -155,7 +179,6 @@ func update_bars():
 	for i in range(len(bs.player_list)):
 		$statusOverview/characters.get_children()[i].find_child("hpBar").update_bar()
 		$statusOverview/characters.get_children()[i].find_child("spBar").update_bar()
-		print()
 
 func update_timeline_display():
 	var index : int = 0
@@ -172,32 +195,57 @@ func update_effect_display():
 			$statusOverview/characters.get_children()[bs.player_list.find(c)].find_child("iconEffect").texture = null
 			continue
 		var effects = effect_dictionary[c]
-		var index = effect_index[c]
+		var index = effect_index_dico[c]
 		var effect = effects[index]
-		
+
 		$statusOverview/characters.get_children()[bs.player_list.find(c)].find_child("iconEffect").texture = effect.icon
-		effect_index[c]+=1
-		if effect_index[c] == effects.size():
-			effect_index[c] = 0
-		
+		effect_index_dico[c]+=1
+		if effect_index_dico[c] == effects.size():
+			effect_index_dico[c] = 0
+
 func add_effect(effect,chara):
-	print(chara.title,' ',effect.title)
+	if chara is Monster:
+		return
 	effect_dictionary[chara].append(effect)
-	effect_index[chara] = chara.effects.size()-1
+	effect_index_dico[chara] = chara.effects.size()-1
 	update_effect_display()
 
 func remove_effect(effect,chara):
+	if chara is Monster:
+		return
 	effect_dictionary[chara].erase(effect)
-	effect_index[chara] = chara.effects.size()-1
+	effect_index_dico[chara] = chara.effects.size()-1
 	update_effect_display()
+
+func on_character_died(chara : Character):
+	effect_dictionary.erase(chara)
+	effect_index_dico.erase(chara)
+	$statusOverview/characters.get_children()[bs.player_list.find(chara)].find_child("iconEffect").texture = null
 #endregion
 
+#region INPUTS
 
+func toggle_log():
+	$battleLogUI.visible = !$battleLogUI.visible
+	
+#endregion
 
+func init_key_selection():
+	var index = 0
+	if bs.selection_is_ally:
+		for i in $"../players":
+			i.index = index
+			index += 1
 
+func navigation_up():
+	pass
+	
+func navigation_down():
+	pass
 
-#TODO TEMPORARY
-func chara_button_setup(chara: Character,group:VBoxContainer):
-	var button = character_button.instantiate()
-	button.character = chara
-	group.add_child(button)
+func clear_UI():
+	effect_loop_timer.queue_free()
+	for chara in bs.player_list:
+		effect_dictionary.erase(chara)
+		effect_index_dico.erase(chara)
+		$statusOverview/characters.get_children()[bs.player_list.find(chara)].find_child("iconEffect").texture = null

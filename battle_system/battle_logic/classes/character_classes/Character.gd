@@ -9,6 +9,13 @@ class_name Character
 @export var full_icon:Texture2D
 var alive : bool = true
 @export var LVL : int
+var no_ability : Ability = load("res://battle_system/data/abilities/no_ability.tres")
+@export var ability: Ability:
+	set(value):
+		if value == null:
+			ability = no_ability
+		else:
+			ability = value.duplicate(true)
 
 # --- main stats ---
 
@@ -53,21 +60,10 @@ var effects : Array
 @export var weaknesses:Array[Types]
 @export var attack_type:Types
 
-# --- defending ---
-
-var defending : bool = false
-var hold_def : Array[int] 
-var def_count : int 
-
-
-#region INIT
-	
+var silenced := false
 
 func init():
-#appeler au début du combat
 	pass
-
-#endregion
 
 #region LOGIC
 
@@ -80,7 +76,6 @@ func queue_reset():
 			queue.append(delay)
 		else:
 			queue.append(queue[-1] + delay)
-		
 
 func pop_out():
 	if not alive:
@@ -99,22 +94,6 @@ func die():
 
 #region MOVE COMPUTE
 
-func defending_check():
-	if defending : 
-		def_count += 1
-		sp += 30
-		if def_count == 1:
-			hold_def = [rdef,mdef]
-			rdef *= 5
-			mdef *= 5
-			BattleEvent.started_defending.emit(self)
-	if def_count > 3 :
-		defending = false
-		rdef = hold_def[0]
-		mdef = hold_def[1]
-		def_count = 0
-		BattleEvent.stoped_defending.emit(self)
-
 func get_attacked(attacker: Character, move: Move):
 	if not alive:
 		return
@@ -124,11 +103,12 @@ func get_attacked(attacker: Character, move: Move):
 		hp -= dmg
 		BattleEvent.damage_inflicted.emit(dmg, self)
 		if randf() <= move.proc:
-			effect_proc(move, attacker)
+			effect_proc(move,attacker)
+			BattleEvent.negative_luck.emit(self)
 	else:
 		BattleEvent.attack_missed.emit(self)
+		BattleEvent.negative_luck.emit(attacker)
 		pass
-		
 	
 	if hp <= 0:
 		die()
@@ -166,38 +146,43 @@ func get_healed(move : Move):
 	hp += move.power
 	return hp-hp_before
 	
-func get_status(move : Move, attacker : Character):
+func get_status(move : Move,attacker : Character):
 	if randf() <= move.acc and randf() <= move.proc:
-		effect_proc(move, attacker)
+		effect_proc(move,attacker)
 	return 1
 
 func effect_proc(move:Move, attacker : Character):
 	if move.effect is OneTimeEffect:
 		move.effect.trigger(self,move,attacker)
 	elif move.effect is StatusEffect:
+		var new_effect = move.effect.duplicate()
+		new_effect.sender = attacker
+		add_effect(new_effect)
+		BattleEvent.effect_to_copy.emit(new_effect,self)
+
+func add_effect(effect : Effect):
 		var new = true
 		for e in effects:
-			if e.title == move.effect.title:
-				if move.effect.cumulable == true:
-					e.duration += move.effect.duration
+			if e.title == effect.title:
+				if effect.cumulable == true:
+					e.duration += effect.duration
 				new = false
 				break
 		if new != false:
-			var new_effect = move.effect.duplicate()
-			new_effect.owner = self
-			new_effect.sender = attacker
-			new_effect.signal_init()
-			effects.append(new_effect)
-			new_effect.apply()
-			BattleEvent.status_proc.emit(new_effect,self)
+			effect.owner = self
+			effect.signal_init()
+			effects.append(effect)
+			effect.apply()
+			BattleEvent.status_proc.emit(effect,self)
 
 func effects_tick():
 	for effect in effects:
 		effect.duration -= 1
-		if effect.duration == 0:
+		if effect.duration < 0:
 			effect.remove()
 			effects.erase(effect)
 			BattleEvent.status_stop.emit(effect,self)
+		
 
 #endregion
 

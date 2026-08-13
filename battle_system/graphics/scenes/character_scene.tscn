@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://05w6whdt5ti3"]
+
+[ext_resource type="Script" uid="uid://drif73cenxpsm" path="res://battle_system/graphics/scripts/character_scene.gd" id="1_bmgyc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fakoe"]
+size = Vector2(0, 0)
+
+[node name="CharacterScene" type="Node2D" unique_id=1616665610]
+script = ExtResource("1_bmgyc")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=292038536]
+texture_filter = 1
+centered = false
+
+[node name="SelectionArea" type="Area2D" parent="." unique_id=1035175153]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SelectionArea" unique_id=1131576205]
+shape = SubResource("RectangleShape2D_fakoe")
+
+[node name="Marker2D" type="Marker2D" parent="." unique_id=1478518860]
+position = Vector2(-34, -34)
+
+[connection signal="input_event" from="SelectionArea" to="." method="_on_selection_area_input_event"]
+[connection signal="mouse_entered" from="SelectionArea" to="." method="_on_selection_area_mouse_entered"]
+[connection signal="mouse_exited" from="SelectionArea" to="." method="_on_selection_area_mouse_exited"]

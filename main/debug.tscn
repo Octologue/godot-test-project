@@ -15,6 +15,7 @@ layout_mode = 0
 offset_left = 5.0
 offset_right = 124.0
 offset_bottom = 97.0
+scale = Vector2(0.6810585, 0.6810585)
 theme = SubResource("Theme_pcdv5")
 
 [node name="Label" type="Label" parent="SAMcontainer" unique_id=503117192]
@@ -58,10 +59,11 @@ theme_override_font_sizes/font_size = 10
 
 [node name="RUTHcontainer" type="VBoxContainer" parent="." unique_id=1910948711]
 layout_mode = 0
-offset_left = 127.0
+offset_left = 107.99999
 offset_top = 1.0
-offset_right = 246.0
+offset_right = 227.0
 offset_bottom = 100.0
+scale = Vector2(0.6810585, 0.6810585)
 theme = SubResource("Theme_pcdv5")
 
 [node name="Label" type="Label" parent="RUTHcontainer" unique_id=910255318]
@@ -105,9 +107,10 @@ theme_override_font_sizes/font_size = 10
 
 [node name="GABcontainer" type="VBoxContainer" parent="." unique_id=790592717]
 layout_mode = 0
-offset_left = 255.0
-offset_right = 374.0
+offset_left = 199.0
+offset_right = 318.0
 offset_bottom = 97.0
+scale = Vector2(0.6810585, 0.6810585)
 theme = SubResource("Theme_pcdv5")
 
 [node name="Label" type="Label" parent="GABcontainer" unique_id=739297940]
@@ -151,10 +154,11 @@ theme_override_font_sizes/font_size = 10
 
 [node name="MORcontainer" type="VBoxContainer" parent="." unique_id=952985590]
 layout_mode = 0
-offset_left = 377.0
+offset_left = 280.0
 offset_top = -1.0
-offset_right = 496.0
+offset_right = 399.0
 offset_bottom = 98.0
+scale = Vector2(0.6810585, 0.6810585)
 theme = SubResource("Theme_pcdv5")
 
 [node name="Label" type="Label" parent="MORcontainer" unique_id=1907619868]
@@ -202,6 +206,7 @@ offset_left = 6.0
 offset_top = 203.0
 offset_right = 49.0
 offset_bottom = 225.0
+scale = Vector2(0.6810585, 0.6810585)
 theme = SubResource("Theme_pcdv5")
 theme_override_font_sizes/font_size = 10
 text = "heal all"
@@ -212,6 +217,7 @@ offset_left = 3.0
 offset_top = 105.0
 offset_right = 379.0
 offset_bottom = 228.0
+scale = Vector2(0.6810585, 0.6810585)
 theme = SubResource("Theme_pcdv5")
 
 [node name="Enemy1" type="VBoxContainer" parent="EnemiesContainer" unique_id=221038393]
@@ -420,6 +426,7 @@ offset_left = 4.0
 offset_top = 177.0
 offset_right = 67.0
 offset_bottom = 199.0
+scale = Vector2(0.6810585, 0.6810585)
 theme_override_font_sizes/font_size = 10
 text = "Start battle"
 

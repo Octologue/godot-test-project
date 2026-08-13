@@ -22,6 +22,10 @@ var last_sp
 
 var XP : int
 
+var defending : bool = false
+var hold_def : Array[int] 
+var def_count : int 
+
 func init_pair_stats():
 	HP = mult_hp*monster.HP
 	SP = mult_sp*monster.SP
@@ -50,9 +54,11 @@ func init_pair():
 	init_pair_stats()
 	init_pair_types()
 	init_pair_moves()
+	ability = monster.ability
 	
 func init():
 	init_pair()
+	ability.init(self)
 	matk = MATK
 	ratk = RATK
 	mdef = MDEF
@@ -78,4 +84,19 @@ func add_xp(amount):
 func xp_to_next_lvl():
 	return 2*LVL*LVL+100*LVL
 
+func defending_check():
+	if defending : 
+		def_count += 1
+		sp += 30
+		if def_count == 1:
+			hold_def = [rdef,mdef]
+			rdef *= 5
+			mdef *= 5
+			BattleEvent.started_defending.emit(self)
+	if def_count > 3 :
+		defending = false
+		rdef = hold_def[0]
+		mdef = hold_def[1]
+		def_count = 0
+		BattleEvent.stoped_defending.emit(self)
 	

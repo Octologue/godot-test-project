@@ -2,10 +2,9 @@ extends Node
 
 signal turn_end
 
-signal character_died
+signal character_died(Character)
 signal target_selected(Character)
 signal selected_move(Move)
-signal selected_monster(Monster)
 signal hp_or_sp_changed()
 
 signal speed_changed
@@ -19,4 +18,8 @@ signal damage_inflicted(damage:int, target : Character) #for healing, amount is 
 signal status_proc(effect:Effect,target:Character)
 signal status_stop(effect:Effect,target:Character)
 signal dmg_from_poison(chara: Character,damage:int)
-signal character_died_log(Character)
+
+signal effect_to_copy(effect,chara)
+signal negative_luck(unlucky)
+
+signal selected_monster(Monster)

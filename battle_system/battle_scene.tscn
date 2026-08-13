@@ -32,6 +32,7 @@
 [ext_resource type="Texture2D" uid="uid://bpfdlttlotlam" path="res://assets/UI/Battle_UI/timeline_pannel.png" id="29_5xgb8"]
 [ext_resource type="Texture2D" uid="uid://8cajrklyb87c" path="res://assets/UI/Battle_UI/menu_mask.png" id="29_65nj3"]
 [ext_resource type="Script" uid="uid://bfslm6i4xy542" path="res://battle_system/battle_logic/scripts/battle_log.gd" id="32_0nauy"]
+[ext_resource type="Texture2D" uid="uid://qn58f5u60xrp" path="res://assets/UI/Battle_UI/cursor.png" id="32_65nj3"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3bfdn"]
 atlas = ExtResource("23_kc0me")
@@ -383,6 +384,32 @@ animations = [{
 "loop": 0,
 "name": &"transition",
 "speed": 24.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yel4j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ent30")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5d6la")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kc0me")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_leoot")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7xxpy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h5v06")
+}],
+"loop": 0,
+"name": &"transition_alt",
+"speed": 24.0
 }]
 
 [node name="BattleScene" type="Node2D" unique_id=1809381810]
@@ -493,10 +520,11 @@ offset_bottom = 21.0
 
 [node name="iconEffect" type="TextureRect" parent="UI/statusOverview/characters/character1" unique_id=2025776316]
 layout_mode = 0
-offset_left = 28.0
-offset_top = 4.0
-offset_right = 42.0
-offset_bottom = 18.0
+offset_left = 27.0
+offset_top = 3.0
+offset_right = 43.0
+offset_bottom = 19.0
+stretch_mode = 2
 
 [node name="character2" type="Control" parent="UI/statusOverview/characters" unique_id=510233785]
 anchors_preset = 0
@@ -582,10 +610,10 @@ offset_bottom = 21.0
 
 [node name="iconEffect" type="TextureRect" parent="UI/statusOverview/characters/character2" unique_id=133432305]
 layout_mode = 0
-offset_left = 28.0
-offset_top = 4.0
-offset_right = 42.0
-offset_bottom = 18.0
+offset_left = 27.0
+offset_top = 3.0
+offset_right = 43.0
+offset_bottom = 19.0
 
 [node name="character3" type="Control" parent="UI/statusOverview/characters" unique_id=459240490]
 anchors_preset = 0
@@ -671,10 +699,10 @@ offset_bottom = 21.0
 
 [node name="iconEffect" type="TextureRect" parent="UI/statusOverview/characters/character3" unique_id=859796842]
 layout_mode = 0
-offset_left = 28.0
-offset_top = 4.0
-offset_right = 42.0
-offset_bottom = 18.0
+offset_left = 27.0
+offset_top = 3.0
+offset_right = 43.0
+offset_bottom = 19.0
 
 [node name="character4" type="Control" parent="UI/statusOverview/characters" unique_id=1024747480]
 anchors_preset = 0
@@ -760,10 +788,17 @@ offset_bottom = 21.0
 
 [node name="iconEffect" type="TextureRect" parent="UI/statusOverview/characters/character4" unique_id=153548311]
 layout_mode = 0
-offset_left = 28.0
-offset_top = 4.0
-offset_right = 42.0
-offset_bottom = 18.0
+offset_left = 27.0
+offset_top = 3.0
+offset_right = 43.0
+offset_bottom = 19.0
+
+[node name="focusedEnemy" type="Control" parent="UI/statusOverview" unique_id=1973595900]
+anchors_preset = 0
+offset_left = 396.0
+offset_top = 3.0
+offset_right = 480.0
+offset_bottom = 43.0
 
 [node name="battleMenu" type="Control" parent="UI" unique_id=1007931719]
 layout_mode = 3
@@ -775,7 +810,7 @@ offset_bottom = 221.0
 
 [node name="animatedMenu" type="AnimatedSprite2D" parent="UI/battleMenu" unique_id=1747835051]
 sprite_frames = SubResource("SpriteFrames_j3x6a")
-animation = &"transition"
+animation = &"appear"
 centered = false
 
 [node name="actionButtons" type="Control" parent="UI/battleMenu" unique_id=692702596]
@@ -830,7 +865,7 @@ texture_normal = ExtResource("17_d5jor")
 texture_pressed = ExtResource("18_etlwm")
 texture_hover = ExtResource("19_7fkee")
 
-[node name="TextureButton" type="TextureButton" parent="UI/battleMenu/actionButtons" unique_id=543215888]
+[node name="runButton" type="TextureButton" parent="UI/battleMenu/actionButtons" unique_id=543215888]
 use_parent_material = true
 layout_mode = 0
 offset_left = 6.0
@@ -850,7 +885,7 @@ anchor_top = 0.056
 anchor_right = 0.095000006
 anchor_bottom = 0.056
 offset_left = 0.034998894
-offset_top = 0.055999756
+offset_top = -0.94400024
 offset_right = 135.035
 offset_bottom = 119.056
 
@@ -858,8 +893,13 @@ offset_bottom = 119.056
 z_index = -1
 material = ExtResource("24_3bfdn")
 instance_shader_parameters/offset = Vector2(70.745, 25.82)
-layout_mode = 0
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.008
+anchor_bottom = 0.008
+offset_top = 0.03999996
 offset_right = 131.0
+offset_bottom = 0.03999996
 theme = ExtResource("24_gblc1")
 
 [node name="infoContainer" type="VBoxContainer" parent="UI/battleMenu/moveMenu/menuBackground" unique_id=232148832]
@@ -1129,35 +1169,53 @@ offset_top = 0.00999999
 offset_right = 20.01
 offset_bottom = 20.01
 
-[node name="AllySelection" type="VBoxContainer" parent="UI" unique_id=226161620]
+[node name="battleLogUI" type="Control" parent="UI" unique_id=1898283831]
 visible = false
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -58.0
-offset_top = -187.99998
-offset_right = 58.0
-grow_horizontal = 2
-grow_vertical = 0
-size_flags_horizontal = 4
-size_flags_vertical = 4
+z_index = 10
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
-[node name="EnemySelection" type="VBoxContainer" parent="UI" unique_id=60660472]
-visible = false
-anchors_preset = 7
+[node name="log" type="RichTextLabel" parent="UI/battleLogUI" unique_id=1852637546]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 27.0
+offset_right = 469.0
+offset_bottom = 252.0
+theme = ExtResource("24_gblc1")
+bbcode_enabled = true
+
+[node name="ColorRect" type="ColorRect" parent="UI/battleLogUI" unique_id=1597873599]
+process_mode = 4
+show_behind_parent = true
+z_index = -2
+layout_mode = 1
+anchors_preset = 5
 anchor_left = 0.5
-anchor_top = 1.0
 anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -58.0
-offset_top = -187.99998
-offset_right = 58.0
+offset_left = -20.0
+offset_right = 460.0
+offset_bottom = 270.0
 grow_horizontal = 2
-grow_vertical = 0
-size_flags_horizontal = 4
-size_flags_vertical = 4
+mouse_filter = 2
+color = Color(0, 0, 0, 0.7254902)
+
+[node name="Label" type="Label" parent="UI/battleLogUI" unique_id=931551731]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 7.0
+offset_right = 65.0
+offset_bottom = 30.0
+theme = ExtResource("24_gblc1")
+text = "Battle Log"
+
+[node name="cursor" type="TextureRect" parent="UI" unique_id=199640220]
+visible = false
+offset_right = 32.0
+offset_bottom = 32.0
+texture = ExtResource("32_65nj3")
+stretch_mode = 2
 
 [node name="players" type="Node2D" parent="." unique_id=2137357862]
 
@@ -1170,3 +1228,4 @@ script = ExtResource("32_0nauy")
 [connection signal="pressed" from="UI/battleMenu/actionButtons/movesButton" to="UI" method="_on_moves_button_pressed"]
 [connection signal="pressed" from="UI/battleMenu/actionButtons/defendButton" to="." method="_on_defend_button_pressed"]
 [connection signal="pressed" from="UI/battleMenu/actionButtons/defendButton" to="UI" method="_on_defend_button_pressed"]
+[connection signal="pressed" from="UI/battleMenu/actionButtons/runButton" to="." method="_on_run_button_pressed"]

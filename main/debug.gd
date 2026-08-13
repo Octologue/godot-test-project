@@ -10,7 +10,6 @@ var monster_list : Array[Monster]
 var resources_lists : Dictionary
 
 func _ready():
-	print (player_data.player_list[0].LVL)
 	init_monster_selection()
 
 #region character stats
@@ -42,7 +41,6 @@ func init_monster_selection():
 		for m in monster_list:
 			l.add_item(m.title)
 		resources_lists[l] = monster_list.duplicate()
-		print(l)
 		monster_list.clear()
 	
 	for child in $EnemiesContainer.get_children():
@@ -93,11 +91,6 @@ func create_new_battle_data():
 		new_enemy.lvl = int(child.find_child("Lvl").text)
 		new_enemy.position = enemy_positions.pop_front()
 		debug_battle_data.enemy_list.append(new_enemy)
-		
-	for i in debug_battle_data.enemy_list:
-		print(i.enemy.title)
-		print(i.lvl)
-		print(i.position)
 		
 	return debug_battle_data
 

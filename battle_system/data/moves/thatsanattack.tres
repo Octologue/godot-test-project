@@ -6,7 +6,7 @@
 script = ExtResource("1_3oysa")
 title = "thatsanattack"
 sp_cost = 5
-acc = 1.0
+acc = 0.06
 power = 600
 move_range = 3
 metadata/_custom_type_script = "uid://dwkthqmibmlio"

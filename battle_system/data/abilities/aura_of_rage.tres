@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="AuraOfRage" format=3 uid="uid://ciqm7guutsumx"]
+
+[ext_resource type="Script" uid="uid://dkir03ovr4f3y" path="res://battle_system/battle_logic/classes/ability_classes/AuraOfRage.gd" id="1_2y07f"]
+
+[resource]
+script = ExtResource("1_2y07f")
+title = "Aura Of Rage"
+metadata/_custom_type_script = "uid://dkir03ovr4f3y"

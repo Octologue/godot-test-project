@@ -15,15 +15,18 @@ func _ready() :
 	BattleEvent.status_proc.connect(_on_status_proc)
 	BattleEvent.status_stop.connect(_on_status_stop)
 	BattleEvent.dmg_from_poison.connect(_on_dmg_from_poison)
-	BattleEvent.character_died_log.connect(_on_character_died_log)
+	BattleEvent.character_died.connect(_on_character_died_log)
 
 func new_turn():
 	turn_count += 1
 	battle_log[turn_count] = current_text
-	current_text = "Turn " + str(turn_count) + "\n"
+	current_text = "[b]Turn " + str(turn_count) + "[/b]\n"
+	$"../UI/battleLogUI/log".text = create_log_text()
 
 func show_current_text():
+	return
 	print(current_text)
+	
 
 func create_log_text():
 	var text = ""

@@ -4,7 +4,7 @@ class_name BattleSystem
 #region VARIABLES and READY
 
 # --- Data ---
-@onready var character_scene = preload("res://battle_system/UI/scenes/character_scene.tscn")
+@onready var character_scene = preload("res://battle_system/graphics/scenes/character_scene.tscn")
 @onready var move_button = preload("res://battle_system/UI/scenes/move_button.tscn")
 
 var player_data = load("res://battle_system/data/player_data.tres")
@@ -17,8 +17,6 @@ var battle_data : BattleData
 @onready var options = $UI/Options
 @onready var moves_button = $UI/battleMenu/actionButtons/movesButton
 @onready var defend_button = $UI/battleMenu/actionButtons/defendButton
-@onready var enemy_selection = $UI/EnemySelection
-@onready var ally_selection = $UI/AllySelection
 
 # --- Battle state enum ---
 enum BattleState {
@@ -41,7 +39,12 @@ var actor : Character
 var move_used : Move
 var targets : Array
 
+var selection_is_enemy = false
+var selection_is_ally = false
+
 var performances : Dictionary = {}
+
+var running_away = false
 
 var enemy_ai : EnemyAI = EnemyAI.new()
 @onready var ui : BattleUI = $UI
@@ -57,14 +60,11 @@ func change_state(new_state):
 		BattleState.RESOLVE: resolve()
 
 func _ready():
-	print(ui)
 	BattleEvent.character_died.connect(_on_character_died)
-	BattleEvent.target_selected.connect(character_button_pressed)
+	BattleEvent.target_selected.connect(character_selected)
 	BattleEvent.selected_move.connect(move_button_pressed)
 	BattleEvent.speed_changed.connect(sort_and_display)
 	#defend_button.pressed.connect(defend)
-
-
 #endregion
 
 #region START
@@ -74,15 +74,12 @@ func battle_init(battle_data_OW):
 	change_state(BattleState.START)
 
 func start():
-	
 	for p in player_data.player_list:
 		player_setup(p)
 		performances[p] = {"damage": 0,"healing": 0,"status": 0,"enemies_killed":[]}
 	for e in battle_data.enemy_list:
 		enemy_setup(e)
 	ui.duplicate_title_fix()
-	for e in enemy_list:
-		ui.chara_button_setup(e,enemy_selection)
 	sort_and_display()
 	
 	ui.init_character_status()
@@ -101,8 +98,6 @@ func player_setup(player : Player):
 		chara_node.position = player_data.player_positions[player]
 		character_nodes[player] = chara_node
 		
-		ui.chara_button_setup(player,ally_selection)
-		
 	elif player.alive == false or player.hp <= 0:
 		print(player.title, " already dead !")
 
@@ -114,13 +109,10 @@ func enemy_setup(enemy_data : EnemyBattleData):
 	enemy_list.append(enemy)
 	
 	var chara_node = character_scene.instantiate()
-	$enemies.add_child(chara_node)
 	chara_node.setup(enemy)
 	chara_node.position = enemy_data.position
 	character_nodes[enemy] = chara_node
-	
-	
-
+	$enemies.add_child(chara_node)
 	
 #endregion
 
@@ -130,7 +122,8 @@ func next_turn():
 	
 	for chara in player_list + enemy_list:
 		chara.effects_tick()
-		chara.defending_check()
+	for p in player_list:
+		p.defending_check()
 	
 	$battleLog.show_current_text()
 	BattleEvent.turn_end.emit()
@@ -142,8 +135,9 @@ func next_turn():
 
 	targets.clear()
 	actor = timeline[0]["character"]
-	if actor.defending:
-		actor.defending_check()
+	if actor is Player:
+		if actor.defending :
+			actor.defending_check()
 		
 	if actor is Player:
 		change_state(BattleState.PLAYER_TURN)
@@ -171,11 +165,13 @@ func defend():
 func _on_defend_button_pressed() :
 	defend()
 
-func character_button_pressed(target_selected):
+func _on_run_button_pressed() -> void:
+	running_away = true
+	change_state(BattleState.RESOLVE)
+	ui.close_menu()
+
+func character_selected(target_selected):
 	targets.append(target_selected) 
-	enemy_selection.hide()
-	ally_selection.hide()
-	
 	change_state(BattleState.ACT)
 
 func move_button_pressed(move):
@@ -187,7 +183,7 @@ func move_button_pressed(move):
 			change_state(BattleState.ACT)
 			
 		move_used.Ranges.ENEMY:
-			enemy_selection.show()
+			selection_is_enemy = true
 			
 		move_used.Ranges.ENEMIES:
 			for e in enemy_list:
@@ -195,7 +191,7 @@ func move_button_pressed(move):
 			change_state(BattleState.ACT)
 			
 		move_used.Ranges.ALLY:
-			ally_selection.show()
+			selection_is_ally = true
 			
 		move_used.Ranges.ALLIES:
 			for a in player_list:
@@ -237,6 +233,7 @@ func enemy_turn():
 #region ACT and ATTACK
 
 func act():
+	$UI/cursor.hide()
 	var actor_node = character_nodes[actor]
 	#var target_node = character_nodes[target]
 	var shift = Vector2(10,0)
@@ -272,10 +269,16 @@ func move_compute():
 					if target.alive == false:
 						performances[actor]["enemies_killed"].append(target)
 			if move_used.category == move_used.Categories.HEAL:
+				if actor.silenced:
+					print(actor," can't use heal move ",move_used," because silenced !")
+					return
 				var amount = target.get_healed(move_used)
 				if actor is Player:
 					performances[actor]["healing"] += amount
 			if move_used.category == move_used.Categories.STATUS:
+				if actor.silenced:
+					print(actor," can't use heal move ",move_used," because silenced !")
+					return
 				var applied = target.get_status(move_used,actor)
 				if actor is Player:
 					performances[actor]["status"] += applied
@@ -292,21 +295,17 @@ func move_compute():
 #region RESOLVE and DIED
 
 func _on_character_died(character : Character):
+	ui.update_bars()
+	ui.on_character_died(character)
 	if character in player_list:
 		player_list.erase(character)
 	elif character in enemy_list:
 		enemy_list.erase(character)
 	character.effects.clear()
-
+	
 	timeline = timeline.filter(func(entry): return entry["character"] != character)
 	
 	character_nodes[character].queue_free()
-	
-	for button in enemy_selection.get_children()+ally_selection.get_children():
-		if button.character == character:
-			button.queue_free()
-			break 
-	BattleEvent.character_died_log.emit(character)
 	
 func check_end_of_battle():
 	if enemy_list.size()+player_list.size()==0:
@@ -339,6 +338,7 @@ func compute_xp_by_performances():
 		player.add_xp(xp)
 	
 func resolve():
+	ui.clear_UI()
 	for p in player_data.player_list :
 		p.last_hp = p.hp
 		p.last_sp = p.sp
@@ -346,8 +346,10 @@ func resolve():
 			p.last_hp = 0
 			p.last_sp = 0
 	print("fin du combat")
-	#print(performances)
-	compute_xp_by_performances()
+	if !running_away :
+		compute_xp_by_performances()
+	for c in player_list+enemy_list:
+		c.effects.clear()
 	await get_tree().create_timer(1.0).timeout
 	var main = get_tree().get_first_node_in_group("main")
 	main.stop_battle_encounter()
