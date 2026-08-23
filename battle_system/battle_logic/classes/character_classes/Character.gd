@@ -45,8 +45,9 @@ var SPE : int
 var spe : int :
 	set(value):
 		spe = value
-		delay = 200 / (log(spe) + 2) - 25
+		delay = 200 / (log(spe) + 2)  - 25
 		delay = max(delay,1) #avoid bug <1
+		print(delay)
 		queue_reset()
 var delay : float 
 var queue : Array[float]
@@ -137,7 +138,7 @@ func compute_damage(attacker : Character,move : Move):
 	else:
 		attack_type_modifier = 1
 
-	damage = damage * randf_range(0.9,1.1) * type_modifier
+	damage = damage * randf_range(0.9,1.1) * type_modifier * attack_type_modifier
 	
 	return damage
 

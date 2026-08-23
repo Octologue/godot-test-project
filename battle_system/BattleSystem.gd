@@ -362,6 +362,8 @@ func resolve():
 func sort_and_display():
 	sort_combined_queue()
 	ui.update_timeline_display()
+	for i in timeline:
+		print(i["character"].title + " " + str(i["time"]))
 
 func sort_combined_queue():
 	var player_time_list = []

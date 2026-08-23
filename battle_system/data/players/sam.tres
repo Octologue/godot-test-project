@@ -25,6 +25,6 @@ title = "Sam"
 sprite = ExtResource("8_reu1b")
 half_icon = ExtResource("2_swlbk")
 full_icon = ExtResource("1_cppxq")
-LVL = 100
+LVL = 20
 moveset = Array[ExtResource("2_k3oj2")]([ExtResource("5_reu1b"), ExtResource("6_mrids"), ExtResource("7_hg2gq"), ExtResource("7_reu1b")])
 metadata/_custom_type_script = "uid://b3634gbmjyvdf"

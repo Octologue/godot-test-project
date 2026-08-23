@@ -1,11 +1,9 @@
 [gd_resource type="Resource" script_class="Monster" format=3 uid="uid://doei1jjen51c6"]
 
 [ext_resource type="Script" uid="uid://dwkthqmibmlio" path="res://battle_system/battle_logic/classes/Move.gd" id="1_6jaxv"]
-[ext_resource type="Resource" uid="uid://1jispf7m688d" path="res://battle_system/data/abilities/aura_of_envy.tres" id="1_wlv2v"]
-[ext_resource type="Texture2D" uid="uid://81am3rxtunjw" path="res://icon.svg" id="2_lrt6u"]
+[ext_resource type="Texture2D" uid="uid://qn58f5u60xrp" path="res://assets/UI/Battle_UI/cursor.png" id="1_y6fsh"]
 [ext_resource type="Resource" uid="uid://u5byi67no46i" path="res://battle_system/data/moves/heal_ally.tres" id="3_vkkns"]
 [ext_resource type="Script" uid="uid://biyn0e4u1vgcb" path="res://battle_system/battle_logic/classes/character_classes/Monster.gd" id="4_wcyyj"]
-[ext_resource type="Texture2D" uid="uid://q1uvyss5iyyt" path="res://assets/placeholder/New Piskel (2).png" id="5_gbs0u"]
 
 [resource]
 script = ExtResource("4_wcyyj")
@@ -18,9 +16,8 @@ base_MDEF = 25
 base_RDEF = 20
 base_SPE = 30
 title = "Lenvyzotl"
-sprite = ExtResource("5_gbs0u")
-full_icon = ExtResource("2_lrt6u")
-ability = ExtResource("1_wlv2v")
+sprite = ExtResource("1_y6fsh")
+full_icon = ExtResource("1_y6fsh")
 moveset = Array[ExtResource("1_6jaxv")]([ExtResource("3_vkkns")])
 resistances = Array[int]([3])
 weaknesses = Array[int]([2])
