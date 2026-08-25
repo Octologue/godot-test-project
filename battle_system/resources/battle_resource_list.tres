@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="BattleResourceList" format=3 uid="uid://bda4ep0u04ihj"]
+
+[ext_resource type="Script" uid="uid://d1k62pjwj8xmp" path="res://battle_system/characters/monster.gd" id="1_hpk8a"]
+[ext_resource type="Script" uid="uid://d0ix8g5lpbw1s" path="res://battle_system/moves/move.gd" id="2_5s8qw"]
+[ext_resource type="Resource" uid="uid://dy5qvbw2t61nr" path="res://battle_system/resources/monsters/lenvizotl_l.tres" id="2_m0bd2"]
+[ext_resource type="Script" uid="uid://mbj3ohyk0tqy" path="res://battle_system/data/battle_resource_list.gd" id="3_m0bd2"]
+
+[resource]
+script = ExtResource("3_m0bd2")
+monster_list = Array[ExtResource("1_hpk8a")]([ExtResource("2_m0bd2")])
+metadata/_custom_type_script = "uid://mbj3ohyk0tqy"

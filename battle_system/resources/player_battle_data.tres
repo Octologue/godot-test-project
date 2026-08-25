@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PlayerBattleData" format=3 uid="uid://dxuc6c5kg7yc6"]
+
+[ext_resource type="Script" uid="uid://cyyd3lbkbsxlu" path="res://battle_system/characters/player.gd" id="1_50exq"]
+[ext_resource type="Script" uid="uid://cqy4o0terei3l" path="res://battle_system/data/player_battle_data.gd" id="1_gsemi"]
+[ext_resource type="Resource" uid="uid://baw10fiegmmyd" path="res://battle_system/resources/players/sam.tres" id="2_3wp24"]
+[ext_resource type="Script" uid="uid://d1k62pjwj8xmp" path="res://battle_system/characters/monster.gd" id="4_3evon"]
+
+[resource]
+script = ExtResource("1_gsemi")
+player_list = Array[ExtResource("1_50exq")]([ExtResource("2_3wp24")])
+player_positions = Dictionary[ExtResource("1_50exq"), Vector2]({
+ExtResource("2_3wp24"): Vector2(30, 100)
+})
+metadata/_custom_type_script = "uid://cqy4o0terei3l"

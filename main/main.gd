@@ -1,11 +1,11 @@
 extends Node2D
 
 @onready var overworld = $Overworld
-@onready var battle_scene_data = preload("res://battle_system/battle_scene.tscn")
+@onready var battle_scene_data = preload("res://battle_system/battle_system.tscn")
 var battle_scene 
 @onready var camera_ow = $Overworld/PlayerOverworld/CameraOW
 @onready var camera_battle = $battleScene/CameraBattle
-@onready var player_data = preload("res://battle_system/data/player_data.tres")
+@onready var player_data = preload("res://battle_system/resources/player_battle_data.tres")
 var in_battle := false
 
 func _ready():
@@ -19,7 +19,7 @@ func initiate_battle_encounter(battle_data):
 	battle_scene = battle_scene_data.instantiate()
 	self.add_child(battle_scene)
 	battle_scene.process_mode = Node.PROCESS_MODE_PAUSABLE
-	battle_scene.battle_init(battle_data)
+	battle_scene.find_child("BattleController").initialize_battle_encounter(battle_data)
 	in_battle = true
 	camera_ow.enabled = false
 
@@ -34,7 +34,7 @@ func stop_battle_encounter():
 func init_player_stats():
 	var character_list : Array = player_data.player_list
 	for i in range(character_list.size()):
-		character_list[i].init()
+		character_list[i].initialize()
 
 func _input(event):
 	if event.is_action_pressed("pause"):

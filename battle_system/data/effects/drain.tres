@@ -1,8 +1,0 @@
-[gd_resource type="Resource" script_class="Drain" format=3 uid="uid://bop177gdf854d"]
-
-[ext_resource type="Script" uid="uid://bemff31tx5qc7" path="res://battle_system/battle_logic/classes/effect_classes/Drain.gd" id="1_lkso0"]
-
-[resource]
-script = ExtResource("1_lkso0")
-title = "drain"
-metadata/_custom_type_script = "uid://bemff31tx5qc7"

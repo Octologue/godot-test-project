@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Monster" format=3 uid="uid://ctrxypsayjwxt"]
+
+[ext_resource type="Script" uid="uid://d0ix8g5lpbw1s" path="res://battle_system/moves/move.gd" id="1_jqm2a"]
+[ext_resource type="Script" uid="uid://d1k62pjwj8xmp" path="res://battle_system/characters/monster.gd" id="2_ypjgu"]
+
+[resource]
+script = ExtResource("2_ypjgu")
+base_HP = 10
+base_SP = 10
+base_MATK = 10
+base_RATK = 10
+base_MDEF = 10
+base_RDEF = 10
+base_SPE = 10
+title = "no monster"
+metadata/_custom_type_script = "uid://d1k62pjwj8xmp"

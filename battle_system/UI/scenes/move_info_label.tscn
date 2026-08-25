@@ -1,6 +1,0 @@
-[gd_scene format=3 uid="uid://lt7ad6lrhifp"]
-
-[ext_resource type="Theme" uid="uid://cdqthytsbmor8" path="res://assets/themes/small_text_theme.theme" id="1_qvvgw"]
-
-[node name="moveInfoLabel" type="Label" unique_id=1398849668]
-theme = ExtResource("1_qvvgw")

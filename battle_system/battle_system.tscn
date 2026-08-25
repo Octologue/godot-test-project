@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://caqy352ac8etp"]
+
+[ext_resource type="Script" uid="uid://bcn7wnwssxsoe" path="res://battle_system/battle_scripts/battle_controller.gd" id="1_q3xb3"]
+[ext_resource type="Script" uid="uid://xtme86ae00oq" path="res://battle_system/battle_scripts/timeline_manager.gd" id="2_j0ups"]
+[ext_resource type="Script" uid="uid://71qnxkg2cwfp" path="res://battle_system/battle_scripts/action_resolver.gd" id="3_j0ups"]
+[ext_resource type="Script" uid="uid://r3lk3uxgstra" path="res://battle_system/battle_scripts/ui_manager.gd" id="4_oo3ix"]
+[ext_resource type="Script" uid="uid://dxbcr3v645jbq" path="res://battle_system/battle_scripts/visuals_manager.gd" id="5_ysyts"]
+
+[node name="BattleSystem" type="Node2D" unique_id=85094970]
+
+[node name="BattleController" type="Node" parent="." unique_id=310689309 node_paths=PackedStringArray("timeline", "action", "ui", "visuals")]
+script = ExtResource("1_q3xb3")
+timeline = NodePath("TimelineManager")
+action = NodePath("ActionResolver")
+ui = NodePath("UiManager")
+visuals = NodePath("VisualsManager")
+
+[node name="TimelineManager" type="Node" parent="BattleController" unique_id=1378721589]
+script = ExtResource("2_j0ups")
+
+[node name="ActionResolver" type="Node" parent="BattleController" unique_id=1929381981]
+script = ExtResource("3_j0ups")
+
+[node name="UiManager" type="Node" parent="BattleController" unique_id=1632173194]
+script = ExtResource("4_oo3ix")
+
+[node name="EnemyAI" type="Node" parent="BattleController" unique_id=1395841336]
+
+[node name="VisualsManager" type="Node" parent="BattleController" unique_id=111162782]
+script = ExtResource("5_ysyts")
+
+[node name="AlliesSprites" type="Node2D" parent="." unique_id=712172017]
+
+[node name="EnemiesSprites" type="Node2D" parent="." unique_id=1176469881]
+
+[node name="Marker2D" type="Marker2D" parent="." unique_id=825889341]
+position = Vector2(29, 109)
