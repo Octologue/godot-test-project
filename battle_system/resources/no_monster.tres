@@ -11,6 +11,6 @@ base_MATK = 10
 base_RATK = 10
 base_MDEF = 10
 base_RDEF = 10
-base_SPE = 10
+base_AGI = 10
 title = "no monster"
 metadata/_custom_type_script = "uid://d1k62pjwj8xmp"

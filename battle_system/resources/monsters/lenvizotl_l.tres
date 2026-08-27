@@ -1,6 +1,7 @@
 [gd_resource type="Resource" script_class="Monster" format=3 uid="uid://dy5qvbw2t61nr"]
 
 [ext_resource type="Script" uid="uid://d0ix8g5lpbw1s" path="res://battle_system/moves/move.gd" id="1_78cur"]
+[ext_resource type="Texture2D" uid="uid://q1uvyss5iyyt" path="res://assets/placeholder/New Piskel (2).png" id="1_bhhws"]
 [ext_resource type="Script" uid="uid://d1k62pjwj8xmp" path="res://battle_system/characters/monster.gd" id="2_ohqoa"]
 [ext_resource type="Texture2D" uid="uid://3ubxdfdj83aq" path="res://assets/placeholder/placeholder_lenvyzotl.png" id="3_ohqoa"]
 
@@ -12,7 +13,8 @@ base_MATK = 50
 base_RATK = 50
 base_MDEF = 50
 base_RDEF = 50
-base_SPE = 50
+base_AGI = 50
 title = "lenvizotl"
 sprite = ExtResource("3_ohqoa")
+icon = ExtResource("1_bhhws")
 metadata/_custom_type_script = "uid://d1k62pjwj8xmp"

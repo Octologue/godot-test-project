@@ -2,7 +2,6 @@ extends Control
 
 @onready var player_data = preload("res://battle_system/resources/player_battle_data.tres")
 @onready var status_ui = preload("res://main/pause menu/status_ui.tscn")
-@onready var character_button = preload("res://battle_system/UI/character_button.tscn")
 
 var history := []
 var current_menu = null

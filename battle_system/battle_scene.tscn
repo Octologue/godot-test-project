@@ -1,0 +1,100 @@
+[gd_scene format=3 uid="uid://caqy352ac8etp"]
+
+[ext_resource type="Script" uid="uid://bcn7wnwssxsoe" path="res://battle_system/battle_scripts/battle_controller.gd" id="1_6y3bk"]
+[ext_resource type="Script" uid="uid://xtme86ae00oq" path="res://battle_system/battle_scripts/timeline_manager.gd" id="2_sylpa"]
+[ext_resource type="Script" uid="uid://71qnxkg2cwfp" path="res://battle_system/battle_scripts/action_resolver.gd" id="3_kuufh"]
+[ext_resource type="Script" uid="uid://r3lk3uxgstra" path="res://battle_system/battle_scripts/ui_manager.gd" id="4_aab42"]
+[ext_resource type="Script" uid="uid://dxbcr3v645jbq" path="res://battle_system/battle_scripts/visuals_manager.gd" id="5_84jg4"]
+[ext_resource type="Script" uid="uid://b6y0xslsaav0w" path="res://battle_system/battle_scripts/enemy_ai.gd" id="5_aab42"]
+[ext_resource type="Script" uid="uid://bfuseh71v2jut" path="res://battle_system/battle_scripts/performances_manager.gd" id="6_kuufh"]
+[ext_resource type="PackedScene" uid="uid://3m3ert4uv4cc" path="res://battle_system/UI/timeline_panel.tscn" id="6_sylpa"]
+[ext_resource type="Script" uid="uid://dsbkobtcfxm7x" path="res://battle_system/battle_scripts/battle_log_manager.gd" id="8_84jg4"]
+
+[node name="BattleScene" type="Node2D" unique_id=85094970]
+
+[node name="BattleController" type="Node" parent="." unique_id=310689309 node_paths=PackedStringArray("timeline", "action_resolver", "enemy_ai", "ui", "visuals", "performance", "battle_log")]
+script = ExtResource("1_6y3bk")
+timeline = NodePath("TimelineManager")
+action_resolver = NodePath("ActionResolver")
+enemy_ai = NodePath("EnemyAI")
+ui = NodePath("UiManager")
+visuals = NodePath("VisualsManager")
+performance = NodePath("PerformancesManager")
+battle_log = NodePath("BattleLogManager")
+
+[node name="TimelineManager" type="Node" parent="BattleController" unique_id=1378721589]
+script = ExtResource("2_sylpa")
+
+[node name="ActionResolver" type="Node" parent="BattleController" unique_id=1929381981]
+script = ExtResource("3_kuufh")
+
+[node name="UiManager" type="Node" parent="BattleController" unique_id=1632173194]
+script = ExtResource("4_aab42")
+
+[node name="EnemyAI" type="Node" parent="BattleController" unique_id=1395841336]
+script = ExtResource("5_aab42")
+
+[node name="VisualsManager" type="Node" parent="BattleController" unique_id=111162782]
+script = ExtResource("5_84jg4")
+
+[node name="PerformancesManager" type="Node" parent="BattleController" unique_id=389539784]
+script = ExtResource("6_kuufh")
+
+[node name="BattleLogManager" type="Node" parent="BattleController" unique_id=357793288]
+script = ExtResource("8_84jg4")
+
+[node name="AlliesSprites" type="Node2D" parent="." unique_id=712172017]
+
+[node name="EnemiesSprites" type="Node2D" parent="." unique_id=1176469881]
+
+[node name="Marker2D" type="Marker2D" parent="." unique_id=825889341]
+position = Vector2(49, 153)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1920134455]
+
+[node name="Timeline" type="HBoxContainer" parent="CanvasLayer" unique_id=493586398]
+custom_minimum_size = Vector2(22, 22)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -128.0
+offset_right = 128.0
+offset_bottom = 22.0
+grow_horizontal = 2
+
+[node name="TimelinePanel" parent="CanvasLayer/Timeline" unique_id=2138178461 instance=ExtResource("6_sylpa")]
+layout_mode = 2
+
+[node name="TimelinePanel2" parent="CanvasLayer/Timeline" unique_id=368640155 instance=ExtResource("6_sylpa")]
+layout_mode = 2
+
+[node name="TimelinePanel3" parent="CanvasLayer/Timeline" unique_id=1881841275 instance=ExtResource("6_sylpa")]
+layout_mode = 2
+
+[node name="TimelinePanel4" parent="CanvasLayer/Timeline" unique_id=778389030 instance=ExtResource("6_sylpa")]
+layout_mode = 2
+
+[node name="TimelinePanel5" parent="CanvasLayer/Timeline" unique_id=302613564 instance=ExtResource("6_sylpa")]
+layout_mode = 2
+
+[node name="TimelinePanel6" parent="CanvasLayer/Timeline" unique_id=1351124804 instance=ExtResource("6_sylpa")]
+layout_mode = 2
+
+[node name="TimelinePanel7" parent="CanvasLayer/Timeline" unique_id=777394895 instance=ExtResource("6_sylpa")]
+layout_mode = 2
+
+[node name="TimelinePanel8" parent="CanvasLayer/Timeline" unique_id=955367633 instance=ExtResource("6_sylpa")]
+layout_mode = 2
+
+[node name="TimelinePanel9" parent="CanvasLayer/Timeline" unique_id=757906654 instance=ExtResource("6_sylpa")]
+layout_mode = 2
+
+[node name="TimelinePanel10" parent="CanvasLayer/Timeline" unique_id=1294591033 instance=ExtResource("6_sylpa")]
+layout_mode = 2
+
+[node name="MoveSelection" type="VBoxContainer" parent="CanvasLayer" unique_id=210325207]
+visible = false
+offset_left = 184.0
+offset_top = 92.0
+offset_right = 242.0
+offset_bottom = 214.0

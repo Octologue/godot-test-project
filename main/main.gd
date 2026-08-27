@@ -1,7 +1,7 @@
 extends Node2D
 
 @onready var overworld = $Overworld
-@onready var battle_scene_data = preload("res://battle_system/battle_system.tscn")
+@onready var battle_scene_data = preload("res://battle_system/battle_scene.tscn")
 var battle_scene 
 @onready var camera_ow = $Overworld/PlayerOverworld/CameraOW
 @onready var camera_battle = $battleScene/CameraBattle

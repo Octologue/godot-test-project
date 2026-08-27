@@ -1,5 +1,5 @@
 class_name VisualsManager
-extends BattleController
+extends Node
 
 @onready var allies = $"../../AlliesSprites"
 @onready var enemies = $"../../EnemiesSprites"

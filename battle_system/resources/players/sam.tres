@@ -1,9 +1,11 @@
 [gd_resource type="Resource" script_class="Player" format=3 uid="uid://baw10fiegmmyd"]
 
-[ext_resource type="Resource" uid="uid://ctrxypsayjwxt" path="res://battle_system/resources/no_monster.tres" id="1_4ikt5"]
+[ext_resource type="Texture2D" uid="uid://8wq3t6yu23ay" path="res://assets/P1_full_icon.png" id="1_cwhw8"]
 [ext_resource type="Script" uid="uid://d0ix8g5lpbw1s" path="res://battle_system/moves/move.gd" id="1_txy14"]
+[ext_resource type="Resource" uid="uid://caqaqw44ip02w" path="res://battle_system/resources/monsters/test_monster.tres" id="2_cwhw8"]
 [ext_resource type="Script" uid="uid://cyyd3lbkbsxlu" path="res://battle_system/characters/player.gd" id="2_hy841"]
 [ext_resource type="Texture2D" uid="uid://c3v8g4o84w8j4" path="res://assets/Sprite-0001.png" id="3_ld7gw"]
+[ext_resource type="Resource" uid="uid://d2ptm5tqrun47" path="res://battle_system/resources/moves/attack_move.tres" id="4_wu6jb"]
 
 [resource]
 script = ExtResource("2_hy841")
@@ -14,7 +16,9 @@ mult_matk = 1.0
 mult_rdef = 1.0
 mult_mdef = 1.0
 mult_agi = 1.0
-monster = ExtResource("1_4ikt5")
+monster = ExtResource("2_cwhw8")
 title = "Sam"
 sprite = ExtResource("3_ld7gw")
+icon = ExtResource("1_cwhw8")
+moveset = Array[ExtResource("1_txy14")]([ExtResource("4_wu6jb")])
 metadata/_custom_type_script = "uid://cyyd3lbkbsxlu"

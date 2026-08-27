@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://biysvvpuspkv"]
+
+[ext_resource type="Script" uid="uid://dy8qdcenv5bv1" path="res://battle_system/UI/move_button.gd" id="1_e1a20"]
+
+[node name="MoveButton" type="Button" unique_id=130151700]
+script = ExtResource("1_e1a20")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

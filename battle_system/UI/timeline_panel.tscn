@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://3m3ert4uv4cc"]
+
+[ext_resource type="Script" uid="uid://dwtxig54rkk8n" path="res://battle_system/UI/timeline_panel.gd" id="1_hynih"]
+
+[node name="TimelinePanel" type="Panel" unique_id=2138178461]
+custom_minimum_size = Vector2(22, 22)
+offset_right = 22.0
+offset_bottom = 22.0
+script = ExtResource("1_hynih")
+
+[node name="Icon" type="TextureRect" parent="." unique_id=132894912]
+custom_minimum_size = Vector2(20, 20)
+clip_contents = true
+layout_mode = 0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 21.0
+offset_bottom = 21.0
+stretch_mode = 2

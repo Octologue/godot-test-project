@@ -3,6 +3,7 @@ class_name Character
 
 @export var title : String
 @export var sprite : Texture2D
+@export var icon : Texture2D
 @export var LVL : int
 
 var HP : int
