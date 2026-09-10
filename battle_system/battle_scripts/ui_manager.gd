@@ -22,12 +22,14 @@ func refresh_timeline_ui(timeline):
 			slot.find_child("Icon").texture = timeline[index]["character"].icon
 			index += 1
 		else:
-			slot.find_child("icon").texture = null 
+			slot.find_child("Icon").texture = null 
 
 func show_battle_menu():
 	pass
 
 func refresh_move_selection_menu(actor : Character):
+	for child in move_selection.get_children():
+		child.queue_free()
 	for move in actor.moveset:
 		var new_button = move_button.instantiate()
 		new_button.move = move
@@ -42,3 +44,19 @@ func on_move_button_pressed(move):
 
 func enable_target_selection(is_target_ally:bool):
 	pass
+
+func duplicate_title_fix(enemy_list):
+	var letter_list = ["a","b","c","d","e"]
+	var title_total_count = {} 
+
+	for enemy in enemy_list:
+		var title = enemy.title
+		title_total_count[title] = title_total_count.get(title, 0) + 1
+
+	var title_seen_count = {} 
+	for enemy in enemy_list:
+		var title = enemy.title
+		if title_total_count[title] > 1:
+			var seen = title_seen_count.get(title, 0)
+			enemy.title += " " + letter_list[seen]
+			title_seen_count[title] = seen + 1

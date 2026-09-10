@@ -5,8 +5,8 @@
 
 [resource]
 script = ExtResource("2_a3h6t")
-damage = 20
 title = "attack move"
-acc = 1.0
+delay_mult = 1.0
+accuracy = 1.0
 move_range = 3
 metadata/_custom_type_script = "uid://b1s8fqrskf0eq"

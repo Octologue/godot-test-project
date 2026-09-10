@@ -4,6 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://q1uvyss5iyyt" path="res://assets/placeholder/New Piskel (2).png" id="1_bhhws"]
 [ext_resource type="Script" uid="uid://d1k62pjwj8xmp" path="res://battle_system/characters/monster.gd" id="2_ohqoa"]
 [ext_resource type="Texture2D" uid="uid://3ubxdfdj83aq" path="res://assets/placeholder/placeholder_lenvyzotl.png" id="3_ohqoa"]
+[ext_resource type="Resource" uid="uid://bhgvbrn7aq1r0" path="res://battle_system/resources/moves/quick_attack.tres" id="3_uxkx4"]
+[ext_resource type="Resource" uid="uid://bk3ls7wsjff63" path="res://battle_system/resources/moves/slow_attack.tres" id="4_lrnk5"]
+[ext_resource type="Resource" uid="uid://d2ptm5tqrun47" path="res://battle_system/resources/moves/attack_move.tres" id="5_nid03"]
 
 [resource]
 script = ExtResource("2_ohqoa")
@@ -17,4 +20,5 @@ base_AGI = 50
 title = "lenvizotl"
 sprite = ExtResource("3_ohqoa")
 icon = ExtResource("1_bhhws")
+moveset = Array[ExtResource("1_78cur")]([ExtResource("3_uxkx4"), ExtResource("4_lrnk5"), ExtResource("5_nid03")])
 metadata/_custom_type_script = "uid://d1k62pjwj8xmp"

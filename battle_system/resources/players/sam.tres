@@ -6,6 +6,8 @@
 [ext_resource type="Script" uid="uid://cyyd3lbkbsxlu" path="res://battle_system/characters/player.gd" id="2_hy841"]
 [ext_resource type="Texture2D" uid="uid://c3v8g4o84w8j4" path="res://assets/Sprite-0001.png" id="3_ld7gw"]
 [ext_resource type="Resource" uid="uid://d2ptm5tqrun47" path="res://battle_system/resources/moves/attack_move.tres" id="4_wu6jb"]
+[ext_resource type="Resource" uid="uid://bk3ls7wsjff63" path="res://battle_system/resources/moves/slow_attack.tres" id="5_tkc5y"]
+[ext_resource type="Resource" uid="uid://bhgvbrn7aq1r0" path="res://battle_system/resources/moves/quick_attack.tres" id="6_ld12q"]
 
 [resource]
 script = ExtResource("2_hy841")
@@ -20,5 +22,5 @@ monster = ExtResource("2_cwhw8")
 title = "Sam"
 sprite = ExtResource("3_ld7gw")
 icon = ExtResource("1_cwhw8")
-moveset = Array[ExtResource("1_txy14")]([ExtResource("4_wu6jb")])
+moveset = Array[ExtResource("1_txy14")]([ExtResource("4_wu6jb"), ExtResource("5_tkc5y"), ExtResource("6_ld12q")])
 metadata/_custom_type_script = "uid://cyyd3lbkbsxlu"

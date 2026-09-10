@@ -47,7 +47,6 @@ func move_compute(target_result:Dictionary,actor:Character,move:Move):
 			heal_character(target_result,move)
 		elif move is StatusMove:
 			status_character(target_result,move)
-
 	else:
 		target_result["missed"] = true
 
@@ -69,9 +68,9 @@ func attack_character(target_result:Dictionary,actor:Character,move:AttackMove):
 func damage_compute(target:Character,actor:Character,move:AttackMove):
 	var damage := 0
 	
-	if move.category == move.Categories.MELEE:
+	if move.category == move.Category.MELEE:
 		damage = (move.power * actor.matk) / target.mdef
-	elif move.category == move.Categories.RANGED:
+	elif move.category == move.Category.RANGED:
 		damage = (move.power * actor.ratk) / target.rdef
 	
 	damage = damage * randf_range(0.9,1.1) * get_type_modifier(target,move) * get_stab(actor,move)

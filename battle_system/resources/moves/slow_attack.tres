@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AttackMove" format=3 uid="uid://bk3ls7wsjff63"]
+
+[ext_resource type="Script" uid="uid://rwj7eptb1gti" path="res://battle_system/effects/effect.gd" id="1_6ao7h"]
+[ext_resource type="Script" uid="uid://b1s8fqrskf0eq" path="res://battle_system/moves/attack_move.gd" id="2_5xjft"]
+
+[resource]
+script = ExtResource("2_5xjft")
+title = "slow attack"
+delay_mult = 3.0
+accuracy = 1.0
+metadata/_custom_type_script = "uid://b1s8fqrskf0eq"

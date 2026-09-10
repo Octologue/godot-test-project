@@ -42,6 +42,7 @@ func change_battle_state(new_state):
 		BattleState.NEXT_TURN : next_turn()
 		BattleState.PLAYER_TURN : player_turn()
 		BattleState.ENEMY_TURN : enemy_turn()
+		BattleState.ACTION : action()
 
 func initialize_battle_encounter(battle_data_OW:BattleData):
 	battle_data = battle_data_OW
@@ -50,8 +51,11 @@ func initialize_battle_encounter(battle_data_OW:BattleData):
 func start():
 	init_allies()
 	init_enemies()
+	
+	ui.duplicate_title_fix(enemy_list)
 	timeline.initialize(ally_list, enemy_list)
-	ui.refresh_timeline_ui(timeline.timeline)
+	ui.refresh_timeline_ui(timeline.battle_timeline)
+	
 	change_battle_state(BattleState.NEXT_TURN)
 
 func init_allies():
@@ -72,6 +76,7 @@ func init_enemies():
 		visuals.enemy_sprite_init(enemy,enemy_data.position)
 
 func next_turn():
+	
 	actor = timeline.get_actor()
 	current_move = null
 	targets.clear()
@@ -82,7 +87,7 @@ func next_turn():
 		change_battle_state(BattleState.ENEMY_TURN)
 
 func player_turn():
-	ui.show_move_selection_menu(timeline.get_actor())
+	ui.show_move_selection_menu(actor)
 
 func on_move_button_pressed(move):
 	current_move = move
@@ -109,16 +114,29 @@ func on_target_selected(target:Character):
 	change_battle_state(BattleState.ACTION)
 
 func enemy_turn():
-	await get_tree().create_timer(0.5).timeout
-	timeline.pop_actor()
-	ui.timeline_ui_reset(timeline.timeline)
-	change_battle_state(BattleState.NEXT_TURN)
+	var enemy_act = enemy_ai.find_moves_and_targets(actor,enemy_list,ally_list)
+	if enemy_act == null:
+		print(actor, " CAN'T ACT")
+		timeline.pop_actor()
+		ui.refresh_timeline_ui(timeline.battle_timeline)
+		change_battle_state(BattleState.NEXT_TURN)
+	else:
+		current_move = enemy_act["move"]
+		targets = enemy_act["targets"]
+		change_battle_state(BattleState.ACTION)
 
 func action():
-	var action_result : BattleActionResult = action_resolver.resolve_action(actor,current_move,targets)
-	if actor in ally_list:
-		performance.add_performance(action_result)
-	action_result_presentation(action_result)
+	#var action_result : BattleActionResult = action_resolver.resolve_action(actor,current_move,targets)
 	
-func action_result_presentation(action_result):
-	pass
+	timeline.on_move_used(actor,current_move)
+	
+	#if actor in ally_list:
+		#performance.add_performance(action_result)
+
+	await action_result_presentation()
+	await get_tree().create_timer(1).timeout
+	
+	change_battle_state(BattleState.NEXT_TURN)
+	
+func action_result_presentation():
+	ui.refresh_timeline_ui(timeline.battle_timeline)

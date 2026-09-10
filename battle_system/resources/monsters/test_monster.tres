@@ -11,6 +11,6 @@ base_MATK = 20
 base_RATK = 20
 base_MDEF = 1000
 base_RDEF = 1000
-base_AGI = 40
+base_AGI = 60
 title = "test mon"
 metadata/_custom_type_script = "uid://d1k62pjwj8xmp"
