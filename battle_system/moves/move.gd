@@ -10,7 +10,9 @@ class_name Move
 @export_range(0,1) var accuracy : float
 
 @export var type : Type
-@export var effects : Array[Effect]
+@export var effect : Effect
 
 @export var move_range : MoveRange
 enum MoveRange {SELF, ENEMY, ALLY, ENEMIES, ALLIES,ALL}
+
+@export var ai_score : int

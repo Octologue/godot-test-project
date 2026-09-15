@@ -1,18 +1,10 @@
 class_name ActionResolver
 extends Node
 
-#resolve_action() return a resource containing every consequence of that action
-#the array targets is made of dictionaries like follow:
-#var example_dico={
-	#"character":Character,
-	#"missed" : bool,
-	#"damage":int, (negative if healing)
-	#"died":bool,
-	#"effects":Array[Effect]
-#}
+var action_result : BattleActionResult
 
-func resolve_action(actor:Character, move: Move, targets: Array[Character]):
-	var action_result = BattleActionResult.new()
+func create_action_result(actor:Character, move: Move, targets: Array[Character]):
+	action_result = BattleActionResult.new()
 	action_result.actor = actor
 	action_result.move = move
 	
@@ -23,13 +15,24 @@ func resolve_action(actor:Character, move: Move, targets: Array[Character]):
 		action_result.enough_sp = true
 	
 	for target in targets:
-		var target_result = {
-			"character":target,
-		}
+		var target_result = BattleTarget.new()
+		target_result.target = target
 		move_compute(target_result,actor,move)
 		action_result.targets.append(target_result)
 	
 	return action_result
+
+func resolve_action(action : BattleActionResult):
+	for target_result in action.targets:
+		if target_result.missed :
+			continue
+		var target = target_result.target
+		target.hp -= target_result.damage
+		if target.hp <= 0:
+			BattleEvent.character_died.emit(target)
+		if target_result.effects.size()>0:
+			target.effects.append_array(target_result.effects)
+		
 
 func is_sp_enough(actor:Character,move:Move):
 	if move.sp_cost >= actor.sp:
@@ -37,9 +40,9 @@ func is_sp_enough(actor:Character,move:Move):
 	else:
 		return true
 
-func move_compute(target_result:Dictionary,actor:Character,move:Move):
+func move_compute(target_result:BattleTarget,actor:Character,move:Move):
 	if randf() <= move.accuracy:
-		target_result["missed"] = false
+		target_result.missed = false
 
 		if move is AttackMove:
 			attack_character(target_result,actor,move)
@@ -48,35 +51,32 @@ func move_compute(target_result:Dictionary,actor:Character,move:Move):
 		elif move is StatusMove:
 			status_character(target_result,move)
 	else:
-		target_result["missed"] = true
+		target_result.missed = true
 
-func attack_character(target_result:Dictionary,actor:Character,move:AttackMove):
+func attack_character(target_result:BattleTarget,actor:Character,move:AttackMove):
 
-	target_result["damage"] = damage_compute(target_result["character"],actor,move)
-	target_result["character"].hp -= target_result["damage"]
-		
-	if target_result["character"].hp <= 0:
-		target_result["died"] = true
-		BattleEvent.character_died.emit(target_result["character"])
-	else:
-		target_result["died"] = false
-			
+	target_result.damage = damage_compute(target_result,actor,move)
+	
+	if target_result.damage > target_result.target.hp:
+		target_result.kill = true
+
 	if randf()<= move.proc:
-		target_result["effects"] = move.effects
-		target_result["character"].effects.append_array(move.effects)
+		target_result.effects = move.effects
+		
 	
-func damage_compute(target:Character,actor:Character,move:AttackMove):
+func damage_compute(target_result:BattleTarget,actor:Character,move:AttackMove):
 	var damage := 0
-	
+	var target = target_result.target
 	if move.category == move.Category.MELEE:
 		damage = (move.power * actor.matk) / target.mdef
 	elif move.category == move.Category.RANGED:
 		damage = (move.power * actor.ratk) / target.rdef
 	
-	damage = damage * randf_range(0.9,1.1) * get_type_modifier(target,move) * get_stab(actor,move)
+	damage = damage * randf_range(0.9,1.1) * get_type_modifier(target_result,move) * get_stab(actor,move)
 	return damage
 
-func get_type_modifier(target:Character,move:AttackMove):
+func get_type_modifier(target_result:BattleTarget,move:AttackMove):
+	var target = target_result.target
 	if move.type in target.weaknesses:
 		return 1.5
 	elif move.type in target.resistances:
@@ -90,10 +90,9 @@ func get_stab(actor:Character,move:AttackMove):
 	else:
 		return 1
 
-func heal_character(target_result:Dictionary,move:HealMove):
-	target_result["damage"] = -move.amount
-	target_result["character"].hp += move.amount
+func heal_character(target_result:BattleTarget,move:HealMove):
+	var heal_amount = max(move.amount , target_result.target.HP)
+	target_result.damage = -heal_amount
 
-func status_character(target_result:Dictionary,move:HealMove):
-	target_result["effects"] = move.effects
-	target_result["character"].effects.append_array(move.effects)
+func status_character(target_result:BattleTarget,move:HealMove):
+	target_result.effects = move.effects

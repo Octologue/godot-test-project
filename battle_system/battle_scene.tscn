@@ -31,8 +31,9 @@ script = ExtResource("3_kuufh")
 [node name="UiManager" type="Node" parent="BattleController" unique_id=1632173194]
 script = ExtResource("4_aab42")
 
-[node name="EnemyAI" type="Node" parent="BattleController" unique_id=1395841336]
+[node name="EnemyAI" type="Node" parent="BattleController" unique_id=1395841336 node_paths=PackedStringArray("action_resolver")]
 script = ExtResource("5_aab42")
+action_resolver = NodePath("../ActionResolver")
 
 [node name="VisualsManager" type="Node" parent="BattleController" unique_id=111162782]
 script = ExtResource("5_84jg4")
