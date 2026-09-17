@@ -87,7 +87,7 @@ func next_turn():
 		change_battle_state(BattleState.ENEMY_TURN)
 
 func player_turn():
-	ui.show_move_selection_menu(actor)
+	ui.show_move_selection(actor)
 
 func on_move_button_pressed(move):
 	current_move = move
@@ -96,9 +96,9 @@ func on_move_button_pressed(move):
 			targets = [actor]
 			change_battle_state(BattleState.ACTION)
 		current_move.MoveRange.ENEMY:
-			ui.enable_target_seleciton(false)
+			ui.enable_enemy_selection(enemy_list)
 		current_move.MoveRange.ALLY:
-			ui.enable_target_seleciton(true)
+			ui.enable_target_selection(true)
 		current_move.MoveRange.ENEMIES:
 			targets = enemy_list.duplicate()
 			change_battle_state(BattleState.ACTION)
@@ -114,7 +114,7 @@ func on_target_selected(target:Character):
 	change_battle_state(BattleState.ACTION)
 
 func enemy_turn():
-	var enemy_act = enemy_ai.find_moves_and_targets(actor,enemy_list,ally_list)
+	var enemy_act = enemy_ai.find_move_and_targets(actor,enemy_list,ally_list)
 	if enemy_act == null:
 		print(actor, " CAN'T ACT")
 		timeline.pop_actor()
@@ -129,9 +129,6 @@ func action():
 	#var action_result : BattleActionResult = action_resolver.resolve_action(actor,current_move,targets)
 	
 	timeline.on_move_used(actor,current_move)
-	
-	#if actor in ally_list:
-		#performance.add_performance(action_result)
 
 	await action_result_presentation()
 	await get_tree().create_timer(1).timeout

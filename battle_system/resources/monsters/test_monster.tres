@@ -13,4 +13,6 @@ base_MDEF = 1000
 base_RDEF = 1000
 base_AGI = 60
 title = "test mon"
+resistances = Array[int]([0])
+weaknesses = Array[int]([5])
 metadata/_custom_type_script = "uid://d1k62pjwj8xmp"

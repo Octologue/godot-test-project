@@ -1,9 +1,6 @@
-
 extends Node
 
 var scores : Array[Dictionary]
-
-
 
 func find_moves_and_targets(actor : Character,enemy_list:Array[Character] ,player_list:Array[Character]):
 	var choosen_targets : Array
@@ -34,7 +31,6 @@ func find_moves_and_targets(actor : Character,enemy_list:Array[Character] ,playe
 		return null
 	
 	var cumul := 0
-	
 	var r = randi()%total
 	for action in weights: 
 		cumul += action["score"]

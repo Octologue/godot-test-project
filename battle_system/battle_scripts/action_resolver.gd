@@ -62,7 +62,6 @@ func attack_character(target_result:BattleTarget,actor:Character,move:AttackMove
 
 	if randf()<= move.proc:
 		target_result.effects = move.effects
-		
 	
 func damage_compute(target_result:BattleTarget,actor:Character,move:AttackMove):
 	var damage := 0
@@ -72,22 +71,38 @@ func damage_compute(target_result:BattleTarget,actor:Character,move:AttackMove):
 	elif move.category == move.Category.RANGED:
 		damage = (move.power * actor.ratk) / target.rdef
 	
-	damage = damage * randf_range(0.9,1.1) * get_type_modifier(target_result,move) * get_stab(actor,move)
+	damage = damage * randf_range(0.9,1.1)\
+	 * get_type_modifier(target_result,move)\
+	 * get_stab(actor,move)\
+	 * get_crit_modifier(target_result)
 	return damage
+
+func get_crit_modifier(target_result:BattleTarget):
+	if randf() <= 0.05:
+		target_result.crit = true
+		return 1.5
+	else:
+		target_result.crit = false
+		return 1
 
 func get_type_modifier(target_result:BattleTarget,move:AttackMove):
 	var target = target_result.target
 	if move.type in target.weaknesses:
+		target_result.weakness = target_result.Weakness.WEAK
 		return 1.5
 	elif move.type in target.resistances:
+		target_result.weakness = target_result.Weakness.RESIST
 		return 0.5
 	else:
+		target_result.weakness = target_result.Weakness.NEUTRAL
 		return 1
 
 func get_stab(actor:Character,move:AttackMove):
 	if move.type == actor.attack_type:
+		action_result.stab = true
 		return 1.5
 	else:
+		action_result.stab = false
 		return 1
 
 func heal_character(target_result:BattleTarget,move:HealMove):

@@ -95,7 +95,22 @@ layout_mode = 2
 
 [node name="MoveSelection" type="VBoxContainer" parent="CanvasLayer" unique_id=210325207]
 visible = false
-offset_left = 184.0
-offset_top = 92.0
-offset_right = 242.0
-offset_bottom = 214.0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -29.0
+offset_top = 91.0
+offset_right = 29.0
+offset_bottom = 213.0
+grow_horizontal = 2
+
+[node name="EnemySelection2" type="VBoxContainer" parent="CanvasLayer" unique_id=48495347]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -29.0
+offset_top = 91.0
+offset_right = 29.0
+offset_bottom = 213.0
+grow_horizontal = 2

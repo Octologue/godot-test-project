@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://d1k62pjwj8xmp" path="res://battle_system/characters/monster.gd" id="1_hpk8a"]
 [ext_resource type="Script" uid="uid://d0ix8g5lpbw1s" path="res://battle_system/moves/move.gd" id="2_5s8qw"]
-[ext_resource type="Resource" uid="uid://dy5qvbw2t61nr" path="res://battle_system/resources/monsters/lenvizotl_l.tres" id="2_m0bd2"]
+[ext_resource type="Resource" uid="uid://dy5qvbw2t61nr" path="res://battle_system/resources/monsters/lenvizotl.tres" id="2_m0bd2"]
 [ext_resource type="Script" uid="uid://mbj3ohyk0tqy" path="res://battle_system/data/battle_resource_list.gd" id="3_m0bd2"]
 
 [resource]

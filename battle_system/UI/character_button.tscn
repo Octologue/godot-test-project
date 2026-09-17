@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://7r0ap78ecmmg"]
+
+[ext_resource type="Script" uid="uid://c81akxsmqxe4i" path="res://battle_system/UI/character_button.gd" id="1_nhm82"]
+
+[node name="CharacterButton" type="Button" unique_id=1238050592]
+script = ExtResource("1_nhm82")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

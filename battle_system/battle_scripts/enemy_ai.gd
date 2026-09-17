@@ -5,26 +5,41 @@ var scores : Array[Dictionary]
 @export var action_resolver : ActionResolver
 
 func find_move_and_targets(actor : Character,enemy_list:Array[Character] ,player_list:Array[Character]):
-	var move_chosen : Move
-	var targets_chosen : Array[Character]
+	scores.clear()
+	
+	var chosen_move : Move
+	var chosen_targets : Array[Character] = []
 	compute_all_scores(actor,enemy_list,player_list)
 	scores.sort_custom(sort_by_score)
-	
-func get_scores_weights():
-	var total := 0
+
+	var total_score := 0
 	var weights : Array[Dictionary]
 	for s in scores: 
 		var new_score := 0
 		if s["score"] >= -40:
 			new_score = int(pow(40 + s["score"],0.5))
-			total += new_score
+			total_score += new_score
 			s["score"] = new_score
 			weights.append(s)
-	if total == 0:
+	if total_score == 0:
+		return null
+
+	var cumul := 0
+	var r = randi()%total_score
+	for action in weights: 
+		cumul += action["score"]
+		if r <= cumul:
+			for t in  action["action"].targets:
+				chosen_targets.append(t.target)
+			chosen_move = action["action"].move
+			break
+	
+	print_scores(actor,chosen_move)
+	
+	if total_score == 0:
 		return null
 	else:
-		return weights
-
+		return {"targets":chosen_targets,"move":chosen_move}
 
 func compute_all_scores(actor : Character,enemy_list:Array[Character] ,player_list:Array[Character]):
 	for move in actor.moveset:
@@ -54,7 +69,7 @@ func compute_score(actor:Character,move:Move,targets:Array[Character]):
 			total_score.append(compute_heal_score(move,target,battle_action))
 		if move is StatusMove:
 			total_score.append(compute_status_score(move,target,battle_action))
-	return {"action" : battle_action, "score": average(total_score)}
+	return {"action" : battle_action, "score": average(total_score) + move.ai_score}
 
 func average(list):
 	var sum := 0.0
@@ -67,9 +82,9 @@ func sort_by_score(a,b):
 
 func compute_attack_score(actor:Character,move:Move,target:BattleTarget,battle_action:BattleActionResult):
 	var score : int = sp_cost_score(battle_action.enough_sp)\
-			+ super_effective_score(target.weakness)\
+			+ super_effective_score(target)\
 			+ attack_category_score(move,target.target)\
-			+ kill_score(target.can_kill)\
+			+ kill_score(target)\
 			+ boosted_score(actor)
 	return score
 
@@ -89,12 +104,13 @@ func sp_cost_score(is_enough:bool):
 	else:
 		return -INF
 
-func super_effective_score(weakness):
-	if weakness == 0:
+func super_effective_score(target:BattleTarget):
+	print(target.weakness)
+	if target.weakness == target.Weakness.NEUTRAL:
 		return 0
-	elif weakness == 1:
+	elif target.weakness == target.Weakness.WEAK:
 		return 50
-	elif weakness == 2:
+	elif target.weakness == target.Weakness.RESIST:
 		return -20
 
 func stab_score(stab:bool):
@@ -109,8 +125,8 @@ func effect_score(target,move):
 			return -10 
 	return 50
 
-func kill_score(can_kill : bool):
-	if can_kill:
+func kill_score(target:BattleTarget):
+	if target.damage>=target.target.hp:
 		return 80
 	else:
 		return 0
@@ -141,3 +157,14 @@ func heal_score(move,target):
 			return -10
 		else:
 			return 40
+
+func print_scores(actor,move):
+	print("SCORES ",actor.title)
+	for s in scores: 
+		var target_names := []
+		for t in s["action"].targets:
+			target_names.append(t.target.title)
+		print("Move:", s["action"].move.title,
+		  "| Targets:", target_names,
+		  "| Score:", s["score"])
+	print("CHOSEN : ",move.title)

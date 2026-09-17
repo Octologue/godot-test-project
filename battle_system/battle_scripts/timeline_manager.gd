@@ -56,6 +56,7 @@ func pop_actor():
 	battle_timeline.pop_front()
 
 func print_timeline():
+	return
 	print("TIMELINE : ")
 	for i in battle_timeline:
 		print (i["character"].title," : ",i["time"])

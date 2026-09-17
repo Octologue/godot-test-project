@@ -3,11 +3,14 @@ extends Node
 
 var timeline_panel : PackedScene = preload("res://battle_system/UI/timeline_panel.tscn")
 var move_button : PackedScene = preload("res://battle_system/UI/move_button.tscn")
+var character_button : PackedScene = preload("res://battle_system/UI/character_button.tscn")
 @onready var timeline_container = $"../../CanvasLayer/Timeline"
 @onready var move_selection = $"../../CanvasLayer/MoveSelection"
+@onready var enemy_selection = $"../../CanvasLayer/EnemySelection2"
 
 func _ready() -> void:
 	BattleEvent.move_button_pressed.connect(on_move_button_pressed)
+	BattleEvent.target_selected.connect(on_target_selected)
 
 func player_ui_init(player):
 	pass
@@ -27,7 +30,7 @@ func refresh_timeline_ui(timeline):
 func show_battle_menu():
 	pass
 
-func refresh_move_selection_menu(actor : Character):
+func refresh_move_selection(actor : Character):
 	for child in move_selection.get_children():
 		child.queue_free()
 	for move in actor.moveset:
@@ -35,15 +38,27 @@ func refresh_move_selection_menu(actor : Character):
 		new_button.move = move
 		move_selection.add_child(new_button)
 
-func show_move_selection_menu(actor:Character):
-	refresh_move_selection_menu(actor)
+func refresh_enemy_selection(enemy_list):
+	for child in enemy_selection.get_children():
+		child.queue_free()
+	for enemy in enemy_list:
+		var new_button = character_button.instantiate()
+		new_button.character = enemy
+		enemy_selection.add_child(new_button)
+
+func show_move_selection(actor:Character):
+	refresh_move_selection(actor)
 	move_selection.show()
 
 func on_move_button_pressed(move):
 	move_selection.hide()
 
-func enable_target_selection(is_target_ally:bool):
-	pass
+func enable_enemy_selection(enemy_list):
+	refresh_enemy_selection(enemy_list)
+	enemy_selection.show()
+
+func on_target_selected(character):
+	enemy_selection.hide()
 
 func duplicate_title_fix(enemy_list):
 	var letter_list = ["a","b","c","d","e"]
